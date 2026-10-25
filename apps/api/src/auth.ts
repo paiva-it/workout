@@ -81,6 +81,7 @@ export class AuthController {
     const ok = u ? await argon2.verify(u.passwordHash, password) : (await argon2.verify(await dummyHash, password), false);
     if (!u || !ok) {
       record(ipKey); record(userKey);
+      console.warn(`[${req.id}] failed login from ${req.ip}`); // never the username/password
       throw fail(401, 'INVALID_CREDENTIALS', 'Incorrect username or password');
     }
     attempts.delete(userKey);
