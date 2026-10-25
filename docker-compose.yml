@@ -1,0 +1,51 @@
+# Production stack on the paiva host. Secrets come from /srv/deploy/workout/.env (root-only), never from Git.
+name: workout
+services:
+  mongo:
+    image: mongo:8.0.34
+    restart: unless-stopped
+    command: ["--wiredTigerCacheSizeGB", "0.25"]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:?}
+      MONGO_APP_PASSWORD: ${MONGO_APP_PASSWORD:?}
+    volumes:
+      - mongo_data:/data/db
+      - ./deploy/mongo-init.js:/docker-entrypoint-initdb.d/10-app-user.js:ro
+      - /srv/deploy/workout/mongodump.yaml:/run/secrets/mongodump.yaml:ro # backup credentials, root-only
+    networks: [internal]
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+    stop_grace_period: 30s
+
+  app:
+    image: workout-app:${GIT_SHA:-dev}
+    build: .
+    restart: unless-stopped
+    depends_on:
+      mongo: { condition: service_healthy }
+    environment:
+      MONGO_URI: mongodb://workout_app:${MONGO_APP_PASSWORD:?}@mongo:27017/workout?authSource=workout
+      APP_ORIGIN: https://workout.paiva.it
+      # The host nginx reaches the container through this network's gateway; only it may set X-Forwarded-For.
+      TRUST_PROXY: loopback, 172.31.250.1
+    ports:
+      - "127.0.0.1:3010:3000"
+    networks: [internal]
+    read_only: true
+    tmpfs: [/tmp]
+    security_opt: ["no-new-privileges:true"]
+    stop_grace_period: 20s
+
+networks:
+  internal:
+    ipam:
+      config:
+        - subnet: 172.31.250.0/24
+          gateway: 172.31.250.1
+
+volumes:
+  mongo_data:

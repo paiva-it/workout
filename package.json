@@ -1,0 +1,25 @@
+{
+  "name": "workout",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.8.1",
+  "engines": {
+    "node": ">=24.22.0"
+  },
+  "scripts": {
+    "build": "pnpm -r --workspace-concurrency=1 run build",
+    "typecheck": "pnpm -r run typecheck",
+    "lint": "eslint .",
+    "test": "pnpm -r --workspace-concurrency=1 run test",
+    "validate:pack": "node scripts/validate-pack.mjs data/training-pack.v1.json",
+    "e2e": "node scripts/e2e.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.13.0",
+    "mongodb": "6.21.0",
+    "playwright": "1.64.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.0"
+  }
+}

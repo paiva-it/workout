@@ -1,0 +1,2435 @@
+{
+  "schemaVersion": 1,
+  "packId": "home-return-foundation",
+  "version": 1,
+  "title": "Home lifting - restart and muscle emphasis plans",
+  "createdOn": "2026-10-25",
+  "language": "en-US",
+  "units": "kg",
+  "description": "Original conservative programming for a returning recreational lifter. Generic exercise content only; personal profile and login live outside the public repo.",
+  "assumptions": [
+    "Usable dumbbells or adjustable dumbbells and a stable flat bench.",
+    "No barbell rack, safety arms, machines, pull-up bar or adjustable bench is assumed.",
+    "No current limiting injury; current symptoms must be assessed before hard training."
+  ],
+  "videos": [
+    {
+      "id": "v-bench",
+      "provider": "youtube",
+      "youtubeId": "622ku8i0M14",
+      "url": "https://www.youtube.com/watch?v=622ku8i0M14",
+      "title": "My Tricks: Dumbbell Bench Press",
+      "channel": "ScottHermanFitness",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-floor",
+      "provider": "youtube",
+      "youtubeId": "T0Y3OBF1bNI",
+      "url": "https://www.youtube.com/watch?v=T0Y3OBF1bNI",
+      "title": "How To Do A Dumbbell Floor Press",
+      "channel": "PureGym",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-incline-pushup",
+      "provider": "youtube",
+      "youtubeId": "0JUrOH--Kdk",
+      "url": "https://www.youtube.com/watch?v=0JUrOH--Kdk",
+      "title": "How to do an Incline Push-Up | Proper Form & Technique | NASM",
+      "channel": "National Academy of Sports Medicine (NASM)",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-row",
+      "provider": "youtube",
+      "youtubeId": "pYcpY20QaE8",
+      "url": "https://www.youtube.com/watch?v=pYcpY20QaE8",
+      "title": "How To: Dumbbell Bent-Over Row (Single-Arm)",
+      "channel": "ScottHermanFitness",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-reverse-fly",
+      "provider": "youtube",
+      "youtubeId": "evXOlgLTPCw",
+      "url": "https://www.youtube.com/watch?v=evXOlgLTPCw",
+      "title": "Bent Over Dumbbell Reverse Fly",
+      "channel": "daniellagimodierept",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-shrug",
+      "provider": "youtube",
+      "youtubeId": "cJRVVxmytaM",
+      "url": "https://www.youtube.com/watch?v=cJRVVxmytaM",
+      "title": "How To: Dumbbell Shrugs",
+      "channel": "ScottHermanFitness",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-squat",
+      "provider": "youtube",
+      "youtubeId": "9KzZD_n2r64",
+      "url": "https://www.youtube.com/watch?v=9KzZD_n2r64",
+      "title": "How to Goblet Squat - The Complete Guide for Beginners",
+      "channel": "Naomi Kong",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-rdl",
+      "provider": "youtube",
+      "youtubeId": "ndfZi5fDaVM",
+      "url": "https://www.youtube.com/watch?v=ndfZi5fDaVM",
+      "title": "Dumbbell RDL | Romanian Deadlift Tutorial",
+      "channel": "Lift With Michelle - Exercise Form Tutorials",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-lunge",
+      "provider": "youtube",
+      "youtubeId": "C_P3Q-PssvY",
+      "url": "https://www.youtube.com/watch?v=C_P3Q-PssvY",
+      "title": "How To Do A Reverse Lunge | The Right Way | Well+Good",
+      "channel": "Well+Good",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Reverse-lunge technique; start with bodyweight and a stable hand support, then add load only when balanced."
+    },
+    {
+      "id": "v-calf",
+      "provider": "youtube",
+      "youtubeId": "PQ-F5uzxipQ",
+      "url": "https://www.youtube.com/watch?v=PQ-F5uzxipQ",
+      "title": "Standing Dumbbell Calf Raise Tutorial",
+      "channel": "Extreme Limits",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Calf-raise technique. Use the flat floor in this plan; no step or raised platform is required."
+    },
+    {
+      "id": "v-press",
+      "provider": "youtube",
+      "youtubeId": "wO0l5jW2NtQ",
+      "url": "https://www.youtube.com/watch?v=wO0l5jW2NtQ",
+      "title": "How to do a Standing Dumbbell Shoulder Press!",
+      "channel": "Elite Performance",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-lateral",
+      "provider": "youtube",
+      "youtubeId": "PzsMitRdI_8",
+      "url": "https://www.youtube.com/watch?v=PzsMitRdI_8",
+      "title": "How to do the DUMBBELL LATERAL RAISE! | 2 Minute Tutorial",
+      "channel": "Max Euceda",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-curl",
+      "provider": "youtube",
+      "youtubeId": "in7PaeYlhrM",
+      "url": "https://www.youtube.com/watch?v=in7PaeYlhrM",
+      "title": "The ONLY Way You Should Be Doing Dumbbell Bicep Curls!",
+      "channel": "Mind Pump TV",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Technique reference; the title is the creator's wording, not a claim that only one curl technique is valid."
+    },
+    {
+      "id": "v-hammer",
+      "provider": "youtube",
+      "youtubeId": "BRVDS6HVR9Q",
+      "url": "https://www.youtube.com/watch?v=BRVDS6HVR9Q",
+      "title": "How To Perform HAMMER CURLS | Biceps Exercise Tutorial",
+      "channel": "Buff Dudes Workouts",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-triceps",
+      "provider": "youtube",
+      "youtubeId": "m58XEsPojZU",
+      "url": "https://www.youtube.com/watch?v=m58XEsPojZU",
+      "title": "Dumbbell Triceps Extension on Floor",
+      "channel": "Ames Elite Fitness",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-close-floor",
+      "provider": "youtube",
+      "youtubeId": "AOGkkhMhebQ",
+      "url": "https://www.youtube.com/watch?v=AOGkkhMhebQ",
+      "title": "Close-Grip Dumbbell Chest Press (On The Floor) (Tutorial + Tips) | Team Evolve",
+      "channel": "Vivian Ngo",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-deadbug",
+      "provider": "youtube",
+      "youtubeId": "BZYaCzbP09M",
+      "url": "https://www.youtube.com/watch?v=BZYaCzbP09M",
+      "title": "Dead Bug",
+      "channel": "E3 Rehab Exercise Library",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-sideplank",
+      "provider": "youtube",
+      "youtubeId": "ZpBJIRLGEgg",
+      "url": "https://www.youtube.com/watch?v=ZpBJIRLGEgg",
+      "title": "How to do a Side Plank",
+      "channel": "National Academy of Sports Medicine (NASM)",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Side-plank technique. Start with bent knees if the straight-leg version is too difficult."
+    },
+    {
+      "id": "v-bridge",
+      "provider": "youtube",
+      "youtubeId": "SKOMwg1JLrU",
+      "url": "https://www.youtube.com/watch?v=SKOMwg1JLrU",
+      "title": "How to do a Glute bridge",
+      "channel": "National Academy of Sports Medicine (NASM)",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-warmup",
+      "provider": "youtube",
+      "youtubeId": "oLu9kwDzBdg",
+      "url": "https://www.youtube.com/watch?v=oLu9kwDzBdg",
+      "title": "Basic warm-up - 5 minutes | NHS",
+      "channel": "NHS",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "General warm-up reference, not a video of the entire recovery session. Choose comfortable low-impact movements."
+    }
+  ],
+  "exercises": [
+    {
+      "id": "db-bench-press",
+      "version": 1,
+      "name": "Dumbbell bench press",
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "triceps",
+        "anterior_deltoids"
+      ],
+      "movementPattern": "horizontal_push",
+      "equipment": [
+        "dumbbells",
+        "flat_bench"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-bench",
+      "cues": [
+        "Plant both feet and keep the bench stable.",
+        "Keep wrists stacked over forearms; lower under control.",
+        "Keep elbows roughly 30-60 degrees from the torso; use a comfortable depth.",
+        "Use only dumbbells you can position and put down safely."
+      ],
+      "regression": "Use the dumbbell floor press instead; record the changed exercise ID.",
+      "archived": false
+    },
+    {
+      "id": "db-floor-press",
+      "version": 1,
+      "name": "Neutral-grip dumbbell floor press",
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "triceps",
+        "anterior_deltoids"
+      ],
+      "movementPattern": "horizontal_push",
+      "equipment": [
+        "dumbbells",
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-floor",
+      "cues": [
+        "Palms face each other; keep wrists straight.",
+        "Let upper arms touch the floor softly; do not bounce.",
+        "Press smoothly; stop before repetitions become a grind."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "incline-pushup",
+      "version": 1,
+      "name": "Incline push-up",
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "triceps",
+        "anterior_deltoids",
+        "core"
+      ],
+      "movementPattern": "horizontal_push",
+      "equipment": [
+        "stable_support"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-incline-pushup",
+      "cues": [
+        "Use a fixed surface that cannot slide or tip.",
+        "Keep head, trunk and hips in one line.",
+        "Lower the chest toward the support, then push away.",
+        "Record support height or support description every session."
+      ],
+      "regression": "Use a higher fixed surface or a wall. A loose chair is not a safe support.",
+      "archived": false
+    },
+    {
+      "id": "db-supported-row",
+      "version": 1,
+      "name": "Bench-supported single-arm dumbbell row",
+      "primaryMuscles": [
+        "lats",
+        "upper_back"
+      ],
+      "secondaryMuscles": [
+        "biceps",
+        "rear_deltoids"
+      ],
+      "movementPattern": "horizontal_pull",
+      "equipment": [
+        "dumbbell",
+        "flat_bench"
+      ],
+      "metric": "reps",
+      "laterality": "separate_sides",
+      "repsMeaning": "per_side",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 1,
+      "videoId": "v-row",
+      "cues": [
+        "Support yourself on a stable bench; keep the trunk quiet.",
+        "Row the elbow toward the hip without twisting.",
+        "Lower smoothly and use the same range on both sides."
+      ],
+      "regression": "Use a lighter dumbbell; rest between sides if needed.",
+      "archived": false
+    },
+    {
+      "id": "db-reverse-fly",
+      "version": 1,
+      "name": "Bent-over dumbbell reverse fly",
+      "primaryMuscles": [
+        "rear_deltoids",
+        "upper_back"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "horizontal_abduction",
+      "equipment": [
+        "dumbbells"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-reverse-fly",
+      "cues": [
+        "Use very light weights and a stable hip hinge.",
+        "Keep elbows softly bent; open the arms without swinging.",
+        "Stop around torso level; keep the neck relaxed."
+      ],
+      "regression": "Use no added weight. If the bent-over position hurts, omit and add no replacement sets.",
+      "archived": false
+    },
+    {
+      "id": "db-shrug",
+      "version": 1,
+      "name": "Dumbbell shrug",
+      "primaryMuscles": [
+        "upper_trapezius"
+      ],
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "movementPattern": "scapular_elevation",
+      "equipment": [
+        "dumbbells"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-shrug",
+      "cues": [
+        "Stand tall and lift the shoulders straight up.",
+        "Pause briefly, then lower; do not roll the shoulders."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "goblet-squat",
+      "version": 1,
+      "name": "Goblet squat",
+      "primaryMuscles": [
+        "quadriceps",
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "core"
+      ],
+      "movementPattern": "squat",
+      "equipment": [
+        "dumbbell"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "single_dumbbell",
+      "defaultImplementCount": 1,
+      "videoId": "v-squat",
+      "cues": [
+        "Hold one secure dumbbell close to the chest.",
+        "Keep the whole foot planted and let knees track with toes.",
+        "Squat only as low as you can control comfortably."
+      ],
+      "regression": "Unloaded squat to a stable bench or sit-to-stand; record the bodyweight variant.",
+      "archived": false
+    },
+    {
+      "id": "db-rdl",
+      "version": 1,
+      "name": "Dumbbell Romanian deadlift",
+      "primaryMuscles": [
+        "hamstrings",
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "spinal_erectors",
+        "forearms"
+      ],
+      "movementPattern": "hinge",
+      "equipment": [
+        "dumbbells"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-rdl",
+      "cues": [
+        "Keep a soft knee bend and send the hips backward.",
+        "Keep the weights close and the spine comfortable and steady.",
+        "Stop at a hamstring stretch before your lower back rounds; floor contact is unnecessary.",
+        "Stand tall without leaning backward."
+      ],
+      "regression": "Rehearse unloaded hip hinges. If uncomfortable, use a bodyweight glute bridge with its own exercise ID.",
+      "archived": false
+    },
+    {
+      "id": "reverse-lunge",
+      "version": 1,
+      "name": "Reverse lunge",
+      "primaryMuscles": [
+        "quadriceps",
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "core"
+      ],
+      "movementPattern": "single_leg",
+      "equipment": [
+        "floor_space",
+        "stable_support"
+      ],
+      "metric": "reps",
+      "laterality": "separate_sides",
+      "repsMeaning": "per_side",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-lunge",
+      "cues": [
+        "Start unloaded, with light hand support if needed.",
+        "Step back and lower smoothly through a comfortable range.",
+        "Push through the front foot to stand; keep the movement balanced.",
+        "Log left and right separately; the side is the front working leg."
+      ],
+      "regression": "Use a shorter comfortable range with hand support, or substitute the goblet-squat bodyweight variant.",
+      "archived": false
+    },
+    {
+      "id": "calf-raise",
+      "version": 1,
+      "name": "Standing calf raise on floor",
+      "primaryMuscles": [
+        "calves"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "plantar_flexion",
+      "equipment": [
+        "floor_space",
+        "stable_support"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-calf",
+      "cues": [
+        "Use a stable support for balance.",
+        "Rise smoothly, pause, and lower slowly on the flat floor.",
+        "Begin bodyweight; later use one dumbbell and retain the same support."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "db-standing-press",
+      "version": 1,
+      "name": "Standing dumbbell shoulder press",
+      "primaryMuscles": [
+        "deltoids"
+      ],
+      "secondaryMuscles": [
+        "triceps",
+        "core"
+      ],
+      "movementPattern": "vertical_push",
+      "equipment": [
+        "dumbbells"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-press",
+      "cues": [
+        "Keep ribs over hips and knees relaxed.",
+        "Start with elbows slightly in front of the torso.",
+        "Press in a comfortable path without leaning backward."
+      ],
+      "regression": "Use lighter weights. If overhead motion is painful, omit it and seek assessment rather than forcing the movement.",
+      "archived": false
+    },
+    {
+      "id": "db-lateral-raise",
+      "version": 1,
+      "name": "Dumbbell lateral raise",
+      "primaryMuscles": [
+        "lateral_deltoids"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "shoulder_abduction",
+      "equipment": [
+        "dumbbells"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-lateral",
+      "cues": [
+        "Use light weights with a small elbow bend.",
+        "Raise slightly forward of your sides to about shoulder level if comfortable.",
+        "Keep thumbs neutral or slightly upward; avoid swinging."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "db-curl",
+      "version": 1,
+      "name": "Standing dumbbell curl",
+      "primaryMuscles": [
+        "biceps"
+      ],
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "movementPattern": "elbow_flexion",
+      "equipment": [
+        "dumbbells"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-curl",
+      "cues": [
+        "Curl both arms together; count one simultaneous repetition as one rep.",
+        "Keep the upper arms quiet and wrists comfortable.",
+        "Lower under control without leaning or swinging."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "db-hammer-curl",
+      "version": 1,
+      "name": "Dumbbell hammer curl",
+      "primaryMuscles": [
+        "brachialis",
+        "biceps"
+      ],
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "movementPattern": "elbow_flexion",
+      "equipment": [
+        "dumbbells"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-hammer",
+      "cues": [
+        "Keep palms facing each other and curl both arms together.",
+        "Count one simultaneous repetition as one rep.",
+        "Keep elbows close to the torso; do not swing."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "db-floor-triceps-extension",
+      "version": 1,
+      "name": "Dumbbell triceps extension on floor",
+      "primaryMuscles": [
+        "triceps"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "elbow_extension",
+      "equipment": [
+        "dumbbells",
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-triceps",
+      "cues": [
+        "Use light dumbbells and a secure grip.",
+        "Bend at the elbows with the upper arms steady.",
+        "Keep the weights away from your face and move slowly."
+      ],
+      "regression": "If elbows are uncomfortable, omit this exercise; keep only the pain-free close-grip floor press already in the plan.",
+      "archived": false
+    },
+    {
+      "id": "db-close-floor-press",
+      "version": 1,
+      "name": "Close-grip dumbbell floor press",
+      "primaryMuscles": [
+        "triceps",
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "anterior_deltoids"
+      ],
+      "movementPattern": "horizontal_push",
+      "equipment": [
+        "dumbbells",
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-close-floor",
+      "cues": [
+        "Use a neutral grip and keep elbows comfortably close.",
+        "Lower gently until upper arms touch the floor.",
+        "Do not bang the dumbbells together or bounce the elbows."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "dead-bug",
+      "version": 1,
+      "name": "Dead bug",
+      "primaryMuscles": [
+        "core"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "anti_extension",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "separate_sides",
+      "repsMeaning": "per_side",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-deadbug",
+      "cues": [
+        "Lie on your back with hips and knees bent.",
+        "Exhale gently while moving opposite arm and leg.",
+        "Keep the trunk quiet and shorten the reach if your back arches.",
+        "Side means the extending leg."
+      ],
+      "regression": "Move only the legs or tap one heel at a time.",
+      "archived": false
+    },
+    {
+      "id": "side-plank",
+      "version": 1,
+      "name": "Side plank",
+      "primaryMuscles": [
+        "core"
+      ],
+      "secondaryMuscles": [
+        "glute_medius"
+      ],
+      "movementPattern": "anti_lateral_flexion",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "duration",
+      "laterality": "separate_sides",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-sideplank",
+      "cues": [
+        "Put the elbow under the shoulder.",
+        "Keep the trunk aligned and breathe normally.",
+        "Start with bent knees if necessary.",
+        "Side means the side supporting the body on the floor."
+      ],
+      "regression": "Use bent knees and 10-15 second holds.",
+      "archived": false
+    },
+    {
+      "id": "glute-bridge",
+      "version": 1,
+      "name": "Glute bridge",
+      "primaryMuscles": [
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "hamstrings",
+        "core"
+      ],
+      "movementPattern": "hip_extension",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-bridge",
+      "cues": [
+        "Keep feet planted and ribs relaxed.",
+        "Lift the hips by squeezing the glutes; do not arch the back.",
+        "Pause briefly, then lower smoothly."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "easy-walk",
+      "version": 1,
+      "name": "Easy walk",
+      "primaryMuscles": [
+        "general_fitness"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "locomotion",
+      "equipment": [
+        "walking_space"
+      ],
+      "metric": "duration",
+      "laterality": "bilateral",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-warmup",
+      "cues": [
+        "Walk at a pace where you can speak in full sentences.",
+        "Use flat, safe ground; no running is required."
+      ],
+      "regression": "Walk for 5-10 minutes and gradually extend the time.",
+      "archived": false
+    },
+    {
+      "id": "gentle-mobility",
+      "version": 1,
+      "name": "Gentle mobility circuit",
+      "primaryMuscles": [
+        "mobility"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "mobility",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "duration",
+      "laterality": "bilateral",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-warmup",
+      "cues": [
+        "Use easy shoulder circles, ankle circles and comfortable trunk rotations.",
+        "Move slowly and stay in a pain-free range.",
+        "Skip any movement that causes symptoms."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    }
+  ],
+  "plans": [
+    {
+      "id": "restart-a",
+      "version": 1,
+      "name": "Restart A - squat, push and pull",
+      "kind": "restart",
+      "focus": [
+        "full_body"
+      ],
+      "estimatedDurationMinutes": [
+        30,
+        50
+      ],
+      "exampleVideoId": "v-squat",
+      "exampleVideoLabel": "Example exercise tutorial - not a video of this complete routine",
+      "warmup": {
+        "durationMinutes": [
+          8,
+          12
+        ],
+        "videoId": "v-warmup",
+        "steps": [
+          {
+            "id": "easy-march",
+            "label": "Easy walk or march",
+            "durationSeconds": 300,
+            "notes": "Gradually increase pace. No jumping required."
+          },
+          {
+            "id": "arm-circles",
+            "label": "Small shoulder circles",
+            "reps": 10,
+            "notes": "Ten forward and ten backward, without pain."
+          },
+          {
+            "id": "scapular-squeeze",
+            "label": "Gentle shoulder-blade squeezes",
+            "reps": 10,
+            "notes": "Keep shoulders relaxed; no weights."
+          },
+          {
+            "id": "wall-pushup",
+            "label": "Easy wall push-ups",
+            "reps": 8,
+            "notes": "A preparation set, not fatigue training."
+          },
+          {
+            "id": "unloaded-squat",
+            "label": "Unloaded squat or sit-to-stand",
+            "reps": 8,
+            "notes": "Use a stable bench and a comfortable range."
+          },
+          {
+            "id": "unloaded-hinge",
+            "label": "Unloaded hip hinge",
+            "reps": 8,
+            "notes": "Send hips back with a soft knee bend."
+          },
+          {
+            "id": "ankle-rock",
+            "label": "Gentle ankle rocks",
+            "reps": 10,
+            "notes": "Each side, holding a stable support."
+          },
+          {
+            "id": "rampup",
+            "label": "Rehearsal / ramp-up sets",
+            "notes": "Before the first loaded exercise, do 1-3 easy sets of 5-10 reps, gradually approaching today's working load. Add one easy rehearsal set when changing to a new movement pattern. Log these as warm-up sets; never use an old PR to set the load."
+          }
+        ]
+      },
+      "items": [
+        {
+          "id": "restart-a-item-01",
+          "exerciseId": "goblet-squat",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 12,
+            "perSide": false
+          },
+          "restSeconds": 120,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "restart-a-item-02",
+          "exerciseId": "db-bench-press",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 12,
+            "perSide": false
+          },
+          "restSeconds": 120,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "restart-a-item-03",
+          "exerciseId": "db-supported-row",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 12,
+            "perSide": true
+          },
+          "restSeconds": 90,
+          "restAfter": "both_sides",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "restart-a-item-04",
+          "exerciseId": "glute-bridge",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 60,
+          "restAfter": "set",
+          "targetRir": null,
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "restart-a-item-05",
+          "exerciseId": "dead-bug",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 6,
+            "max": 10,
+            "perSide": true
+          },
+          "restSeconds": 60,
+          "restAfter": "both_sides",
+          "targetRir": null,
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        }
+      ],
+      "cooldown": {
+        "durationMinutes": [
+          3,
+          5
+        ],
+        "instructions": [
+          "Walk slowly until breathing settles.",
+          "Optional gentle stretches only if comfortable; no forceful stretching."
+        ]
+      },
+      "notes": [
+        "Use the program's first-two-weeks set cap; the table shows the weeks 3-4 maximum.",
+        "Keep 3-4 good repetitions in reserve during the first four weeks.",
+        "The first week can be 25-35 minutes. Do not add sets just to fill an hour."
+      ],
+      "archived": false
+    },
+    {
+      "id": "restart-b",
+      "version": 1,
+      "name": "Restart B - hinge, push and pull",
+      "kind": "restart",
+      "focus": [
+        "full_body"
+      ],
+      "estimatedDurationMinutes": [
+        30,
+        50
+      ],
+      "exampleVideoId": "v-rdl",
+      "exampleVideoLabel": "Example exercise tutorial - not a video of this complete routine",
+      "warmup": {
+        "durationMinutes": [
+          8,
+          12
+        ],
+        "videoId": "v-warmup",
+        "steps": [
+          {
+            "id": "easy-march",
+            "label": "Easy walk or march",
+            "durationSeconds": 300,
+            "notes": "Gradually increase pace. No jumping required."
+          },
+          {
+            "id": "arm-circles",
+            "label": "Small shoulder circles",
+            "reps": 10,
+            "notes": "Ten forward and ten backward, without pain."
+          },
+          {
+            "id": "scapular-squeeze",
+            "label": "Gentle shoulder-blade squeezes",
+            "reps": 10,
+            "notes": "Keep shoulders relaxed; no weights."
+          },
+          {
+            "id": "wall-pushup",
+            "label": "Easy wall push-ups",
+            "reps": 8,
+            "notes": "A preparation set, not fatigue training."
+          },
+          {
+            "id": "unloaded-squat",
+            "label": "Unloaded squat or sit-to-stand",
+            "reps": 8,
+            "notes": "Use a stable bench and a comfortable range."
+          },
+          {
+            "id": "unloaded-hinge",
+            "label": "Unloaded hip hinge",
+            "reps": 8,
+            "notes": "Send hips back with a soft knee bend."
+          },
+          {
+            "id": "ankle-rock",
+            "label": "Gentle ankle rocks",
+            "reps": 10,
+            "notes": "Each side, holding a stable support."
+          },
+          {
+            "id": "rampup",
+            "label": "Rehearsal / ramp-up sets",
+            "notes": "Before the first loaded exercise, do 1-3 easy sets of 5-10 reps, gradually approaching today's working load. Add one easy rehearsal set when changing to a new movement pattern. Log these as warm-up sets; never use an old PR to set the load."
+          }
+        ]
+      },
+      "items": [
+        {
+          "id": "restart-b-item-01",
+          "exerciseId": "db-rdl",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 12,
+            "perSide": false
+          },
+          "restSeconds": 120,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "restart-b-item-02",
+          "exerciseId": "incline-pushup",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 6,
+            "max": 12,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "restart-b-item-03",
+          "exerciseId": "db-supported-row",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 12,
+            "perSide": true
+          },
+          "restSeconds": 90,
+          "restAfter": "both_sides",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "restart-b-item-04",
+          "exerciseId": "db-standing-press",
+          "exerciseVersion": 1,
+          "workingSets": 1,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 12,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": "One easy set; omit if overhead motion is uncomfortable."
+        },
+        {
+          "id": "restart-b-item-05",
+          "exerciseId": "calf-raise",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 12,
+            "max": 20,
+            "perSide": false
+          },
+          "restSeconds": 60,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "restart-b-item-06",
+          "exerciseId": "side-plank",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "duration",
+            "min": 15,
+            "max": 30,
+            "perSide": true
+          },
+          "restSeconds": 60,
+          "restAfter": "both_sides",
+          "targetRir": null,
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        }
+      ],
+      "cooldown": {
+        "durationMinutes": [
+          3,
+          5
+        ],
+        "instructions": [
+          "Walk slowly until breathing settles.",
+          "Optional gentle stretches only if comfortable; no forceful stretching."
+        ]
+      },
+      "notes": [
+        "The program phase overrides listed set counts and effort.",
+        "Keep push-ups comfortably below failure and use a high support if needed."
+      ],
+      "archived": false
+    },
+    {
+      "id": "chest",
+      "version": 1,
+      "name": "Chest emphasis",
+      "kind": "focus",
+      "focus": [
+        "chest"
+      ],
+      "estimatedDurationMinutes": [
+        45,
+        60
+      ],
+      "exampleVideoId": "v-bench",
+      "exampleVideoLabel": "Example exercise tutorial - not a video of this complete routine",
+      "warmup": {
+        "durationMinutes": [
+          8,
+          12
+        ],
+        "videoId": "v-warmup",
+        "steps": [
+          {
+            "id": "easy-march",
+            "label": "Easy walk or march",
+            "durationSeconds": 300,
+            "notes": "Gradually increase pace. No jumping required."
+          },
+          {
+            "id": "arm-circles",
+            "label": "Small shoulder circles",
+            "reps": 10,
+            "notes": "Ten forward and ten backward, without pain."
+          },
+          {
+            "id": "scapular-squeeze",
+            "label": "Gentle shoulder-blade squeezes",
+            "reps": 10,
+            "notes": "Keep shoulders relaxed; no weights."
+          },
+          {
+            "id": "wall-pushup",
+            "label": "Easy wall push-ups",
+            "reps": 8,
+            "notes": "A preparation set, not fatigue training."
+          },
+          {
+            "id": "rampup",
+            "label": "Rehearsal / ramp-up sets",
+            "notes": "Before the first loaded exercise, do 1-3 easy sets of 5-10 reps, gradually approaching today's working load. Add one easy rehearsal set when changing to a new movement pattern. Log these as warm-up sets; never use an old PR to set the load."
+          }
+        ]
+      },
+      "items": [
+        {
+          "id": "chest-item-01",
+          "exerciseId": "db-bench-press",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 12,
+            "perSide": false
+          },
+          "restSeconds": 150,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "chest-item-02",
+          "exerciseId": "db-floor-press",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 120,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "chest-item-03",
+          "exerciseId": "incline-pushup",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 6,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "chest-item-04",
+          "exerciseId": "dead-bug",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 6,
+            "max": 10,
+            "perSide": true
+          },
+          "restSeconds": 60,
+          "restAfter": "both_sides",
+          "targetRir": null,
+          "optional": true,
+          "defaultVariant": "standard",
+          "notes": "Optional from week 7 onward; omit when tired."
+        }
+      ],
+      "cooldown": {
+        "durationMinutes": [
+          3,
+          5
+        ],
+        "instructions": [
+          "Walk slowly until breathing settles.",
+          "Optional gentle stretches only if comfortable; no forceful stretching."
+        ]
+      },
+      "notes": [
+        "Seven direct chest sets at full volume; no flyes or solo barbell benching required.",
+        "Allow about 10 minutes warm-up, 25-35 minutes working sets and setup, then 3-5 minutes easy cooldown. Add a short easy walk only if desired.",
+        "For the first two focus weeks, cap each exercise at two sets and omit optional work."
+      ],
+      "archived": false
+    },
+    {
+      "id": "back",
+      "version": 1,
+      "name": "Back emphasis",
+      "kind": "focus",
+      "focus": [
+        "back"
+      ],
+      "estimatedDurationMinutes": [
+        45,
+        60
+      ],
+      "exampleVideoId": "v-row",
+      "exampleVideoLabel": "Example exercise tutorial - not a video of this complete routine",
+      "warmup": {
+        "durationMinutes": [
+          8,
+          12
+        ],
+        "videoId": "v-warmup",
+        "steps": [
+          {
+            "id": "easy-march",
+            "label": "Easy walk or march",
+            "durationSeconds": 300,
+            "notes": "Gradually increase pace. No jumping required."
+          },
+          {
+            "id": "arm-circles",
+            "label": "Small shoulder circles",
+            "reps": 10,
+            "notes": "Ten forward and ten backward, without pain."
+          },
+          {
+            "id": "scapular-squeeze",
+            "label": "Gentle shoulder-blade squeezes",
+            "reps": 10,
+            "notes": "Keep shoulders relaxed; no weights."
+          },
+          {
+            "id": "wall-pushup",
+            "label": "Easy wall push-ups",
+            "reps": 8,
+            "notes": "A preparation set, not fatigue training."
+          },
+          {
+            "id": "rampup",
+            "label": "Rehearsal / ramp-up sets",
+            "notes": "Before the first loaded exercise, do 1-3 easy sets of 5-10 reps, gradually approaching today's working load. Add one easy rehearsal set when changing to a new movement pattern. Log these as warm-up sets; never use an old PR to set the load."
+          }
+        ]
+      },
+      "items": [
+        {
+          "id": "back-item-01",
+          "exerciseId": "db-supported-row",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 12,
+            "perSide": true
+          },
+          "restSeconds": 120,
+          "restAfter": "both_sides",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "back-item-02",
+          "exerciseId": "db-reverse-fly",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 12,
+            "max": 20,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "back-item-03",
+          "exerciseId": "db-shrug",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "back-item-04",
+          "exerciseId": "db-curl",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        }
+      ],
+      "cooldown": {
+        "durationMinutes": [
+          3,
+          5
+        ],
+        "instructions": [
+          "Walk slowly until breathing settles.",
+          "Optional gentle stretches only if comfortable; no forceful stretching."
+        ]
+      },
+      "notes": [
+        "This is a horizontal-pull-focused home plan. Dumbbells and a bench do not provide a true vertical pull.",
+        "A pull-up bar or safely anchored band could expand future versions; neither is assumed now.",
+        "Both sides of one row round count as one prescribed set, but store separate actual left/right records."
+      ],
+      "archived": false
+    },
+    {
+      "id": "legs",
+      "version": 1,
+      "name": "Legs emphasis",
+      "kind": "focus",
+      "focus": [
+        "quadriceps",
+        "hamstrings",
+        "glutes",
+        "calves"
+      ],
+      "estimatedDurationMinutes": [
+        50,
+        65
+      ],
+      "exampleVideoId": "v-squat",
+      "exampleVideoLabel": "Example exercise tutorial - not a video of this complete routine",
+      "warmup": {
+        "durationMinutes": [
+          8,
+          12
+        ],
+        "videoId": "v-warmup",
+        "steps": [
+          {
+            "id": "easy-march",
+            "label": "Easy walk or march",
+            "durationSeconds": 300,
+            "notes": "Gradually increase pace. No jumping required."
+          },
+          {
+            "id": "unloaded-squat",
+            "label": "Unloaded squat or sit-to-stand",
+            "reps": 8,
+            "notes": "Use a stable bench and a comfortable range."
+          },
+          {
+            "id": "unloaded-hinge",
+            "label": "Unloaded hip hinge",
+            "reps": 8,
+            "notes": "Send hips back with a soft knee bend."
+          },
+          {
+            "id": "ankle-rock",
+            "label": "Gentle ankle rocks",
+            "reps": 10,
+            "notes": "Each side, holding a stable support."
+          },
+          {
+            "id": "rampup",
+            "label": "Rehearsal / ramp-up sets",
+            "notes": "Before the first loaded exercise, do 1-3 easy sets of 5-10 reps, gradually approaching today's working load. Add one easy rehearsal set when changing to a new movement pattern. Log these as warm-up sets; never use an old PR to set the load."
+          }
+        ]
+      },
+      "items": [
+        {
+          "id": "legs-item-01",
+          "exerciseId": "goblet-squat",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 12,
+            "perSide": false
+          },
+          "restSeconds": 150,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "legs-item-02",
+          "exerciseId": "db-rdl",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 12,
+            "perSide": false
+          },
+          "restSeconds": 150,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "legs-item-03",
+          "exerciseId": "reverse-lunge",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 6,
+            "max": 10,
+            "perSide": true
+          },
+          "restSeconds": 120,
+          "restAfter": "both_sides",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "bodyweight_supported",
+          "notes": "Begin unloaded; use a hand support if necessary."
+        },
+        {
+          "id": "legs-item-04",
+          "exerciseId": "calf-raise",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 12,
+            "max": 20,
+            "perSide": false
+          },
+          "restSeconds": 75,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        }
+      ],
+      "cooldown": {
+        "durationMinutes": [
+          3,
+          5
+        ],
+        "instructions": [
+          "Walk slowly until breathing settles.",
+          "Optional gentle stretches only if comfortable; no forceful stretching."
+        ]
+      },
+      "notes": [
+        "Start the lunge with bodyweight even if other exercises use dumbbells.",
+        "Rest 15-30 seconds between sides if needed, then take the prescribed rest after both sides.",
+        "Keep early sessions shorter using the phase cap; never rush balance work to finish in 60 minutes."
+      ],
+      "archived": false
+    },
+    {
+      "id": "shoulders-core",
+      "version": 1,
+      "name": "Shoulders and core emphasis",
+      "kind": "focus",
+      "focus": [
+        "shoulders",
+        "core"
+      ],
+      "estimatedDurationMinutes": [
+        50,
+        65
+      ],
+      "exampleVideoId": "v-press",
+      "exampleVideoLabel": "Example exercise tutorial - not a video of this complete routine",
+      "warmup": {
+        "durationMinutes": [
+          8,
+          12
+        ],
+        "videoId": "v-warmup",
+        "steps": [
+          {
+            "id": "easy-march",
+            "label": "Easy walk or march",
+            "durationSeconds": 300,
+            "notes": "Gradually increase pace. No jumping required."
+          },
+          {
+            "id": "arm-circles",
+            "label": "Small shoulder circles",
+            "reps": 10,
+            "notes": "Ten forward and ten backward, without pain."
+          },
+          {
+            "id": "scapular-squeeze",
+            "label": "Gentle shoulder-blade squeezes",
+            "reps": 10,
+            "notes": "Keep shoulders relaxed; no weights."
+          },
+          {
+            "id": "wall-pushup",
+            "label": "Easy wall push-ups",
+            "reps": 8,
+            "notes": "A preparation set, not fatigue training."
+          },
+          {
+            "id": "rampup",
+            "label": "Rehearsal / ramp-up sets",
+            "notes": "Before the first loaded exercise, do 1-3 easy sets of 5-10 reps, gradually approaching today's working load. Add one easy rehearsal set when changing to a new movement pattern. Log these as warm-up sets; never use an old PR to set the load."
+          }
+        ]
+      },
+      "items": [
+        {
+          "id": "shoulders-core-item-01",
+          "exerciseId": "db-standing-press",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 12,
+            "perSide": false
+          },
+          "restSeconds": 120,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "shoulders-core-item-02",
+          "exerciseId": "db-lateral-raise",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 12,
+            "max": 20,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "shoulders-core-item-03",
+          "exerciseId": "db-supported-row",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": true
+          },
+          "restSeconds": 90,
+          "restAfter": "both_sides",
+          "targetRir": [
+            3,
+            4
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": "Small second weekly back exposure; keep 3 reps in reserve."
+        },
+        {
+          "id": "shoulders-core-item-04",
+          "exerciseId": "dead-bug",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 6,
+            "max": 10,
+            "perSide": true
+          },
+          "restSeconds": 60,
+          "restAfter": "both_sides",
+          "targetRir": null,
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "shoulders-core-item-05",
+          "exerciseId": "side-plank",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "duration",
+            "min": 15,
+            "max": 30,
+            "perSide": true
+          },
+          "restSeconds": 60,
+          "restAfter": "both_sides",
+          "targetRir": null,
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        }
+      ],
+      "cooldown": {
+        "durationMinutes": [
+          3,
+          5
+        ],
+        "instructions": [
+          "Walk slowly until breathing settles.",
+          "Optional gentle stretches only if comfortable; no forceful stretching."
+        ]
+      },
+      "notes": [
+        "Two pressing sets limit triceps fatigue before the later arm day.",
+        "The row is intentional: it gives the back a second weekly exposure rather than making every session completely isolated.",
+        "End timed holds when posture or normal breathing fails; maximum-duration tests are unnecessary."
+      ],
+      "archived": false
+    },
+    {
+      "id": "arms",
+      "version": 1,
+      "name": "Arms emphasis + light lower-body touch",
+      "kind": "focus",
+      "focus": [
+        "biceps",
+        "triceps"
+      ],
+      "estimatedDurationMinutes": [
+        50,
+        65
+      ],
+      "exampleVideoId": "v-curl",
+      "exampleVideoLabel": "Example exercise tutorial - not a video of this complete routine",
+      "warmup": {
+        "durationMinutes": [
+          8,
+          12
+        ],
+        "videoId": "v-warmup",
+        "steps": [
+          {
+            "id": "easy-march",
+            "label": "Easy walk or march",
+            "durationSeconds": 300,
+            "notes": "Gradually increase pace. No jumping required."
+          },
+          {
+            "id": "arm-circles",
+            "label": "Small shoulder circles",
+            "reps": 10,
+            "notes": "Ten forward and ten backward, without pain."
+          },
+          {
+            "id": "scapular-squeeze",
+            "label": "Gentle shoulder-blade squeezes",
+            "reps": 10,
+            "notes": "Keep shoulders relaxed; no weights."
+          },
+          {
+            "id": "wall-pushup",
+            "label": "Easy wall push-ups",
+            "reps": 8,
+            "notes": "A preparation set, not fatigue training."
+          },
+          {
+            "id": "unloaded-squat",
+            "label": "Unloaded squat or sit-to-stand",
+            "reps": 8,
+            "notes": "Use a stable bench and a comfortable range."
+          },
+          {
+            "id": "unloaded-hinge",
+            "label": "Unloaded hip hinge",
+            "reps": 8,
+            "notes": "Send hips back with a soft knee bend."
+          },
+          {
+            "id": "ankle-rock",
+            "label": "Gentle ankle rocks",
+            "reps": 10,
+            "notes": "Each side, holding a stable support."
+          },
+          {
+            "id": "rampup",
+            "label": "Rehearsal / ramp-up sets",
+            "notes": "Before the first loaded exercise, do 1-3 easy sets of 5-10 reps, gradually approaching today's working load. Add one easy rehearsal set when changing to a new movement pattern. Log these as warm-up sets; never use an old PR to set the load."
+          }
+        ]
+      },
+      "items": [
+        {
+          "id": "arms-item-01",
+          "exerciseId": "db-curl",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "arms-item-02",
+          "exerciseId": "db-hammer-curl",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "arms-item-03",
+          "exerciseId": "db-floor-triceps-extension",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "arms-item-04",
+          "exerciseId": "db-close-floor-press",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 12,
+            "perSide": false
+          },
+          "restSeconds": 120,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "arms-item-05",
+          "exerciseId": "goblet-squat",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 12,
+            "perSide": false
+          },
+          "restSeconds": 120,
+          "restAfter": "set",
+          "targetRir": [
+            3,
+            4
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": "Light lower-body second exposure; stop with 3-4 reps left."
+        },
+        {
+          "id": "arms-item-06",
+          "exerciseId": "glute-bridge",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 12,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 60,
+          "restAfter": "set",
+          "targetRir": null,
+          "optional": true,
+          "defaultVariant": "standard",
+          "notes": "Optional from week 7 onward, if recovering well."
+        }
+      ],
+      "cooldown": {
+        "durationMinutes": [
+          3,
+          5
+        ],
+        "instructions": [
+          "Walk slowly until breathing settles.",
+          "Optional gentle stretches only if comfortable; no forceful stretching."
+        ]
+      },
+      "notes": [
+        "The close-grip floor press also gives the chest a second exposure.",
+        "Perform straight sets initially. Do not turn this into a fast circuit.",
+        "The extra lower-body work is deliberately light; omit it if legs remain sore enough to alter movement."
+      ],
+      "archived": false
+    },
+    {
+      "id": "recovery",
+      "version": 1,
+      "name": "Recovery - easy movement",
+      "kind": "recovery",
+      "focus": [
+        "recovery"
+      ],
+      "estimatedDurationMinutes": [
+        30,
+        50
+      ],
+      "exampleVideoId": "v-warmup",
+      "exampleVideoLabel": "Example exercise tutorial - not a video of this complete routine",
+      "warmup": {
+        "durationMinutes": [
+          2,
+          3
+        ],
+        "videoId": "v-warmup",
+        "steps": [
+          {
+            "id": "ease-in",
+            "label": "Start the walk slowly",
+            "durationSeconds": 120,
+            "notes": "Increase pace gradually if comfortable."
+          }
+        ]
+      },
+      "items": [
+        {
+          "id": "recovery-item-01",
+          "exerciseId": "easy-walk",
+          "exerciseVersion": 1,
+          "workingSets": 1,
+          "target": {
+            "metric": "duration",
+            "min": 1200,
+            "max": 2100,
+            "perSide": false
+          },
+          "restSeconds": 0,
+          "restAfter": "set",
+          "targetRir": null,
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "recovery-item-02",
+          "exerciseId": "gentle-mobility",
+          "exerciseVersion": 1,
+          "workingSets": 1,
+          "target": {
+            "metric": "duration",
+            "min": 300,
+            "max": 480,
+            "perSide": false
+          },
+          "restSeconds": 0,
+          "restAfter": "set",
+          "targetRir": null,
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        }
+      ],
+      "cooldown": {
+        "durationMinutes": [
+          2,
+          3
+        ],
+        "instructions": [
+          "Finish with a slower walk and relaxed breathing."
+        ]
+      },
+      "notes": [
+        "This is not another hard lifting day. Use a conversation pace.",
+        "Begin with a shorter walk if needed. Full rest is also a valid choice.",
+        "The linked NHS video illustrates a general warm-up, not the entire recovery plan."
+      ],
+      "archived": false
+    }
+  ],
+  "programs": [
+    {
+      "id": "return-to-training",
+      "version": 1,
+      "name": "Four-week restart",
+      "recommendedDefault": true,
+      "startDatePolicy": "choose_on_first_use",
+      "weekStart": "monday",
+      "phases": [
+        {
+          "weeks": [
+            1,
+            1
+          ],
+          "name": "Relearn the movements",
+          "schedule": [
+            {
+              "weekday": "monday",
+              "planId": "restart-a"
+            },
+            {
+              "weekday": "friday",
+              "planId": "restart-b"
+            }
+          ],
+          "workingSetCap": 1,
+          "allowOptional": false,
+          "rir": [
+            4,
+            5
+          ],
+          "notes": "Easy walking on other days. If this is still too much, split the first session over two days without adding volume."
+        },
+        {
+          "weeks": [
+            2,
+            2
+          ],
+          "name": "Build the habit",
+          "schedule": [
+            {
+              "weekday": "monday",
+              "planId": "restart-a"
+            },
+            {
+              "weekday": "wednesday",
+              "planId": "restart-b"
+            },
+            {
+              "weekday": "friday",
+              "planId": "restart-a"
+            }
+          ],
+          "workingSetCap": 1,
+          "allowOptional": false,
+          "rir": [
+            3,
+            4
+          ],
+          "notes": "Use two sessions instead of three if soreness affects normal movement."
+        },
+        {
+          "weeks": [
+            3,
+            4
+          ],
+          "name": "Build basic capacity",
+          "alternatingSchedules": [
+            [
+              {
+                "weekday": "monday",
+                "planId": "restart-b"
+              },
+              {
+                "weekday": "wednesday",
+                "planId": "restart-a"
+              },
+              {
+                "weekday": "friday",
+                "planId": "restart-b"
+              }
+            ],
+            [
+              {
+                "weekday": "monday",
+                "planId": "restart-a"
+              },
+              {
+                "weekday": "wednesday",
+                "planId": "restart-b"
+              },
+              {
+                "weekday": "friday",
+                "planId": "restart-a"
+              }
+            ]
+          ],
+          "workingSetCap": 2,
+          "allowOptional": false,
+          "rir": [
+            3,
+            4
+          ],
+          "notes": "Add the second set only when the first set and next-day recovery are comfortable; staying at one set is allowed."
+        },
+        {
+          "weeks": [
+            5,
+            null
+          ],
+          "name": "Continue full body if preferred",
+          "alternatingSchedules": [
+            [
+              {
+                "weekday": "monday",
+                "planId": "restart-b"
+              },
+              {
+                "weekday": "wednesday",
+                "planId": "restart-a"
+              },
+              {
+                "weekday": "friday",
+                "planId": "restart-b"
+              }
+            ],
+            [
+              {
+                "weekday": "monday",
+                "planId": "restart-a"
+              },
+              {
+                "weekday": "wednesday",
+                "planId": "restart-b"
+              },
+              {
+                "weekday": "friday",
+                "planId": "restart-a"
+              }
+            ]
+          ],
+          "workingSetCap": 2,
+          "allowOptional": false,
+          "rir": [
+            2,
+            3
+          ],
+          "notes": "Optional indefinite continuation instead of switching to the focus program. Alternate B/A/B then A/B/A; keeping an easier earlier phase is also allowed. This does not add lifting days."
+        }
+      ],
+      "transitionPolicy": "Never auto-switch programs. Staying on three full-body sessions is a good long-term option. Offer the focus program after four weeks only if recovery is comfortable and there is no limiting pain or breathing symptom."
+    },
+    {
+      "id": "five-focus-days",
+      "version": 1,
+      "name": "Five focus days with two easy days",
+      "recommendedDefault": false,
+      "startDatePolicy": "explicit_selection_after_restart",
+      "weekStart": "monday",
+      "schedule": [
+        {
+          "weekday": "monday",
+          "planId": "chest"
+        },
+        {
+          "weekday": "tuesday",
+          "planId": "back"
+        },
+        {
+          "weekday": "wednesday",
+          "planId": "legs"
+        },
+        {
+          "weekday": "thursday",
+          "planId": "shoulders-core"
+        },
+        {
+          "weekday": "friday",
+          "planId": "recovery"
+        },
+        {
+          "weekday": "saturday",
+          "planId": "arms"
+        },
+        {
+          "weekday": "sunday",
+          "planId": "recovery",
+          "fullRestAllowed": true
+        }
+      ],
+      "phases": [
+        {
+          "weeks": [
+            1,
+            2
+          ],
+          "name": "Transition to the split",
+          "workingSetCap": 2,
+          "allowOptional": false,
+          "rir": [
+            3,
+            4
+          ],
+          "notes": "These are the first two weeks after selecting this program, normally overall weeks 5-6. Keep existing loads; do not increase load and volume together. If recovery worsens, return to three full-body sessions."
+        },
+        {
+          "weeks": [
+            3,
+            null
+          ],
+          "name": "Steady training",
+          "workingSetCap": null,
+          "allowOptional": true,
+          "rir": [
+            2,
+            3
+          ],
+          "notes": "Normally overall week 7 onward. Add a third listed set one exercise at a time. Optional work remains opt-in and is never needed just to reach an hour."
+        }
+      ],
+      "missedDayPolicy": "Resume the next session in sequence; do not stack missed workouts. Keep at least one intervening non-pressing day between shoulder, arm and chest sessions if shifting the calendar."
+    }
+  ]
+}

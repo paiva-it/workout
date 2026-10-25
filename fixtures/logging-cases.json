@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "description": "Synthetic numerical examples, not personal workout data. Volume is optional and applies only to external-load repetition sets.",
+  "cases": [
+    {
+      "id": "paired-dumbbells",
+      "reps": 12,
+      "load": {
+        "basis": "per_dumbbell",
+        "valueGrams": 10000,
+        "implementCount": 2,
+        "addedGrams": 0,
+        "assistanceGrams": 0
+      },
+      "expectedExternalVolumeKgReps": 240
+    },
+    {
+      "id": "goblet",
+      "reps": 12,
+      "load": {
+        "basis": "single_dumbbell",
+        "valueGrams": 10000,
+        "implementCount": 1,
+        "addedGrams": 0,
+        "assistanceGrams": 0
+      },
+      "expectedExternalVolumeKgReps": 120
+    },
+    {
+      "id": "row-left",
+      "reps": 12,
+      "side": "left",
+      "load": {
+        "basis": "per_dumbbell",
+        "valueGrams": 10000,
+        "implementCount": 1,
+        "addedGrams": 0,
+        "assistanceGrams": 0
+      },
+      "expectedExternalVolumeKgReps": 120
+    },
+    {
+      "id": "row-right",
+      "reps": 10,
+      "side": "right",
+      "load": {
+        "basis": "per_dumbbell",
+        "valueGrams": 10000,
+        "implementCount": 1,
+        "addedGrams": 0,
+        "assistanceGrams": 0
+      },
+      "expectedExternalVolumeKgReps": 100
+    },
+    {
+      "id": "barbell-includes-bar",
+      "reps": 8,
+      "load": {
+        "basis": "barbell_total",
+        "valueGrams": 40000,
+        "implementCount": 1,
+        "addedGrams": 0,
+        "assistanceGrams": 0
+      },
+      "expectedExternalVolumeKgReps": 320
+    },
+    {
+      "id": "bodyweight-pushup",
+      "reps": 10,
+      "load": {
+        "basis": "bodyweight",
+        "valueGrams": null,
+        "implementCount": 0,
+        "addedGrams": 0,
+        "assistanceGrams": 0
+      },
+      "expectedExternalVolumeKgReps": null
+    }
+  ],
+  "timeCases": [
+    {
+      "instantUtc": "2026-10-25T00:30:00Z",
+      "timezone": "Europe/Lisbon",
+      "localDate": "2026-10-25",
+      "localTime": "01:30",
+      "utcOffsetMinutes": 60
+    },
+    {
+      "instantUtc": "2026-10-25T01:30:00Z",
+      "timezone": "Europe/Lisbon",
+      "localDate": "2026-10-25",
+      "localTime": "01:30",
+      "utcOffsetMinutes": 0
+    }
+  ],
+  "parseCases": [
+    {
+      "input": "95.5",
+      "expectedGrams": 95500
+    },
+    {
+      "input": "95,5",
+      "expectedGrams": 95500
+    },
+    {
+      "input": "2.25",
+      "expectedGrams": 2250
+    }
+  ]
+}
