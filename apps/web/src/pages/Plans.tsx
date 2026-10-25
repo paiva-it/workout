@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { applyPhase, localToInstants, type Exercise, type Plan, type Program, type Video as VideoT } from '@workout/contracts';
+import { applyPhase, isFixedProgram, isSectionStep, localToInstants, type SectionStep, type Exercise, type Plan, type Program, type Video as VideoT } from '@workout/contracts';
 import { ApiError, useApi } from '../api';
 import { Details, ErrorBox, Field, LOAD_LABEL, Loading, rirText, targetText, Video } from '../ui';
 import { useAuth } from '../main';
 import { startSession } from './Today';
+import { dosage, StepCard } from '../sections';
 
-type Summary = { id: string; version: number; packId: string; packVersion: number; name: string; kind: string; focus: string[]; estimatedDurationMinutes: [number, number]; itemCount: number };
+type Summary = { id: string; version: number; packId: string; packVersion: number; name: string; kind: string; focus: string[]; estimatedDurationMinutes: [number, number]; itemCount: number; sections: { warmup: number; cooldown: number } | null };
 
 export function Plans() {
   const [kind, setKind] = useState('');
@@ -34,7 +35,8 @@ export function Plans() {
           <li key={p.id} className="card">
             <Link to={`/plans/${p.id}`} className="block-link">
               <h2>{p.name}</h2>
-              <p className="muted small">{p.kind} · {p.focus.join(', ').replace(/_/g, ' ')} · {p.estimatedDurationMinutes[0]}–{p.estimatedDurationMinutes[1]} min · {p.itemCount} exercises</p>
+              <p className="muted small">{p.kind} · {p.focus.join(', ').replace(/_/g, ' ')} · {p.estimatedDurationMinutes[0]}–{p.estimatedDurationMinutes[1]} min</p>
+              <p className="small">{p.sections ? `Warm-up ${p.sections.warmup} · Workout ${p.itemCount} · Cooldown ${p.sections.cooldown}` : `${p.itemCount} exercises`}</p>
             </Link>
           </li>
         ))}
@@ -61,6 +63,8 @@ export function PlanDetail() {
   const program = programs.data?.find((p) => p.id === pos?.programId);
   const inProgram = program && [...(program.schedule ?? []), ...program.phases.flatMap((ph) => [...(ph.schedule ?? []), ...(ph.alternatingSchedules ?? []).flat()])].some((e) => e.planId === plan.id);
   const phase = inProgram ? pos.phase : null;
+  const fixed = program ? isFixedProgram(program) : false;
+  const structured = plan.warmup.steps.length > 0 && isSectionStep(plan.warmup.steps[0]);
   const pastInstants = past ? localToInstants(past, user.timezone) : [];
 
   async function start(extra: Record<string, unknown> = {}) {
@@ -79,7 +83,7 @@ export function PlanDetail() {
       <Link to="/plans">← Plans</Link>
       <h1>{plan.name}</h1>
       <p className="muted">{plan.estimatedDurationMinutes[0]}–{plan.estimatedDurationMinutes[1]} min · version {plan.version}</p>
-      {phase ? (
+      {fixed ? null : phase ? (
         <p className="card accent small">Program phase applied when you start: <strong>{phase.name}</strong> — {phase.workingSetCap ? `max ${phase.workingSetCap} working set(s)` : 'listed sets'}, {rirText(phase.rir)}{phase.allowOptional ? ', optional work available' : ', no optional work'}.</p>
       ) : (
         <p className="muted small">Not part of your current program phase: listed sets and effort apply.</p>
@@ -95,12 +99,18 @@ export function PlanDetail() {
       <ErrorBox error={err} />
       <Video video={videos[plan.exampleVideoId]} label={plan.exampleVideoLabel} />
 
-      <Details summary={`Warm-up · ${plan.warmup.durationMinutes[0]}–${plan.warmup.durationMinutes[1]} min`}>
-        <ol>{plan.warmup.steps.map((s) => <li key={s.id}><strong>{s.label}</strong>{s.reps ? ` × ${s.reps}` : ''}{s.durationSeconds ? ` · ${Math.round(s.durationSeconds / 60)} min` : ''} — <span className="muted">{s.notes}</span></li>)}</ol>
+      {structured && (
+        <>
+          <h2>Warm-up · {plan.warmup.durationMinutes[0]}–{plan.warmup.durationMinutes[1]} min</h2>
+          {(plan.warmup.steps as SectionStep[]).map((st) => <StepCard key={st.id} step={st} exercise={exercises[st.exerciseId]} video={videos[exercises[st.exerciseId].videoId]} />)}
+        </>
+      )}
+      {!structured && <Details summary={`Warm-up · ${plan.warmup.durationMinutes[0]}–${plan.warmup.durationMinutes[1]} min`}>
+        <ol>{(plan.warmup.steps as { id: string; label: string; reps?: number; durationSeconds?: number; notes: string }[]).map((s) => <li key={s.id}><strong>{s.label}</strong>{s.reps ? ` × ${s.reps}` : ''}{s.durationSeconds ? ` · ${Math.round(s.durationSeconds / 60)} min` : ''} — <span className="muted">{s.notes}</span></li>)}</ol>
         <Video video={videos[plan.warmup.videoId]} />
-      </Details>
+      </Details>}
 
-      <h2>Exercises</h2>
+      <h2>{structured ? 'Workout' : 'Exercises'}</h2>
       {plan.items.map((item) => {
         const ex = exercises[item.exerciseId];
         const eff = applyPhase(item, phase);
@@ -108,7 +118,7 @@ export function PlanDetail() {
           <section key={item.id} className="card stack">
             <h3>{ex.name}{item.optional && <span className="tag">optional</span>}</h3>
             <p>
-              {eff.workingSets !== item.workingSets ? <><s>{item.workingSets}</s> {eff.workingSets}</> : eff.workingSets} × {targetText(item.target)}
+              {eff.workingSets !== item.workingSets ? <><s>{item.workingSets}</s> {eff.workingSets}</> : eff.workingSets} × {ex.repsMeaning === 'alternating_total' ? dosage(item.target, ex.repsMeaning) : targetText(item.target)}
               {eff.rir && ` · ${rirText(eff.rir)}`} · rest {item.restSeconds}s
             </p>
             <p className="muted small">Load: {LOAD_LABEL[ex.defaultLoadBasis]} · equipment: {ex.equipment.join(', ').replace(/_/g, ' ')} · variant: {item.defaultVariant}</p>
@@ -121,7 +131,13 @@ export function PlanDetail() {
           </section>
         );
       })}
-      <Details summary="Cool-down and notes">
+      {structured && (
+        <>
+          <h2>Cooldown · {plan.cooldown.durationMinutes[0]}–{plan.cooldown.durationMinutes[1]} min</h2>
+          {plan.cooldown.steps!.map((st) => <StepCard key={st.id} step={st} exercise={exercises[st.exerciseId]} video={videos[exercises[st.exerciseId].videoId]} />)}
+        </>
+      )}
+      <Details summary={structured ? 'Cooldown guidance and plan notes' : 'Cool-down and notes'}>
         <ul>{plan.cooldown.instructions.map((c) => <li key={c}>{c}</li>)}</ul>
         <ul>{plan.notes.map((n) => <li key={n} className="small">{n}</li>)}</ul>
       </Details>

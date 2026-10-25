@@ -1,0 +1,46 @@
+{
+  "migrationId": "four-fixed-plans-structured-sections-v1",
+  "preparedOn": "2026-10-25",
+  "sourcePack": {
+    "packId": "home-return-foundation",
+    "version": 1,
+    "schemaVersion": 1,
+    "sha256": "1d89314d375221e15f27373596a33c40d78d8a68a1b5c52152c2e0e24e84ffc3"
+  },
+  "targetPack": {
+    "packId": "home-return-foundation",
+    "version": 2,
+    "schemaVersion": 2
+  },
+  "activePlanIds": [
+    "arms",
+    "chest",
+    "legs",
+    "core"
+  ],
+  "removedFromActiveCatalogPlanIds": [
+    "restart-a",
+    "restart-b",
+    "back",
+    "shoulders-core",
+    "recovery"
+  ],
+  "retainedProgramId": "return-to-training",
+  "retainedProgramVersion": 2,
+  "removedProgramIds": [
+    "five-focus-days"
+  ],
+  "programSelectionRemap": {
+    "five-focus-days": "return-to-training"
+  },
+  "historyPolicy": "Do not change historical or in-progress snapshots, actual sets, body measurements, plan versions or program contexts.",
+  "deploymentOrder": [
+    "Back up database and capture catalog and program selection state",
+    "Deploy code supporting schema versions 1 and 2 and both old and new session shapes",
+    "Validate and preview the v2 pack against the live catalog",
+    "Import and activate the immutable v2 pack",
+    "Idempotently remap removed program selections and obsolete held-phase preferences",
+    "Verify existing history and an in-progress legacy session, then a new session with all three sections"
+  ],
+  "rollbackPolicy": "Keep the dual-format application version deployed if schema 2 sessions exist. Restore the active catalog pointer to the captured old pack without deleting new sessions or importing a forbidden lower pack version. Use a reviewed rollback command, not database replacement."
+}

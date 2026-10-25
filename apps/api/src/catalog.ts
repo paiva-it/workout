@@ -4,27 +4,39 @@ import { Ajv2020 } from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import type { Request } from 'express';
 import { z } from 'zod';
-import type { Exercise, Plan, Program, TrainingPack as Pack, Video } from '@workout/contracts';
+import type { Exercise, Plan, Program, SectionStep, TrainingPack as Pack, Video } from '@workout/contracts';
 import { CatalogState, TrainingPack } from './db.js';
 import { canonicalJson, fail, parse, sha256 } from './common.js';
 
-const schemaPath = process.env.PACK_SCHEMA_PATH ?? new URL('../../../contracts/training-pack.schema.json', import.meta.url);
+const contractsDir = process.env.PACK_SCHEMA_DIR ?? new URL('../../../contracts/', import.meta.url).pathname;
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 (addFormats as unknown as (a: Ajv2020) => void)(ajv);
-const validateSchema = ajv.compile(JSON.parse(readFileSync(schemaPath, 'utf8')));
+// Both formats stay pinned side by side; `schemaVersion` picks one before validation (no stripping of unknown fields).
+const SCHEMAS: Record<number, ReturnType<typeof ajv.compile>> = {
+  1: ajv.compile(JSON.parse(readFileSync(contractsDir + 'training-pack.schema.json', 'utf8'))),
+  2: ajv.compile(JSON.parse(readFileSync(contractsDir + 'training-pack.v2.schema.json', 'utf8'))),
+};
+const WARMUP_ROLES = ['pulse_raise', 'mobility', 'rehearsal'], COOLDOWN_ROLES = ['easy_movement', 'stretch'];
 export const MAX_PACK_BYTES = 2 * 1024 * 1024;
 const HTML = /<\s*\/?\s*[a-z!?]|javascript:|on\w+\s*=/i;
+const URL_KEY = /\/videos\/\d+\/url$/;
 
 /** Full validation: JSON Schema 2020-12 + cross-references + semantics + no markup. Never touches the DB. */
 export function validatePack(raw: unknown): { pack: Pack | null; errors: string[] } {
   const errors: string[] = [];
   const bytes = Buffer.byteLength(JSON.stringify(raw ?? null));
   if (bytes > MAX_PACK_BYTES) return { pack: null, errors: ['Pack exceeds 2 MiB'] };
+  const version = (raw as { schemaVersion?: unknown } | null)?.schemaVersion;
+  const validateSchema = typeof version === 'number' ? SCHEMAS[version] : undefined;
+  if (!validateSchema) return { pack: null, errors: [`Unsupported schemaVersion ${JSON.stringify(version)} (supported: 1, 2)`] };
   if (!validateSchema(raw)) return { pack: null, errors: (validateSchema.errors ?? []).slice(0, 50).map((e) => `${e.instancePath || '/'} ${e.message}`) };
   const p = raw as Pack;
   const check = (ok: unknown, msg: string) => { if (!ok) errors.push(msg); };
   const walk = (v: unknown, path: string): void => {
-    if (typeof v === 'string') check(!HTML.test(v), `Markup/script content not allowed at ${path}`);
+    if (typeof v === 'string') {
+      check(!HTML.test(v), `Markup/script content not allowed at ${path}`);
+      if (p.schemaVersion === 2) check(!v.includes('=') || URL_KEY.test(path), `'=' is only allowed in video URLs (${path})`);
+    }
     else if (Array.isArray(v)) v.forEach((x, i) => walk(x, `${path}/${i}`));
     else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) walk(x, `${path}/${k}`);
   };
@@ -44,6 +56,8 @@ export function validatePack(raw: unknown): { pack: Pack | null; errors: string[
     check(e.defaultLoadBasis !== 'per_dumbbell' || [1, 2].includes(e.defaultImplementCount), `Per-dumbbell count: ${e.id}`);
     check(e.metric !== 'duration' || e.repsMeaning === 'seconds', `Duration semantics: ${e.id}`);
     check(e.laterality !== 'separate_sides' || e.metric !== 'reps' || e.repsMeaning === 'per_side', `Side semantics: ${e.id}`);
+    check(e.repsMeaning !== 'alternating_total' || (e.metric === 'reps' && e.laterality === 'bilateral'), `alternating_total is only for bilateral reps: ${e.id}`);
+    if (p.schemaVersion === 2 && e.metric === 'reps' && e.laterality === 'bilateral') check(['simultaneous_repetitions', 'alternating_total'].includes(e.repsMeaning), `Bilateral reps semantics: ${e.id}`);
   }
   for (const plan of plans.values()) {
     check(videos.has(plan.exampleVideoId), `Missing plan video: ${plan.id}`);
@@ -59,6 +73,29 @@ export function validatePack(raw: unknown): { pack: Pack | null; errors: string[
       check(item.target.perSide === (e.laterality === 'separate_sides'), `Laterality mismatch: ${item.id}`);
       check(item.target.min <= item.target.max, `Target range: ${item.id}`);
       check(!item.targetRir || item.targetRir[0] <= item.targetRir[1], `RIR: ${item.id}`);
+    }
+    if (p.schemaVersion === 2) {
+      const ids = new Set(plan.items.map((i) => i.id));
+      const sections = [['warmup', plan.warmup.steps, WARMUP_ROLES], ['cooldown', plan.cooldown.steps ?? [], COOLDOWN_ROLES]] as const;
+      for (const [name, steps, roles] of sections) {
+        for (const st of steps as SectionStep[]) {
+          check(!ids.has(st.id), `Duplicate step/item id in ${plan.id}: ${st.id}`);
+          ids.add(st.id);
+          check(roles.includes(st.role), `Role ${st.role} not allowed in ${name}: ${st.id}`);
+          const e = exercises.get(st.exerciseId);
+          check(e, `Missing exercise: ${st.exerciseId} (${st.id})`);
+          if (!e) continue;
+          check(e.version === st.exerciseVersion, `Exercise version mismatch: ${st.id}`);
+          check(st.target.metric === e.metric, `Metric mismatch: ${st.id}`);
+          check(st.target.perSide === (e.laterality === 'separate_sides'), `Laterality mismatch: ${st.id}`);
+          check(st.target.min <= st.target.max, `Target range: ${st.id}`);
+          if (st.linkedWorkoutItemId !== null) {
+            const item = plan.items.find((i) => i.id === st.linkedWorkoutItemId);
+            check(st.role === 'rehearsal', `Only rehearsals link to a work item: ${st.id}`);
+            check(item && item.exerciseId === st.exerciseId && item.exerciseVersion === st.exerciseVersion, `Rehearsal must match its linked item's exercise and version: ${st.id}`);
+          }
+        }
+      }
     }
   }
   for (const program of p.programs) {
@@ -121,8 +158,10 @@ export async function previewPack(p: Pack) {
     const prev = exerciseIdentity.get(e.id);
     if (prev && prev !== identity(e)) errors.push(`Exercise ${e.id} changes its logging identity (metric/sides/load basis); use a new exercise ID.`);
   }
-  if (errors.length && status !== 'noop') status = 'conflict';
   const active = state.activePacks.some((a) => a.packId === p.packId && a.version === p.version);
+  const activeVersion = state.activePacks.find((a) => a.packId === p.packId)?.version ?? 0;
+  if (!active && p.version < activeVersion) errors.push(`Version ${p.version} is older than active version ${activeVersion}; an import never downgrades (use the activate-pack maintenance command to roll back).`);
+  if (errors.length && (status !== 'noop' || (!active && p.version < activeVersion))) status = 'conflict';
   return { status, errors, contentHash, packId: p.packId, version: p.version, title: p.title, counts, catalogRevision: state.revision, active };
 }
 
@@ -146,6 +185,18 @@ export async function importPack(p: Pack, actor: string, expectedCatalogRevision
   if (!updated) throw fail(409, 'CATALOG_CONFLICT', 'The catalog changed since preview. Preview again; the stored pack can be activated on retry.', { catalogRevision: state.revision });
   cache = null;
   return { ...preview, status: preview.status, activated: true, catalogRevision: updated.revision };
+}
+
+/** Maintenance-only rollback/roll-forward of the active pointer to an already stored pack version. */
+export async function activateStoredPack(packId: string, version: number) {
+  if (!(await TrainingPack.exists({ _id: `${packId}@${version}` }))) throw new Error(`pack ${packId}@${version} is not stored`);
+  const state = await getCatalogState();
+  const before = state.activePacks;
+  const activePacks = [...before.filter((a) => a.packId !== packId), { packId, version }];
+  const updated = await CatalogState.findOneAndUpdate({ _id: 'active', revision: state.revision }, { $set: { activePacks }, $inc: { revision: 1 } }, { returnDocument: 'after' }).lean();
+  if (!updated) throw new Error('catalog changed concurrently; retry');
+  cache = null;
+  return { before, after: activePacks, revision: updated.revision };
 }
 
 export async function getCatalogState() {
@@ -187,7 +238,7 @@ export function resolvePlan(pack: Pack, planId: string, version?: number) {
   if (!plan) return null;
   const exercises = Object.fromEntries(pack.exercises.map((e) => [e.id, e]));
   const videos = Object.fromEntries(pack.videos.map((v) => [v.id, v]));
-  return { plan, exercises, videos, packId: pack.packId, packVersion: pack.version };
+  return { plan, exercises, videos, packId: pack.packId, packVersion: pack.version, packSchemaVersion: pack.schemaVersion };
 }
 
 const PreviewDto = z.strictObject({ pack: z.unknown() });
@@ -200,7 +251,8 @@ export class CatalogController {
     const c = await activeCatalog();
     return c.plans
       .filter((p) => !p.archived && (!kind || p.kind === kind) && (!focus || p.focus.includes(focus)) && (!maxMinutes || p.estimatedDurationMinutes[0] <= Number(maxMinutes)))
-      .map((p) => ({ id: p.id, version: p.version, packId: p.packId, packVersion: p.packVersion, name: p.name, kind: p.kind, focus: p.focus, estimatedDurationMinutes: p.estimatedDurationMinutes, itemCount: p.items.length }));
+      .map((p) => ({ id: p.id, version: p.version, packId: p.packId, packVersion: p.packVersion, name: p.name, kind: p.kind, focus: p.focus, estimatedDurationMinutes: p.estimatedDurationMinutes, itemCount: p.items.length,
+        sections: p.cooldown.steps ? { warmup: p.warmup.steps.length, cooldown: p.cooldown.steps.length } : null }));
   }
 
   @Get('plans/:id')

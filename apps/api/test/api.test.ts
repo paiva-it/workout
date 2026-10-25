@@ -224,14 +224,15 @@ describe('catalog import', () => {
     expect(plans.find((p: { id: string }) => p.id === 'restart-a').version).toBe(2);
     const s = (await c.req('GET', `/sessions/${start.body.id}`)).body;
     expect(s.planSnapshot.name).toBe('Restart A - squat, push and pull');
-    expect(s.planRef).toEqual({ id: 'restart-a', version: 1, packId: pack.packId, packVersion: 1 });
+    expect(s.planRef).toEqual({ id: 'restart-a', version: 1, packId: pack.packId, packVersion: 1, packSchemaVersion: 1 });
     expect((await c.req('GET', `/plans/restart-a?packId=${pack.packId}&packVersion=1`)).body.plan.version).toBe(1); // old version still resolvable
     await c.req('POST', `/sessions/${s.id}/finish`, { operationId: randomUUID(), expectedRevision: s.revision, outcome: 'abandon' });
   });
 
   it('rejects a lower pack version and oversized bodies', async () => {
     const pv = await c.req('POST', '/plan-imports/preview', { pack });
-    expect(pv.body.status).toBe('noop'); // v1 is stored and identical
+    expect(pv.body.status).toBe('conflict'); // v1 is stored and identical, but v2 is active: imports never downgrade
+    expect(pv.body.errors[0]).toMatch(/never downgrades/);
     const big = await c.req('POST', '/plan-imports/preview', { pack: { ...pack, description: 'x'.repeat(3_200_000) } });
     expect(big.status).toBe(413);
   });

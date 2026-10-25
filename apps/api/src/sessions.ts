@@ -2,14 +2,14 @@ import { randomUUID } from 'node:crypto';
 import { Body, Controller, Get, HttpCode, Param, Post, Patch, Query, Req } from '@nestjs/common';
 import type { Request } from 'express';
 import { z } from 'zod';
-import { applyPhase, localParts, programPosition, type Exercise, type Plan, type PlanItem, type Program, type Video } from '@workout/contracts';
+import { applyPhase, isSectionStep, localParts, programPosition, type Exercise, type Plan, type PlanItem, type Program, type SectionStep, type Video } from '@workout/contracts';
 import { TrainingSession, User, out } from './db.js';
 import { activeCatalog, loadPack, resolvePlan } from './catalog.js';
 import { fail, hashPayload, parse, zInt, zIso, zNote, zTz, zUuid, type AuthedUser } from './common.js';
 
 type Doc = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any -- lean session documents
 const LOADED = ['per_dumbbell', 'single_dumbbell', 'barbell_total', 'external_total'];
-const MUTABLE = ['status', 'isActive', 'endedAt', 'pauses', 'elapsedSeconds', 'activeSeconds', 'warmupChecklist', 'restTimer', 'exercises', 'metadata', 'corrections', 'correctedAt'] as const;
+const MUTABLE = ['status', 'isActive', 'endedAt', 'pauses', 'elapsedSeconds', 'activeSeconds', 'warmupChecklist', 'restTimer', 'exercises', 'sectionActivities', 'metadata', 'corrections', 'correctedAt'] as const;
 const KEEP_OPERATIONS = 2000;
 
 // ---------- Session construction ----------
@@ -31,6 +31,16 @@ function makeOccurrence(item: PlanItem, ex: Exercise, video: Video | undefined, 
   for (let r = 1; r <= eff.workingSets; r++) occ.sets.push(...makeSets(occ, 'working', r, item.target.perSide));
   return occ;
 }
+/** Schema-2 warm-up/cooldown activity: its own snapshot and set records, separate from working exercises. */
+function makeActivity(step: SectionStep, section: 'warmup' | 'cooldown', ex: Exercise, video: Video | undefined, linkedWorkoutOccurrenceId: string | null) {
+  const sides = ex.laterality === 'separate_sides' ? ['left', 'right'] : ['both'];
+  const sets = [];
+  for (let r = 1; r <= step.sets; r++) for (const side of sides) sets.push({ id: randomUUID(), roundIndex: r, side, status: 'pending', completionMode: null, actualReps: null, actualDurationSeconds: null, actualLoad: null, completedAt: null, recordedAt: null, skipReason: null });
+  return {
+    id: randomUUID(), planStepId: step.id, section, exerciseId: ex.id, exerciseVersion: ex.version, exerciseSnapshot: ex, videoSnapshot: video ?? null,
+    prescriptionSnapshot: step, variantKey: step.defaultVariant, loadBasis: ex.defaultLoadBasis, implementCount: ex.defaultImplementCount, linkedWorkoutOccurrenceId, sets, notes: null,
+  };
+}
 const programPlanIds = (p: Program) => new Set([...(p.schedule ?? []), ...p.phases.flatMap((ph) => [...(ph.schedule ?? []), ...(ph.alternatingSchedules ?? []).flat()])].map((e) => e.planId));
 
 // ---------- Mutation engine: owner + revision predicate, operation-id replay, single-document atomic write ----------
@@ -48,7 +58,8 @@ async function mutate(user: AuthedUser, id: string, operationId: string, payload
     if (!opts.closed && !doc.isActive) throw fail(409, 'SESSION_CLOSED', 'This workout is already finished');
     const next = structuredClone(doc);
     if ((await fn(next, new Date())) === false) return { session: view(doc), replayed: false };
-    const $set = Object.fromEntries(MUTABLE.map((k) => [k, next[k]]));
+    // Legacy (schema 1) sessions have no sectionActivities: never write a fabricated empty one back.
+    const $set = Object.fromEntries(MUTABLE.filter((k) => next[k] !== undefined).map((k) => [k, next[k]]));
     const r = await TrainingSession.updateOne(
       { _id: id, ownerId: user.id, revision: doc.revision },
       { $set, $inc: { revision: 1 }, $push: { appliedOperations: { $each: [{ operationId, payloadHash, appliedRevision: doc.revision + 1 }], $slice: -KEEP_OPERATIONS } } },
@@ -85,7 +96,18 @@ const UpdateSessionNotes = z.strictObject({
   type: z.literal('updateSessionNotes'),
   metadata: z.strictObject({ energy: zInt(1, 5).nullable(), soreness: zInt(0, 10).nullable(), sleepMinutes: zInt(0, 1440).nullable(), sessionRpe: zInt(0, 10).nullable(), notes: zNote(4000) }),
 });
+const zSection = z.enum(['warmup', 'cooldown']);
+const zSetIds = z.array(zUuid).min(1).max(2);
+const AckSection = z.strictObject({ type: z.literal('acknowledgeSectionSet'), section: zSection, activityId: zUuid, setIds: zSetIds });
+const SkipSection = z.strictObject({ type: z.literal('skipSectionSet'), section: zSection, activityId: zUuid, setIds: zSetIds, reason: zNote(1000).default(null) });
+const ResetSection = z.strictObject({ type: z.literal('resetSectionSet'), section: zSection, activityId: zUuid, setIds: zSetIds });
+const SetSectionActual = z.strictObject({
+  type: z.literal('setSectionActual'), section: zSection, activityId: zUuid, setId: zUuid,
+  actualReps: zInt(0, 1000).nullable(), actualDurationSeconds: zInt(0, 86400).nullable(), valueGrams: zGrams.nullable().default(null),
+});
+const SectionOps = [AckSection, SkipSection, ResetSection, SetSectionActual, z.strictObject({ type: z.literal('updateSectionNotes'), section: zSection, activityId: zUuid, notes: zNote(1000) })] as const;
 const Op = z.discriminatedUnion('type', [
+  ...SectionOps,
   SetActual,
   z.strictObject({ type: z.literal('addSet'), exerciseOccurrenceId: zUuid, setType: z.enum(['working', 'warmup']) }),
   z.strictObject({ type: z.literal('removePendingSet'), exerciseOccurrenceId: zUuid, setType: z.enum(['working', 'warmup']), roundIndex: zInt(1, 100) }),
@@ -199,6 +221,12 @@ async function applyOp(d: Doc, op: OpT, now: Date, user: AuthedUser) {
       Object.assign(step, { completed: op.completed, completedAt: op.completed ? now : null });
       return;
     }
+    case 'acknowledgeSectionSet':
+    case 'skipSectionSet':
+    case 'resetSectionSet':
+    case 'setSectionActual':
+    case 'updateSectionNotes':
+      return applySectionOp(d, op, now);
     case 'updateRestTimer': {
       if (op.action === 'clear') { d.restTimer = null; return; }
       const secs = op.durationSeconds ?? 90;
@@ -206,6 +234,46 @@ async function applyOp(d: Doc, op: OpT, now: Date, user: AuthedUser) {
       return;
     }
   }
+}
+
+function findActivity(d: Doc, section: 'warmup' | 'cooldown', id: string) {
+  const list = d.sectionActivities?.[section];
+  if (!list) throw fail(409, 'NO_SECTIONS', 'This workout format has no structured warm-up/cooldown');
+  return list.find((a: Doc) => a.id === id) ?? (() => { throw fail(404, 'NOT_FOUND', 'Activity not in this workout'); })();
+}
+const BLANK_ACTUALS = { actualReps: null, actualDurationSeconds: null, actualLoad: null };
+/** Section sets: quick acknowledgement never invents numbers; measured values are validated; sides are independent. */
+function applySectionOp(d: Doc, op: Extract<OpT, { section: unknown }>, now: Date) {
+  const act = findActivity(d, op.section, op.activityId);
+  if (op.type === 'updateSectionNotes') { if (act.notes === op.notes) return false; act.notes = op.notes; return; }
+  const ids = op.type === 'setSectionActual' ? [op.setId] : op.setIds;
+  if (new Set(ids).size !== ids.length) throw fail(422, 'VALIDATION', 'Duplicate set id');
+  const sets = ids.map((id) => act.sets.find((x: Doc) => x.id === id) ?? (() => { throw fail(404, 'NOT_FOUND', 'Set not in this activity'); })());
+  if (sets.length === 2 && sets[0].roundIndex !== sets[1].roundIndex) throw fail(422, 'VALIDATION', 'Both sides must belong to the same round');
+  let changed = false;
+  for (const set of sets) {
+    const before = JSON.stringify(set);
+    if (op.type === 'acknowledgeSectionSet') {
+      if (set.status !== 'done') Object.assign(set, { status: 'done', completionMode: 'acknowledged', ...BLANK_ACTUALS, completedAt: now, skipReason: null });
+    } else if (op.type === 'skipSectionSet') {
+      Object.assign(set, { status: 'skipped', completionMode: null, ...BLANK_ACTUALS, completedAt: null, skipReason: op.reason });
+    } else if (op.type === 'resetSectionSet') {
+      Object.assign(set, { status: 'pending', completionMode: null, ...BLANK_ACTUALS, completedAt: null, skipReason: null });
+    } else {
+      const metric = act.prescriptionSnapshot.target.metric;
+      if (metric === 'reps' && !(op.actualReps && op.actualReps > 0)) throw fail(422, 'VALIDATION', 'Enter the reps you did', { fieldErrors: { actualReps: 'Required' } });
+      if (metric === 'duration' && !(op.actualDurationSeconds && op.actualDurationSeconds > 0)) throw fail(422, 'VALIDATION', 'Enter the seconds you did', { fieldErrors: { actualDurationSeconds: 'Required' } });
+      const loaded = LOADED.includes(act.loadBasis);
+      if (!loaded && op.valueGrams != null) throw fail(422, 'VALIDATION', 'This activity is logged without external load', { fieldErrors: { valueGrams: 'Not applicable' } });
+      Object.assign(set, {
+        status: 'done', completionMode: 'measured', skipReason: null, completedAt: set.status === 'done' ? set.completedAt : now,
+        actualReps: metric === 'reps' ? op.actualReps : null, actualDurationSeconds: metric === 'duration' ? op.actualDurationSeconds : null,
+        actualLoad: loaded && op.valueGrams != null ? { basis: act.loadBasis, valueGrams: op.valueGrams, implementCount: act.implementCount, addedGrams: 0, assistanceGrams: 0, enteredUnit: 'kg' } : null,
+      });
+    }
+    if (JSON.stringify(set) !== before) { set.recordedAt = now; changed = true; }
+  }
+  if (!changed) return false;
 }
 
 /** completed only when every required working set of every non-optional exercise is done. */
@@ -226,7 +294,7 @@ const CreateDto = z.strictObject({
 });
 const TimeDto = z.strictObject({ operationId: zUuid, at: zIso.optional() });
 const FinishDto = z.strictObject({ operationId: zUuid, expectedRevision: zInt(1, 1e9), outcome: z.enum(['finish', 'abandon']), endedAt: zIso.optional() });
-const CorrectionDto = z.strictObject({ operationId: zUuid, expectedRevision: zInt(1, 1e9), reason: z.string().trim().min(3).max(1000), operations: z.array(z.discriminatedUnion('type', [SetActual, UpdateExercise, UpdateSessionNotes])).min(1).max(50) });
+const CorrectionDto = z.strictObject({ operationId: zUuid, expectedRevision: zInt(1, 1e9), reason: z.string().trim().min(3).max(1000), operations: z.array(z.discriminatedUnion('type', [SetActual, UpdateExercise, UpdateSessionNotes, AckSection, SkipSection, ResetSection, SetSectionActual])).min(1).max(50) });
 
 @Controller()
 export class SessionsController {
@@ -252,19 +320,29 @@ export class SessionsController {
     const lp = localParts(startedAt, dto.timezone);
     const programContext = dto.applyProgram ? await programContextFor(user.id, r.plan, lp.localDate) : null;
     const plan: Plan = r.plan;
-    const used = new Set(plan.items.map((i) => i.exerciseId));
+    const structured = r.packSchemaVersion === 2;
+    const steps = (list: unknown[] | undefined) => (list ?? []).filter((x) => isSectionStep(x as SectionStep)) as SectionStep[];
+    const warmupSteps = structured ? steps(plan.warmup.steps) : [], cooldownSteps = structured ? steps(plan.cooldown.steps) : [];
+    const used = new Set([...plan.items, ...warmupSteps, ...cooldownSteps].map((i) => i.exerciseId));
     const exerciseDefinitions = Object.fromEntries(Object.entries(r.exercises).filter(([id]) => used.has(id)));
     const videoIds = new Set([plan.exampleVideoId, plan.warmup.videoId, ...Object.values(exerciseDefinitions).map((e) => e.videoId)]);
     const videoDefinitions = Object.fromEntries(Object.entries(r.videos).filter(([id]) => videoIds.has(id)));
     const doc = {
       _id: randomUUID(), ownerId: user.id, clientSessionId: dto.clientSessionId, createPayloadHash, revision: 1,
-      planRef: { id: plan.id, version: plan.version, packId: r.packId, packVersion: r.packVersion },
+      schemaVersion: structured ? 2 : 1,
+      planRef: { id: plan.id, version: plan.version, packId: r.packId, packVersion: r.packVersion, packSchemaVersion: r.packSchemaVersion },
       planSnapshot: { ...plan, exerciseDefinitions, videoDefinitions },
       programContext, status: 'in_progress', isActive: true, source: dto.source, startedAt, endedAt: null,
       timezone: dto.timezone, startUtcOffsetMinutes: lp.offsetMinutes, localDate: lp.localDate,
-      warmupChecklist: plan.warmup.steps.map((s) => ({ stepId: s.id, completed: false, completedAt: null })),
+      warmupChecklist: structured ? [] : plan.warmup.steps.map((s) => ({ stepId: s.id, completed: false, completedAt: null })),
       exercises: plan.items.filter((i) => !i.optional).map((i) => makeOccurrence(i, r.exercises[i.exerciseId], r.videos[r.exercises[i.exerciseId].videoId], programContext)),
-    };
+    } as Doc;
+    if (structured) {
+      // Rehearsals are linked to the working occurrence but never capped, counted or used as "last time".
+      const occByItem = new Map(doc.exercises.map((o: Doc) => [o.planItemId, o.id]));
+      const build = (st: SectionStep, section: 'warmup' | 'cooldown') => makeActivity(st, section, r.exercises[st.exerciseId], r.videos[r.exercises[st.exerciseId].videoId], st.linkedWorkoutItemId ? (occByItem.get(st.linkedWorkoutItemId) ?? null) as string | null : null);
+      doc.sectionActivities = { warmup: warmupSteps.map((st) => build(st, 'warmup')), cooldown: cooldownSteps.map((st) => build(st, 'cooldown')) };
+    }
     try {
       await TrainingSession.create(doc as Doc);
     } catch (e) {
@@ -354,8 +432,8 @@ export class SessionsController {
       if (d.isActive) throw fail(409, 'SESSION_ACTIVE', 'Edit the live workout directly; corrections are for finished workouts');
       const before: Doc = {}, after: Doc = {};
       for (const op of dto.operations) {
-        const key = op.type === 'updateSessionNotes' ? 'metadata' : op.type === 'setActual' ? `set:${op.setId}` : `exercise:${op.exerciseOccurrenceId}`;
-        const snap = () => (op.type === 'updateSessionNotes' ? d.metadata : op.type === 'setActual' ? findSet(findOcc(d, op.exerciseOccurrenceId), op.setId) : (({ sets: _s, ...o }) => o)(findOcc(d, op.exerciseOccurrenceId)));
+        const key = op.type === 'updateSessionNotes' ? 'metadata' : op.type === 'setActual' ? `set:${op.setId}` : 'section' in op ? `${op.section}:${op.activityId}` : `exercise:${op.exerciseOccurrenceId}`;
+        const snap = () => (op.type === 'updateSessionNotes' ? d.metadata : op.type === 'setActual' ? findSet(findOcc(d, op.exerciseOccurrenceId), op.setId) : 'section' in op ? findActivity(d, op.section, op.activityId).sets : (({ sets: _s, ...o }) => o)(findOcc(d, op.exerciseOccurrenceId)));
         before[key] ??= structuredClone(snap());
         if (op.type === 'setActual') applySetActual(d, op, now, null);
         else if (op.type === 'updateSessionNotes') d.metadata = op.metadata;
@@ -403,9 +481,10 @@ export function finishDoc(d: Doc, outcome: 'finish' | 'abandon', end: Date) {
 export async function programContextFor(userId: string, plan: Plan, localDate: string) {
   const u = await User.findById(userId).lean();
   const sel = u?.program;
-  if (!sel?.programId || !sel.startDate) return null;
+  if (!sel?.programId) return null;
   const program = (await activeCatalog()).programs.find((p) => p.id === sel.programId);
   if (!program || !programPlanIds(program).has(plan.id)) return null;
-  const pos = programPosition(program, { programId: sel.programId, startDate: sel.startDate, heldPhaseIndex: sel.heldPhaseIndex ?? null }, localDate)!;
+  const pos = programPosition(program, { programId: sel.programId, startDate: sel.startDate ?? null, heldPhaseIndex: sel.heldPhaseIndex ?? null }, localDate);
+  if (!pos) return null;
   return { programId: program.id, programVersion: program.version, programWeek: pos.programWeek, phaseIndex: pos.phaseIndex, phaseName: pos.phase.name, workingSetCap: pos.phase.workingSetCap, rir: pos.phase.rir, allowOptional: pos.phase.allowOptional };
 }

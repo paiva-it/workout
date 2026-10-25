@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { localParts, weekdayIndex, type Program } from '@workout/contracts';
+import { isFixedProgram, localParts, weekdayIndex, type Program } from '@workout/contracts';
 import { api, useApi } from '../api';
 import { ErrorBox, Field } from '../ui';
 import { useAuth } from '../main';
@@ -13,6 +13,7 @@ const nextMonday = (tz: string) => {
 export default function Settings() {
   const { user, refresh, logout } = useAuth();
   const programs = useApi<Program[]>('/programs').data ?? [];
+  const planNames: Record<string, string> = Object.fromEntries((useApi<{ id: string; name: string }[]>('/plans').data ?? []).map((p) => [p.id, p.name]));
   const [msg, setMsg] = useState<Record<string, string>>({});
   const say = (k: string, v: string) => setMsg((m) => ({ ...m, [k]: v }));
   const [prog, setProg] = useState({ programId: user.program?.programId ?? programs.find((p) => p.recommendedDefault)?.id ?? 'return-to-training', startDate: user.program?.startDate ?? nextMonday(user.timezone), held: user.program?.heldPhaseIndex?.toString() ?? '' });
@@ -21,7 +22,7 @@ export default function Settings() {
 
   async function saveProgram() {
     try {
-      await api('PATCH', '/me/program', { expectedRevision: user.revision, programId: prog.programId, startDate: prog.startDate || null, heldPhaseIndex: prog.held === '' ? null : Number(prog.held) });
+      await api('PATCH', '/me/program', { expectedRevision: user.revision, programId: prog.programId, startDate: prog.startDate || null, heldPhaseIndex: prog.held === '' || (selected && isFixedProgram(selected)) ? null : Number(prog.held) });
       await refresh();
       say('program', 'Saved');
     } catch (e) { say('program', (e as Error).message); }
@@ -59,6 +60,9 @@ export default function Settings() {
         </Field>
         {selected?.transitionPolicy && <p className="muted small">{selected.transitionPolicy}</p>}
         {selected?.missedDayPolicy && <p className="muted small">{selected.missedDayPolicy}</p>}
+        {selected && isFixedProgram(selected) ? (
+          <ul className="schedule small">{(selected.schedule ?? selected.phases[0].schedule ?? []).map((e) => <li key={e.weekday}><strong>{e.weekday[0].toUpperCase() + e.weekday.slice(1, 3)}</strong> {planNames[e.planId] ?? e.planId}</li>)}</ul>
+        ) : <>
         <Field label="Start date" hint="Weeks start on Monday. Pick the Monday you start."><input type="date" value={prog.startDate} onChange={(e) => setProg({ ...prog, startDate: e.target.value })} /></Field>
         <Field label="Phase" hint="Hold or repeat an easier phase instead of following the calendar.">
           <select value={prog.held} onChange={(e) => setProg({ ...prog, held: e.target.value })}>
@@ -66,6 +70,7 @@ export default function Settings() {
             {selected?.phases.map((ph, i) => <option key={i} value={i}>Hold: {ph.name} (weeks {ph.weeks[0]}{ph.weeks[1] ? `–${ph.weeks[1]}` : '+'})</option>)}
           </select>
         </Field>
+        </>}
         <button className="btn primary" onClick={saveProgram}>Save program</button>
         {msg.program && <p className="small" role="status">{msg.program}</p>}
       </section>

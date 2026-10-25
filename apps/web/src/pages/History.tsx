@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { parseKgToGrams } from '@workout/contracts';
 import { api, fmtDate, fmtDuration, fmtTime, kg, useApi } from '../api';
 import { ErrorBox, Field, isLoaded, LOAD_LABEL, Loading } from '../ui';
+import { dosage, sectionSummaryText } from '../sections';
 
 type Any = any; // eslint-disable-line @typescript-eslint/no-explicit-any -- server snapshots
 
@@ -65,6 +66,9 @@ export function HistoryDetail() {
       <p className="muted small">Active {fmtDuration(s.activeSeconds)} · elapsed {fmtDuration(s.elapsedSeconds)}{s.pauses.length ? ` · ${s.pauses.length} pause(s)` : ''}{s.source === 'manual_backfill' ? ' · manual entry' : ''} · plan v{s.planRef.version}</p>
       {s.programContext && <p className="small">Week {s.programContext.programWeek} · {s.programContext.phaseName}</p>}
       {s.metadata?.notes && <p className="card small">{s.metadata.notes}</p>}
+      <p className="small">{sectionSummaryText('Warm-up', s.sectionActivities?.warmup)} · {sectionSummaryText('Cooldown', s.sectionActivities?.cooldown)}</p>
+      {s.sectionActivities ? <SectionHistory title="Warm-up" list={s.sectionActivities.warmup} /> : <LegacyWarmup s={s} />}
+      <h2>Workout</h2>
       {s.exercises.map((o: Any) => (
         <section key={o.id} className="card stack">
           <h2>{o.exerciseSnapshot.name}{o.skipped && <span className="tag">skipped</span>}</h2>
@@ -87,6 +91,13 @@ export function HistoryDetail() {
           {o.sets.filter((x: Any) => x.id === editing).map((x: Any) => <Correction key={x.id} s={s} occ={o} set={x} done={() => { setEditing(null); reload(); }} />)}
         </section>
       ))}
+      {s.sectionActivities ? <SectionHistory title="Cooldown" list={s.sectionActivities.cooldown} /> : (
+        <section className="card stack">
+          <h2>Cooldown</h2>
+          <p className="muted small">Not recorded in this workout format.</p>
+          {s.planSnapshot.cooldown?.instructions && <ul className="small">{s.planSnapshot.cooldown.instructions.map((c: string) => <li key={c}>{c}</li>)}</ul>}
+        </section>
+      )}
       {s.corrections.length > 0 && (
         <section className="card stack">
           <h2>Corrections</h2>
@@ -125,4 +136,28 @@ function Correction({ s, occ, set, done }: { s: Any; occ: Any; set: Any; done: (
       <button className="btn primary" onClick={submit}>Save correction</button>
     </div>
   );
+}
+
+const setResult = (x: Any) => x.status === 'skipped' ? 'skipped' : x.status === 'pending' ? 'not done'
+  : x.completionMode === 'measured' ? `done: ${x.actualReps ?? `${x.actualDurationSeconds} s`}${x.actualLoad?.valueGrams != null ? ` × ${kg(x.actualLoad.valueGrams)} kg` : ''}` : 'done (no numbers recorded)';
+
+function SectionHistory({ title, list }: { title: string; list: Any[] }) {
+  return (
+    <section className="card stack">
+      <h2>{title}</h2>
+      <ul className="list small">
+        {list.map((a) => (
+          <li key={a.id}>
+            <strong>{a.exerciseSnapshot.name}</strong> <span className="muted">{a.prescriptionSnapshot.sets} × {dosage(a.prescriptionSnapshot.target, a.exerciseSnapshot.repsMeaning)}</span>
+            <br />{a.sets.map((x: Any) => `${x.side !== 'both' ? `${x.side} ` : ''}${setResult(x)}`).join(' · ')}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function LegacyWarmup({ s }: { s: Any }) {
+  const done = s.warmupChecklist.filter((w: Any) => w.completed).length;
+  return <p className="muted small">Warm-up checklist: {done}/{s.warmupChecklist.length} ticked (older workout format).</p>;
 }

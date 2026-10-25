@@ -5,13 +5,20 @@ Personal training log at **https://workout.paiva.it** — single user, phone-fir
 - `apps/web` — React 19 + TypeScript + Vite SPA (Today, Plans, Workout, History, Weight, Settings).
 - `apps/api` — NestJS 12 + Mongoose 9 on Node 24 LTS. Serves the built SPA and `/api/v1` from one container.
 - `packages/contracts` — shared types and pure logic (phase application, kg→grams, DST-safe local time, volume).
-- `data/training-pack.v1.json` — the seed plans; `contracts/training-pack.schema.json` is the import format.
+- `data/training-pack.v2.json` — the active plans (four fixed sessions with structured warm-up/workout/cooldown,
+  schema 2). `data/training-pack.v1.json` is the original restart pack (schema 1), kept for history and tests.
+  Import formats: `contracts/training-pack.schema.json` (1) and `contracts/training-pack.v2.schema.json` (2);
+  `schemaVersion` selects the validator. `docs/revamp-2026-10/` holds the spec of the v2 change.
 - `docs/` — product, data model, API, security, deployment and acceptance specs this app implements.
 
 ## How it works (short)
 
 - Plans live in MongoDB as immutable, versioned *packs*. Import a new pack (Settings → Import plans, or the CLI) to add plans; no code change.
   Same pack/version + same content is a no-op, different content is a 409, and broken references fail before anything is activated.
+- Schema-2 plans have exercise-linked warm-up and cooldown activities. Workouts show Warm-up → Workout → Cooldown;
+  a quick *Done* stores an acknowledgement with no numbers, *Log actual* stores measured values. These activities live
+  in `sectionActivities` and never count as working sets, volume or "last time". Older (schema-1) workouts keep their
+  original warm-up checklist and are never rewritten.
 - Starting a workout snapshots the plan, exercises and videos into the session and applies the program phase
   (sets = min(listed, cap); RIR = elementwise max of item and phase). Later plan versions never touch old sessions.
 - Every workout edit is a typed operation with an operation ID and expected revision, applied as one atomic
@@ -64,12 +71,16 @@ $H "$C exec -T app node dist/cli.js import-pack /dev/stdin" < my-pack.json      
 $H "$C exec -T app node dist/cli.js bootstrap-user" < bootstrap.env                   # no-op if the user exists
 $H "$C exec -T app node dist/cli.js import-profile" < profile.private.json            # idempotent by profileImportKey
 read -rs PW && printf '%s\n' "$PW" | $H "$C exec -T app node dist/cli.js reset-password <username>"; unset PW  # revokes all sessions
+$H "$C exec -T app node dist/cli.js migrate-program-selections /dev/stdin" < docs/revamp-2026-10/catalog-migration.json  # after a catalog swap; idempotent, audited in maintenanceLog
+$H "$C exec -T app node dist/cli.js activate-pack home-return-foundation 1"           # roll the active catalog pointer back (imports never downgrade)
 $H /srv/deploy/workout/backup.sh                   # backup now (cron runs it daily 03:17 UTC)
 $H /srv/deploy/workout/src/deploy/restore-test.sh  # restore newest backup into a temp DB, compare, drop
 ```
 
 Rollback: `$H "cd /srv/deploy/workout/src.prev && GIT_SHA=<previous sha> docker compose --env-file ../.env up -d --no-build app"`
-(previous images stay tagged `workout-app:<sha>`; the DB volume is never removed — no `down -v`).
+(previous images stay tagged `workout-app:<sha>`; the DB volume is never removed — no `down -v`). Once schema-2
+workouts exist, never roll back below the commit that added schema 2 (it cannot read them); roll the catalog back
+with `activate-pack` instead.
 
 Backups are local to the host (`/srv/backups/workout`, root-only, 14 daily + 8 weekly). There is no off-host copy yet.
 

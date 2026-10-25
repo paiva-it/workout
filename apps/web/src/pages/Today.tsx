@@ -43,24 +43,31 @@ export default function Today() {
       <section className="card stack">
         {!t.position ? (
           <>
-            <h2>Choose a start date</h2>
-            <p>The {t.program?.name ?? 'four-week restart'} counts weeks from the start date you pick. Nothing is scheduled until you choose.</p>
-            <Link className="btn primary" to="/settings">Set program start</Link>
+            <h2>{t.program ? 'Choose a start date' : 'Choose a program'}</h2>
+            <p>{t.program ? `${t.program.name} counts weeks from the start date you pick. Nothing is scheduled until you choose.` : 'Pick a program in Settings to get a weekly schedule, or start any plan directly.'}</p>
+            <Link className="btn primary" to="/settings">{t.program ? 'Set program start' : 'Choose program'}</Link>
           </>
         ) : (
           <>
-            <p className="muted small">{t.position.programName} · week {t.position.programWeek}{t.position.held ? ' (phase held)' : ''}</p>
-            <h2>{t.position.phase.name}</h2>
-            <p className="small">
-              {t.position.phase.workingSetCap ? `Up to ${t.position.phase.workingSetCap} working set${t.position.phase.workingSetCap > 1 ? 's' : ''} per exercise` : 'Listed sets'} · {rirText(t.position.phase.rir)}
-            </p>
+            {t.position.fixed ? (
+              <h2>{t.position.programName}</h2>
+            ) : (
+              <>
+                <p className="muted small">{t.position.programName} · week {t.position.programWeek}{t.position.held ? ' (phase held)' : ''}</p>
+                <h2>{t.position.phase.name}</h2>
+                <p className="small">
+                  {t.position.phase.workingSetCap ? `Up to ${t.position.phase.workingSetCap} working set${t.position.phase.workingSetCap > 1 ? 's' : ''} per exercise` : 'Listed sets'} · {rirText(t.position.phase.rir)}
+                </p>
+              </>
+            )}
             <p className="muted small">{t.position.phase.notes}</p>
-            <p className="small">This week: {t.position.schedule.map((s: { weekday: string; planId: string }) => `${s.weekday.slice(0, 3)} ${s.planId}`).join(' · ')}</p>
+            <ul className="schedule small">{t.position.schedule.map((s: { weekday: string; planId: string; planName: string }) => <li key={s.weekday}><strong>{s.weekday[0].toUpperCase() + s.weekday.slice(1, 3)}</strong> {s.planName}</li>)}</ul>
+            <p className="muted small">Other days: easy activity or rest.</p>
             {t.next ? (
               <>
                 <h3>Next: {t.next.name}</h3>
                 <p className="muted small">{t.next.estimatedDurationMinutes[0]}–{t.next.estimatedDurationMinutes[1]} min · {t.doneThisWeek} done this week. Missed days are never owed.</p>
-                {!t.active && <button className="btn primary" onClick={start}>Start {t.next.name.split(' - ')[0]}</button>}
+                {!t.active && <button className="btn primary" onClick={start}>Start {t.next.name}</button>}
                 <Link className="btn ghost" to={`/plans/${t.next.planId}`}>View plan</Link>
               </>
             ) : (

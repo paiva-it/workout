@@ -4,6 +4,7 @@ import { localToInstants, parseKgToGrams } from '@workout/contracts';
 import { api, ApiError, fmtDuration, fmtTime, kg, outbox, useApi, useOutbox, type OutboxItem } from '../api';
 import { Details, ErrorBox, Field, isLoaded, LOAD_LABEL, loadHint, Loading, rirText, targetText, Video } from '../ui';
 import { useAuth } from '../main';
+import { ActivityCard, dosage, SECTION_LABEL, sectionCounts, sectionSummaryText, type Section } from '../sections';
 
 type Any = any; // eslint-disable-line @typescript-eslint/no-explicit-any -- server session snapshot
 const useNow = (ms = 1000) => {
@@ -16,6 +17,19 @@ function overlay(s: Any, pending: OutboxItem[]) {
   if (!s || !pending.length) return s;
   const d = structuredClone(s);
   for (const p of pending) {
+    if (p.kind === 'patch' && typeof p.op.section === 'string' && d.sectionActivities) {
+      const act = d.sectionActivities[p.op.section as string]?.find((a: Any) => a.id === p.op.activityId);
+      const ids = (p.op.setIds as string[] | undefined) ?? [p.op.setId as string];
+      for (const set of act?.sets.filter((x: Any) => ids.includes(x.id)) ?? []) {
+        const t = p.op.type;
+        if (t === 'acknowledgeSectionSet') Object.assign(set, set.status === 'done' ? {} : { status: 'done', completionMode: 'acknowledged', actualReps: null, actualDurationSeconds: null, actualLoad: null });
+        else if (t === 'skipSectionSet') Object.assign(set, { status: 'skipped', completionMode: null });
+        else if (t === 'resetSectionSet') Object.assign(set, { status: 'pending', completionMode: null });
+        else if (t === 'setSectionActual') Object.assign(set, { status: 'done', completionMode: 'measured', actualReps: p.op.actualReps, actualDurationSeconds: p.op.actualDurationSeconds, actualLoad: p.op.valueGrams == null ? null : { valueGrams: p.op.valueGrams } });
+        set._unsynced = true;
+      }
+      continue;
+    }
     if (p.kind !== 'patch' || p.op.type !== 'setActual') continue;
     const set = d.exercises.find((o: Any) => o.id === p.op.exerciseOccurrenceId)?.sets.find((x: Any) => x.id === p.op.setId);
     if (set) Object.assign(set, { status: p.op.status, actualReps: p.op.actualReps, actualDurationSeconds: p.op.actualDurationSeconds, actualRir: p.op.actualRir, notes: p.op.notes, failedAttempt: p.op.failedAttempt, actualLoad: p.op.valueGrams == null ? set.actualLoad && { ...set.actualLoad, valueGrams: null } : { ...(set.actualLoad ?? {}), valueGrams: p.op.valueGrams }, _unsynced: true });
@@ -52,6 +66,16 @@ function ActiveWorkout({ s, pendingCount }: { s: Any; pendingCount: number }) {
   const ctx = s.programContext;
   const optionalItems = s.planSnapshot.items.filter((i: Any) => i.optional && !s.exercises.some((o: Any) => o.planItemId === i.id));
   const status = ob.status === 'conflict' ? 'Conflict - review' : ob.status === 'offline' ? `Offline - pending sync (${pendingCount})` : ob.status === 'saving' || pendingCount ? 'Saving…' : 'Saved';
+  const structured = !!s.sectionActivities;
+  const tabKey = `workout.section.${s.id}`;
+  const [tab, setTabState] = useState<Section>(() => { try { return (sessionStorage.getItem(tabKey) as Section) || 'warmup'; } catch { return 'warmup'; } });
+  const setTab = (t: Section) => { setTabState(t); try { sessionStorage.setItem(tabKey, t); } catch { /* ignore */ } window.scrollTo({ top: 0 }); };
+  const work = s.exercises.filter((o: Any) => !o.optional || o.sets.some((x: Any) => x.status !== 'pending'));
+  const workDone = work.filter((o: Any) => o.sets.filter((x: Any) => x.type === 'working').every((x: Any) => x.status === 'done')).length;
+  const counts: Record<Section, string> = structured
+    ? { warmup: `${sectionCounts(s.sectionActivities.warmup).done}/${s.sectionActivities.warmup.length}`, workout: `${workDone}/${work.length}`, cooldown: `${sectionCounts(s.sectionActivities.cooldown).done}/${s.sectionActivities.cooldown.length}` }
+    : { warmup: '', workout: '', cooldown: '' };
+  const show = (t: Section) => !structured || tab === t;
 
   return (
     <div className="stack workout">
@@ -64,14 +88,29 @@ function ActiveWorkout({ s, pendingCount }: { s: Any; pendingCount: number }) {
       </header>
       {ob.error && <p className="error small" role="alert">Not saved: {ob.error}</p>}
       {ob.conflict && <Conflict />}
-      {ctx && <p className="card accent small">Week {ctx.programWeek} · {ctx.phaseName} · {ctx.workingSetCap ? `max ${ctx.workingSetCap} working set(s)` : 'listed sets'} · {rirText(ctx.rir)}</p>}
+      {ctx && ctx.workingSetCap != null && <p className="card accent small">Week {ctx.programWeek} · {ctx.phaseName} · max {ctx.workingSetCap} working set(s) · {rirText(ctx.rir)}</p>}
       <div className="row wrap">
         <button className="btn" onClick={() => outbox.enqueue({ sessionId: s.id, kind: paused ? 'resume' : 'pause', at: new Date().toISOString() })}>{paused ? 'Resume' : 'Pause'}</button>
         <button className="btn primary" onClick={() => setFinishing(true)}>Finish…</button>
       </div>
       {paused && <p className="card small">Paused. Your sets are saved; resume when ready.</p>}
+      {structured && (
+        <nav className="section-nav" aria-label="Workout sections">
+          {(['warmup', 'workout', 'cooldown'] as Section[]).map((t) => (
+            <button key={t} className={tab === t ? 'active' : ''} aria-current={tab === t ? 'step' : undefined} onClick={() => setTab(t)}>
+              {SECTION_LABEL[t]} <span className="count">{counts[t]}</span>
+            </button>
+          ))}
+        </nav>
+      )}
 
-      <Details summary={`Warm-up (${s.warmupChecklist.filter((w: Any) => w.completed).length}/${s.warmupChecklist.length})`} open={!s.warmupChecklist.some((w: Any) => w.completed)}>
+      {structured && tab === 'warmup' && (
+        <>
+          {s.sectionActivities.warmup.map((a: Any) => <ActivityCard key={a.id} activity={a} enqueue={enqueue} />)}
+          <button className="btn primary" onClick={() => setTab('workout')}>Continue to workout →</button>
+        </>
+      )}
+      {!structured && <Details summary={`Warm-up (${s.warmupChecklist.filter((w: Any) => w.completed).length}/${s.warmupChecklist.length})`} open={!s.warmupChecklist.some((w: Any) => w.completed)}>
         <ul className="checklist">
           {s.planSnapshot.warmup.steps.map((step: Any) => {
             const st = s.warmupChecklist.find((w: Any) => w.stepId === step.id);
@@ -87,17 +126,29 @@ function ActiveWorkout({ s, pendingCount }: { s: Any; pendingCount: number }) {
         </ul>
         <p className="muted small">Warm-up steps never count as working sets. Log loaded ramp-up sets with “+ Warm-up set”.</p>
         <Video video={s.planSnapshot.videoDefinitions[s.planSnapshot.warmup.videoId]} label="General warm-up reference" />
-      </Details>
+      </Details>}
 
-      {s.exercises.map((occ: Any) => <ExerciseCard key={occ.id} s={s} occ={occ} enqueue={enqueue} />)}
+      {show('workout') && s.exercises.map((occ: Any) => <ExerciseCard key={occ.id} s={s} occ={occ} enqueue={enqueue} />)}
 
-      {optionalItems.length > 0 && (
+      {show('workout') && optionalItems.length > 0 && (
         <section className="card stack">
           <h2>Optional work</h2>
           {ctx && !ctx.allowOptional ? <p className="muted small">Not part of this phase. It stays off until a later phase.</p> : optionalItems.map((i: Any) => (
             <button key={i.id} className="btn" onClick={() => enqueue({ type: 'addOptionalExercise', planItemId: i.id })}>+ Add optional: {s.planSnapshot.exerciseDefinitions[i.exerciseId].name}</button>
           ))}
         </section>
+      )}
+      {structured && tab === 'workout' && <button className="btn primary" onClick={() => setTab('cooldown')}>Continue to cooldown →</button>}
+      {structured && tab === 'cooldown' && (
+        <>
+          {s.sectionActivities.cooldown.map((a: Any) => <ActivityCard key={a.id} activity={a} enqueue={enqueue} />)}
+          <button className="btn primary" onClick={() => setFinishing(true)}>Finish workout</button>
+        </>
+      )}
+      {!structured && s.planSnapshot.cooldown?.instructions && (
+        <Details summary="Cool-down">
+          <ul>{s.planSnapshot.cooldown.instructions.map((c: string) => <li key={c}>{c}</li>)}</ul>
+        </Details>
       )}
       <SessionNotes s={s} enqueue={enqueue} />
       <RestTimer s={s} now={now} enqueue={enqueue} />
@@ -161,7 +212,7 @@ function ExerciseCard({ s, occ, enqueue }: { s: Any; occ: Any; enqueue: (op: Rec
       <h2 id={`ex-${occ.id}`}>{ex.name}{occ.optional && <span className="tag">optional</span>}{occ.skipped && <span className="tag">skipped</span>}</h2>
       {occ.originalExerciseSnapshot && <p className="small">Substituted for {occ.originalExerciseSnapshot.name}</p>}
       <p className="target">
-        Target {p.workingSets} × {targetText(p.target)}{p.rir ? ` · ${rirText(p.rir)}` : ''} · rest {p.restSeconds}s
+        Target {p.workingSets} × {occ.exerciseSnapshot.repsMeaning === 'alternating_total' ? dosage(p.target, 'alternating_total') : targetText(p.target)}{p.rir ? ` · ${rirText(p.rir)}` : ''} · rest {p.restSeconds}s
         {occ.originalPrescription.workingSets !== p.workingSets && <span className="muted small"> (phase cap; plan lists {occ.originalPrescription.workingSets})</span>}
       </p>
       {occ.originalPrescription.notes && <p className="small">{occ.originalPrescription.notes}</p>}
@@ -239,7 +290,7 @@ function SetRow({ occ, set, enqueue, suggest }: { occ: Any; set: Any; enqueue: (
     <div ref={ref} className={`set ${set.status} ${set.type}`} onBlur={onBlur}>
       <span className="set-label">{label}<span className="muted small"> {set.type === 'warmup' ? 'warm-up' : `target ${tgt}`}</span></span>
       {metric === 'reps' ? (
-        <label className="mini"><span>Reps</span><input inputMode="numeric" pattern="[0-9]*" value={d.reps} onChange={(e) => setD({ ...d, reps: e.target.value })} placeholder={tgt} aria-label={`${label} reps`} /></label>
+        <label className="mini"><span>{occ.exerciseSnapshot.repsMeaning === 'alternating_total' ? 'Total reps' : 'Reps'}</span><input inputMode="numeric" pattern="[0-9]*" value={d.reps} onChange={(e) => setD({ ...d, reps: e.target.value })} placeholder={tgt} aria-label={`${label} reps`} /></label>
       ) : (
         <label className="mini"><span>Seconds</span><input inputMode="numeric" pattern="[0-9]*" value={d.secs} onChange={(e) => setD({ ...d, secs: e.target.value })} placeholder={tgt} aria-label={`${label} seconds`} /></label>
       )}
@@ -356,6 +407,7 @@ function FinishDialog({ s, pendingCount, onClose }: { s: Any; pendingCount: numb
       <div className="card dialog stack">
         <h2 id="finish-title">Finish workout</h2>
         <p>{doneN} of {required.length} required working sets done{doneN === required.length && required.length ? ' — complete' : ' — will be saved as partial'}.</p>
+        {s.sectionActivities && <p className="small">{sectionSummaryText('Warm-up', s.sectionActivities.warmup)} · {sectionSummaryText('Cooldown', s.sectionActivities.cooldown)}. These never change the strength result.</p>}
         {missing.length > 0 && (
           <Details summary={`${missing.length} set(s) not done`}>
             <ul className="small">{missing.map((x: Any) => <li key={x.id}>{x.occ.exerciseSnapshot.name} set {x.roundIndex}{x.side !== 'both' ? ` ${x.side}` : ''}: {x.occ.skipped ? 'exercise skipped' : x.status}</li>)}</ul>

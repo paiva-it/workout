@@ -18,8 +18,8 @@ ENV NODE_ENV=production PORT=3000
 WORKDIR /app/apps/api
 COPY --from=build --chown=root:root /out ./
 COPY --from=build /app/apps/web/dist /app/apps/web/dist
-COPY contracts/training-pack.schema.json /app/contracts/training-pack.schema.json
-COPY data/training-pack.v1.json /app/data/training-pack.v1.json
+COPY contracts/training-pack.schema.json contracts/training-pack.v2.schema.json /app/contracts/
+COPY data/training-pack.v1.json data/training-pack.v2.json /app/data/
 USER node
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD ["node", "-e", "fetch('http://127.0.0.1:3000/api/v1/health/ready').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))"]

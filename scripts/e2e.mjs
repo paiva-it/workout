@@ -179,19 +179,83 @@ try {
     await noOverflow(page, 'weight');
   });
 
-  await step('plan import: preview then import makes a new plan appear without code changes', async () => {
-    const pack = JSON.parse(readFileSync(root + 'data/training-pack.v1.json', 'utf8'));
-    pack.version = 2;
-    pack.plans.push({ ...structuredClone(pack.plans[0]), id: 'e2e-new-plan', name: 'E2E synthetic plan' });
+  await step('importing the real v2 pack replaces the catalog with four three-section plans', async () => {
     await page.getByRole('link', { name: 'Settings' }).click();
-    await page.getByLabel('Or paste JSON').fill(JSON.stringify(pack));
+    await page.getByLabel('Or paste JSON').fill(readFileSync(root + 'data/training-pack.v2.json', 'utf8'));
     await page.getByRole('button', { name: 'Preview' }).click();
-    await page.getByText('plans: 1 new, 8 unchanged, 0 conflicting').waitFor();
+    await page.getByText('plans: 4 new, 0 unchanged, 0 conflicting').waitFor();
+    await page.getByText('exercises: 29 new, 21 unchanged, 0 conflicting').waitFor();
     await page.getByRole('button', { name: 'Import and activate' }).click();
     await page.getByText(/imported and activated/).waitFor();
     await page.getByRole('link', { name: 'Plans' }).click();
-    await page.getByText('E2E synthetic plan').waitFor();
-    await noOverflow(page, 'plans');
+    await page.locator('ul.cards > li h2', { hasText: 'D - Abs and core' }).waitFor({ timeout: 5000 }).catch(async (e) => { console.log(page.url(), (await page.locator('main').innerText()).slice(0, 800)); throw e; });
+    assert.deepEqual(await page.locator('ul.cards > li h2').allInnerTexts(), ['A - Arms, shoulders and back', 'B - Chest, shoulders and back', 'C - Legs and glutes', 'D - Abs and core']);
+    await page.getByText('Warm-up 7 · Workout 7 · Cooldown 4').waitFor();
+    await noOverflow(page, 'plans v2');
+    await page.getByRole('link', { name: 'Today' }).click();
+    await page.getByText('Four fixed dumbbell sessions').waitFor();
+    assert.equal(await page.getByText(/week \d/).count(), 0, 'week/phase shown for a fixed program');
+  });
+
+  await step('plan detail shows Warm-up, Workout and Cooldown with per-exercise cards', async () => {
+    await page.getByRole('link', { name: 'Plans' }).click();
+    await page.getByText('A - Arms, shoulders and back').click();
+    for (const h of [/^Warm-up ·/, /^Workout$/, /^Cooldown ·/]) await page.getByRole('heading', { name: h }).waitFor();
+    await page.getByText('Light rehearsal - not a work set.').first().waitFor();
+    await noOverflow(page, 'plan detail v2');
+  });
+
+  await step('three-section workout: acknowledge, skip, both sides, log, continue to cooldown, finish', async () => {
+    await page.getByRole('button', { name: 'Start now' }).click();
+    const nav = page.getByRole('navigation', { name: 'Workout sections' });
+    await nav.waitFor();
+    await nav.getByRole('button', { name: /Warm-up 0\/7/ }).waitFor();
+    assert.deepEqual(await smallTargets(page), [], 'tap targets under 44px (warm-up)');
+    await noOverflow(page, 'warm-up');
+    const march = page.locator('section.activity', { hasText: 'March on the spot' });
+    await march.getByRole('button', { name: 'Done', exact: true }).click();
+    await march.locator('.done-text', { hasText: '✓ Done' }).waitFor();
+    await nav.getByRole('button', { name: /Warm-up 1\/7/ }).waitFor();
+    const circles = page.locator('section.activity').nth(1);
+    await circles.getByRole('button', { name: 'Skip', exact: true }).click();
+    await circles.locator('.tag', { hasText: 'skipped' }).waitFor();
+    const rowRehearsal = page.locator('section.activity', { hasText: 'Light rehearsal' }).first();
+    await rowRehearsal.getByRole('button', { name: 'Mark both sides done' }).click();
+    await rowRehearsal.getByText('✓ done', { exact: true }).waitFor();
+    await page.getByRole('status').filter({ hasText: 'Saved' }).waitFor();
+    await page.getByRole('button', { name: 'Continue to workout →' }).click();
+    const row = page.locator('section.exercise', { hasText: 'row' }).first();
+    await row.getByLabel('Set 1 L reps').fill('12');
+    await row.getByLabel('Set 1 L kg per dumbbell').fill('8');
+    await row.locator('.set', { hasText: 'Set 1 L' }).getByRole('button', { name: 'Done' }).click();
+    await page.getByRole('status').filter({ hasText: 'Saved' }).waitFor();
+    const french = page.locator('section.exercise', { hasText: 'French' });
+    await french.getByText('kg (one dumbbell)').waitFor();
+    await noOverflow(page, 'workout v2');
+    await page.getByRole('button', { name: 'Continue to cooldown →' }).click();
+    const stretch = page.locator('section.activity', { hasText: 'shoulder stretch' }).first();
+    await stretch.getByRole('button', { name: 'Log actual' }).first().click();
+    await stretch.getByLabel(/Left seconds/).fill('25');
+    await stretch.getByRole('button', { name: 'Save' }).click();
+    await stretch.getByText('✓ 25 s').waitFor();
+    await page.reload();
+    await page.getByRole('navigation', { name: 'Workout sections' }).getByRole('button', { name: /Cooldown/ }).waitFor();
+    await page.locator('section.activity', { hasText: 'shoulder stretch' }).first().getByText('✓ 25 s').waitFor();
+    await noOverflow(page, 'cooldown');
+    await page.getByRole('button', { name: 'Finish workout' }).click();
+    await page.getByText(/Warm-up: 2\/7 done, 1 skipped · Cooldown: 0\/4 done/).waitFor();
+    await page.getByRole('button', { name: 'Finish', exact: true }).click();
+    await page.getByRole('heading', { name: 'Warm-up' }).waitFor();
+    await page.getByText('done (no numbers recorded)').first().waitFor();
+    await page.getByText('left done: 25 s').waitFor();
+    await noOverflow(page, 'history v2');
+  });
+
+  await step('an old-format workout still shows its own history without invented cooldown records', async () => {
+    await page.getByRole('link', { name: 'History', exact: true }).click();
+    await page.getByText('Restart A - squat, push and pull').first().click();
+    await page.getByText('Not recorded in this workout format.').waitFor();
+    await page.getByText(/Warm-up checklist: \d+\/\d+ ticked/).waitFor();
   });
 
   await step('logout clears local state; private API then refuses', async () => {

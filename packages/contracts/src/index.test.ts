@@ -90,3 +90,20 @@ it('programWeek counts Monday-based weeks', () => {
   expect(programWeek('2026-10-25', '2026-10-25')).toBe(1); // Sunday start
   expect(programWeek('2026-10-25', '2026-10-26')).toBe(2);
 });
+
+describe('v2 fixed program', () => {
+  const v2: TrainingPack = JSON.parse(readFileSync(new URL('data/training-pack.v2.json', root), 'utf8'));
+  const p = v2.programs[0];
+  it('needs no start date, never caps sets, and keeps the same week forever', () => {
+    const a = programPosition(p, { programId: p.id, startDate: null, heldPhaseIndex: null }, '2026-10-27')!;
+    const b = programPosition(p, { programId: p.id, startDate: '2026-01-05', heldPhaseIndex: null }, '2026-10-27')!;
+    expect(a.schedule.map((s) => s.planId)).toEqual(['arms', 'legs', 'chest', 'core']);
+    expect(b.schedule).toEqual(a.schedule);
+    expect(a.phase.workingSetCap).toBeNull();
+    for (const plan of v2.plans) for (const i of plan.items) expect(applyPhase(i, a.phase).workingSets).toBe(i.workingSets);
+  });
+  it('an obsolete held phase index cannot restore an old cap', () => {
+    const held = programPosition(p, { programId: p.id, startDate: null, heldPhaseIndex: 2 }, '2026-10-27')!;
+    expect(held.phase.workingSetCap).toBeNull();
+  });
+});

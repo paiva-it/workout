@@ -3,7 +3,7 @@ import { Body, Controller, Get, Header, Patch, Req, Res } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { z } from 'zod';
-import { localParts, nextScheduled, programPosition, weekdayIndex } from '@workout/contracts';
+import { isFixedProgram, localParts, nextScheduled, programPosition, weekdayIndex } from '@workout/contracts';
 import { BodyMeasurement, TrainingPack, TrainingSession, User, out } from './db.js';
 import { activeCatalog } from './catalog.js';
 import { safeUser } from './auth.js';
@@ -55,14 +55,17 @@ export class MeController {
     ]);
     const program = u.program?.programId ? c.programs.find((p) => p.id === u.program!.programId) ?? null : null;
     let position = null, next = null, doneThisWeek = 0;
-    if (program && u.program?.startDate) {
-      const pos = programPosition(program, { programId: program.id, startDate: u.program.startDate, heldPhaseIndex: u.program.heldPhaseIndex ?? null }, today)!;
+    const pos = program && programPosition(program, { programId: program.id, startDate: u.program?.startDate ?? null, heldPhaseIndex: u.program?.heldPhaseIndex ?? null }, today);
+    if (program && pos) {
       const weekStart = new Date(Date.parse(today) - weekdayIndex(today) * 86400000).toISOString().slice(0, 10);
       // Count finished (not abandoned) program sessions since this week's Monday; missed ones are never owed.
       doneThisWeek = recent.filter((s) => s.localDate >= weekStart && s.status !== 'abandoned' && (s.programContext as { programId?: string } | null)?.programId === program.id).length;
       const entry = nextScheduled(pos, doneThisWeek);
       const plan = entry && c.plans.find((p) => p.id === entry.planId);
-      position = { programId: program.id, programName: program.name, programWeek: pos.programWeek, phaseIndex: pos.phaseIndex, phase: pos.phase, schedule: pos.schedule, held: u.program.heldPhaseIndex != null };
+      const fixed = isFixedProgram(program);
+      const names = Object.fromEntries(c.plans.map((p) => [p.id, p.name]));
+      position = { programId: program.id, programName: program.name, programWeek: pos.programWeek, phaseIndex: pos.phaseIndex, phase: pos.phase, fixed, held: !fixed && u.program?.heldPhaseIndex != null,
+        schedule: pos.schedule.map((s) => ({ ...s, planName: names[s.planId] ?? s.planId })) };
       next = plan ? { weekday: entry!.weekday, planId: plan.id, planVersion: plan.version, packId: plan.packId, packVersion: plan.packVersion, name: plan.name, estimatedDurationMinutes: plan.estimatedDurationMinutes } : null;
     }
     return {

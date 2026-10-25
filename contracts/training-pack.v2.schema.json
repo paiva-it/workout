@@ -1,0 +1,894 @@
+{
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        2
+      ]
+    },
+    "packId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "createdOn": {
+      "type": "string",
+      "format": "date"
+    },
+    "language": {
+      "enum": [
+        "en-US"
+      ]
+    },
+    "units": {
+      "enum": [
+        "kg"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 3000
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1000
+      },
+      "minItems": 1,
+      "maxItems": 20
+    },
+    "videos": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/video"
+      },
+      "minItems": 1,
+      "maxItems": 500
+    },
+    "exercises": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/exercise"
+      },
+      "minItems": 1,
+      "maxItems": 500
+    },
+    "plans": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/plan"
+      },
+      "minItems": 1,
+      "maxItems": 100
+    },
+    "programs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/program"
+      },
+      "minItems": 0,
+      "maxItems": 50
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "packId",
+    "version",
+    "title",
+    "createdOn",
+    "language",
+    "units",
+    "description",
+    "assumptions",
+    "videos",
+    "exercises",
+    "plans",
+    "programs"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://training.paiva.it/schemas/training-pack.v2.json",
+  "title": "Training pack v2 - structured warm-up and cooldown activities",
+  "$defs": {
+    "video": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+        },
+        "provider": {
+          "enum": [
+            "youtube"
+          ]
+        },
+        "youtubeId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{11}$"
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https://www\\.youtube\\.com/watch\\?v=[A-Za-z0-9_-]{11}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "channel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "checkedOn": {
+          "type": "string",
+          "format": "date"
+        },
+        "verification": {
+          "enum": [
+            "search_metadata_matched",
+            "playback_checked"
+          ]
+        },
+        "playbackVerified": {
+          "type": "boolean"
+        },
+        "embeddingVerified": {
+          "type": "boolean"
+        },
+        "usageNote": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1500
+        }
+      },
+      "required": [
+        "id",
+        "provider",
+        "youtubeId",
+        "url",
+        "title",
+        "channel",
+        "checkedOn",
+        "verification",
+        "playbackVerified",
+        "embeddingVerified",
+        "usageNote"
+      ],
+      "additionalProperties": false
+    },
+    "exercise": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "primaryMuscles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "minItems": 1,
+          "maxItems": 10
+        },
+        "secondaryMuscles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "minItems": 0,
+          "maxItems": 10
+        },
+        "movementPattern": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "equipment": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "minItems": 1,
+          "maxItems": 10
+        },
+        "metric": {
+          "enum": [
+            "reps",
+            "duration"
+          ]
+        },
+        "laterality": {
+          "enum": [
+            "bilateral",
+            "separate_sides"
+          ]
+        },
+        "repsMeaning": {
+          "enum": [
+            "per_side",
+            "simultaneous_repetitions",
+            "seconds",
+            "alternating_total"
+          ]
+        },
+        "defaultLoadBasis": {
+          "enum": [
+            "per_dumbbell",
+            "single_dumbbell",
+            "barbell_total",
+            "external_total",
+            "bodyweight",
+            "none"
+          ]
+        },
+        "defaultImplementCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "videoId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+        },
+        "cues": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "minItems": 1,
+          "maxItems": 8
+        },
+        "regression": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1500
+        },
+        "archived": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "name",
+        "primaryMuscles",
+        "secondaryMuscles",
+        "movementPattern",
+        "equipment",
+        "metric",
+        "laterality",
+        "repsMeaning",
+        "defaultLoadBasis",
+        "defaultImplementCount",
+        "videoId",
+        "cues",
+        "regression",
+        "archived"
+      ],
+      "additionalProperties": false
+    },
+    "warmup": {
+      "type": "object",
+      "properties": {
+        "durationMinutes": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30
+            },
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2,
+          "items": false
+        },
+        "videoId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sectionStep"
+          },
+          "minItems": 1,
+          "maxItems": 20
+        }
+      },
+      "required": [
+        "durationMinutes",
+        "videoId",
+        "steps"
+      ],
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "enum": [
+            "reps",
+            "duration"
+          ]
+        },
+        "min": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400
+        },
+        "perSide": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metric",
+        "min",
+        "max",
+        "perSide"
+      ],
+      "additionalProperties": false
+    },
+    "item": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+        },
+        "exerciseId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+        },
+        "exerciseVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "workingSets": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "restSeconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 600
+        },
+        "restAfter": {
+          "enum": [
+            "both_sides",
+            "set"
+          ]
+        },
+        "targetRir": {
+          "anyOf": [
+            {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 10
+                },
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 10
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2,
+              "items": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "optional": {
+          "type": "boolean"
+        },
+        "defaultVariant": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 1500
+        }
+      },
+      "required": [
+        "id",
+        "exerciseId",
+        "exerciseVersion",
+        "workingSets",
+        "target",
+        "restSeconds",
+        "restAfter",
+        "targetRir",
+        "optional",
+        "defaultVariant",
+        "notes"
+      ],
+      "additionalProperties": false
+    },
+    "plan": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "kind": {
+          "enum": [
+            "restart",
+            "focus",
+            "recovery"
+          ]
+        },
+        "focus": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "minItems": 1,
+          "maxItems": 10
+        },
+        "estimatedDurationMinutes": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 240
+            },
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 240
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2,
+          "items": false
+        },
+        "exampleVideoId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+        },
+        "exampleVideoLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "warmup": {
+          "$ref": "#/$defs/warmup"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/item"
+          },
+          "minItems": 1,
+          "maxItems": 30
+        },
+        "cooldown": {
+          "type": "object",
+          "properties": {
+            "durationMinutes": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 30
+                },
+                {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 30
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2,
+              "items": false
+            },
+            "instructions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              "minItems": 1,
+              "maxItems": 10
+            },
+            "steps": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/sectionStep"
+              },
+              "minItems": 1,
+              "maxItems": 10
+            }
+          },
+          "required": [
+            "durationMinutes",
+            "instructions",
+            "steps"
+          ],
+          "additionalProperties": false
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "minItems": 1,
+          "maxItems": 20
+        },
+        "archived": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "name",
+        "kind",
+        "focus",
+        "estimatedDurationMinutes",
+        "exampleVideoId",
+        "exampleVideoLabel",
+        "warmup",
+        "items",
+        "cooldown",
+        "notes",
+        "archived"
+      ],
+      "additionalProperties": false
+    },
+    "scheduleEntry": {
+      "type": "object",
+      "properties": {
+        "weekday": {
+          "enum": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday"
+          ]
+        },
+        "planId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+        },
+        "fullRestAllowed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "weekday",
+        "planId"
+      ],
+      "additionalProperties": false
+    },
+    "phase": {
+      "type": "object",
+      "properties": {
+        "weeks": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "schedule": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scheduleEntry"
+          },
+          "minItems": 1,
+          "maxItems": 7
+        },
+        "alternatingSchedules": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/scheduleEntry"
+            },
+            "minItems": 1,
+            "maxItems": 7
+          },
+          "minItems": 1,
+          "maxItems": 8
+        },
+        "workingSetCap": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "allowOptional": {
+          "type": "boolean"
+        },
+        "rir": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10
+            },
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2,
+          "items": false
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "weeks",
+        "name",
+        "workingSetCap",
+        "allowOptional",
+        "rir",
+        "notes"
+      ],
+      "additionalProperties": false
+    },
+    "program": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "recommendedDefault": {
+          "type": "boolean"
+        },
+        "startDatePolicy": {
+          "enum": [
+            "choose_on_first_use",
+            "explicit_selection_after_restart"
+          ]
+        },
+        "weekStart": {
+          "enum": [
+            "monday"
+          ]
+        },
+        "schedule": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scheduleEntry"
+          },
+          "minItems": 1,
+          "maxItems": 7
+        },
+        "phases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/phase"
+          },
+          "minItems": 1,
+          "maxItems": 20
+        },
+        "transitionPolicy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 3000
+        },
+        "missedDayPolicy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 3000
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "name",
+        "recommendedDefault",
+        "startDatePolicy",
+        "weekStart",
+        "phases"
+      ],
+      "additionalProperties": false
+    },
+    "sectionStep": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+        },
+        "exerciseId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+        },
+        "exerciseVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "restSeconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 600
+        },
+        "restAfter": {
+          "enum": [
+            "both_sides",
+            "set"
+          ]
+        },
+        "defaultVariant": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 1500,
+          "minLength": 1
+        },
+        "sets": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "role": {
+          "enum": [
+            "pulse_raise",
+            "mobility",
+            "rehearsal",
+            "easy_movement",
+            "stretch"
+          ]
+        },
+        "linkedWorkoutItemId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "exerciseId",
+        "exerciseVersion",
+        "target",
+        "restSeconds",
+        "restAfter",
+        "defaultVariant",
+        "notes",
+        "sets",
+        "role",
+        "linkedWorkoutItemId"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

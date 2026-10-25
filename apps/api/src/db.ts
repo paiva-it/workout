@@ -100,6 +100,7 @@ const TrainingSessionSchema = new Schema(
     warmupChecklist: { type: [new Schema({ stepId: String, completed: Boolean, completedAt: { type: Date, default: null } }, sub)], default: [] },
     restTimer: { type: Mixed, default: null },
     exercises: [OccurrenceSchema],
+    sectionActivities: { type: Mixed, default: undefined }, // schema-2 sessions only: { warmup: SectionActivity[], cooldown: SectionActivity[] }
     metadata: { type: Mixed, default: () => ({ energy: null, soreness: null, sleepMinutes: null, sessionRpe: null, notes: null }) },
     appliedOperations: { type: [new Schema({ operationId: String, payloadHash: String, appliedRevision: Number }, sub)], default: [] },
     corrections: { type: [Mixed], default: [] },

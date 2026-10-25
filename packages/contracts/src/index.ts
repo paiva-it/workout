@@ -8,7 +8,7 @@ export interface Video { id: string; provider: 'youtube'; youtubeId: string; url
 export interface Exercise {
   id: string; version: number; name: string; primaryMuscles: string[]; secondaryMuscles: string[]; movementPattern: string;
   equipment: string[]; metric: 'reps' | 'duration'; laterality: 'bilateral' | 'separate_sides';
-  repsMeaning: 'per_side' | 'simultaneous_repetitions' | 'seconds'; defaultLoadBasis: Load['basis']; defaultImplementCount: number;
+  repsMeaning: 'per_side' | 'simultaneous_repetitions' | 'seconds' | 'alternating_total'; defaultLoadBasis: Load['basis']; defaultImplementCount: number;
   videoId: string; cues: string[]; regression: string; archived: boolean;
 }
 export interface PlanItem {
@@ -17,10 +17,17 @@ export interface PlanItem {
   restSeconds: number; restAfter: 'both_sides' | 'set'; targetRir: [number, number] | null; optional: boolean; defaultVariant: string; notes: string;
 }
 export interface WarmupStep { id: string; label: string; durationSeconds?: number; reps?: number; notes: string }
+export type SectionRole = 'pulse_raise' | 'mobility' | 'rehearsal' | 'easy_movement' | 'stretch';
+/** Schema 2: an exercise-linked warm-up/cooldown activity. Never a working set. */
+export interface SectionStep {
+  id: string; exerciseId: string; exerciseVersion: number; sets: number; target: PlanItem['target'];
+  restSeconds: number; restAfter: 'both_sides' | 'set'; defaultVariant: string; role: SectionRole; linkedWorkoutItemId: string | null; notes: string;
+}
+export const isSectionStep = (s: WarmupStep | SectionStep): s is SectionStep => 'exerciseId' in s;
 export interface Plan {
   id: string; version: number; name: string; kind: 'restart' | 'focus' | 'recovery'; focus: string[]; estimatedDurationMinutes: [number, number];
-  exampleVideoId: string; exampleVideoLabel: string; warmup: { durationMinutes: [number, number]; videoId: string; steps: WarmupStep[] };
-  items: PlanItem[]; cooldown: { durationMinutes: [number, number]; instructions: string[] }; notes: string[]; archived: boolean;
+  exampleVideoId: string; exampleVideoLabel: string; warmup: { durationMinutes: [number, number]; videoId: string; steps: WarmupStep[] | SectionStep[] };
+  items: PlanItem[]; cooldown: { durationMinutes: [number, number]; instructions: string[]; steps?: SectionStep[] }; notes: string[]; archived: boolean;
 }
 export interface ScheduleEntry { weekday: Weekday; planId: string; fullRestAllowed?: boolean }
 export interface Phase {
@@ -32,7 +39,7 @@ export interface Program {
   schedule?: ScheduleEntry[]; phases: Phase[]; transitionPolicy?: string; missedDayPolicy?: string;
 }
 export interface TrainingPack {
-  schemaVersion: 1; packId: string; version: number; title: string; createdOn: string; language: 'en-US'; units: 'kg';
+  schemaVersion: 1 | 2; packId: string; version: number; title: string; createdOn: string; language: 'en-US'; units: 'kg';
   description: string; assumptions: string[]; videos: Video[]; exercises: Exercise[]; plans: Plan[]; programs: Program[];
 }
 
@@ -110,9 +117,11 @@ export function applyPhase(item: PlanItem, phase: Pick<Phase, 'workingSetCap' | 
 
 export interface ProgramSelection { programId: string | null; startDate: string | null; heldPhaseIndex: number | null }
 export interface ProgramPosition { programId: string; programVersion: number; programWeek: number; phaseIndex: number; phase: Phase; schedule: ScheduleEntry[] }
+/** One open-ended phase: nothing changes week to week, so no start date or phase controls are needed. */
+export const isFixedProgram = (p: Program) => p.phases.length === 1 && p.phases[0].weeks[0] === 1 && p.phases[0].weeks[1] === null;
 export function programPosition(program: Program, sel: ProgramSelection, today: string): ProgramPosition | null {
-  if (!sel.startDate) return null;
-  const week = programWeek(sel.startDate, today);
+  if (!sel.startDate && !isFixedProgram(program)) return null;
+  const week = sel.startDate ? programWeek(sel.startDate, today) : 1;
   const phaseIndex = sel.heldPhaseIndex != null && program.phases[sel.heldPhaseIndex] ? sel.heldPhaseIndex : phaseIndexForWeek(program, week);
   const phase = program.phases[phaseIndex];
   // A held phase uses its own first week for alternation so the schedule stays defined.
