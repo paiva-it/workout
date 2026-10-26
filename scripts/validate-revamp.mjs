@@ -8,10 +8,12 @@ import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = p => JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));
-const baseline = read('data/training-pack.v1.json');
+const original = read('data/training-pack.v1.json');
+const baseline = read('data/training-pack.v2.json');
 const v1schema = read('contracts/training-pack.schema.json');
 const v2schema = read('contracts/training-pack.v2.schema.json');
-const input = process.argv[2] ? path.resolve(process.argv[2]) : path.join(root,'data/training-pack.v2.json');
+const v3schema = read('contracts/training-pack.v3.schema.json');
+const input = process.argv[2] ? path.resolve(process.argv[2]) : path.join(root,'data/training-pack.v3.json');
 const pack = JSON.parse(fs.readFileSync(input,'utf8'));
 const canonical = x => JSON.stringify(x && typeof x === 'object' ? Array.isArray(x) ? x.map(y=>JSON.parse(canonical(y))) : Object.fromEntries(Object.keys(x).sort().map(k=>[k,JSON.parse(canonical(x[k]))])) : x);
 function structural(value, rule, schema, at='$') {
@@ -69,7 +71,7 @@ function noUnsafeText(x,where='$') {
   }
 }
 function check(p) {
-  structural(p,v2schema,v2schema);
+  structural(p,v3schema,v3schema);
   assert(Buffer.byteLength(JSON.stringify(p)) <= 2*1024*1024,'file size');
   noUnsafeText(p);
   assert(p.packId===baseline.packId && p.version===baseline.version+1,'pack identity/version');
@@ -110,6 +112,40 @@ function check(p) {
       }
     }
   }
+  const blockIds=new Set();let blockCount=0,logicalSets=0,actualRows=0;
+  const expected={arms:[3,16,19],chest:[3,12,15],legs:[3,13,17],core:[2,12,16]};
+  for(const plan of ps.values()) {
+    const items=new Map(plan.items.map(i=>[i.id,i]));
+    const flattened=[];let logical=0,rows=0;
+    assert.equal(plan.version,expected[plan.id][0],'plan version');
+    for(const b of plan.workoutBlocks) {
+      assert(!blockIds.has(b.id) && !occurrenceIds.has(b.id),'duplicate/colliding block ID');blockIds.add(b.id);blockCount++;
+      assert(b.itemIds.length>=2 && b.itemIds.length<=3,'group must contain 2-3 exercises in this pack');
+      for(const id of b.itemIds) {
+        assert(items.has(id),'dangling block member');assert(!flattened.includes(id),'duplicate block member');flattened.push(id);
+        const item=items.get(id);assert.equal(item.workingSets,b.rounds,'rounds must equal prescribed sets');
+        logical+=b.rounds;rows+=b.rounds*(item.target.perSide?2:1);
+      }
+      // Exercise one exact execution sequence. This is one set per member/round,
+      // never rounds times workingSets. Only ONE rest boundary is emitted.
+      const events=[];
+      for(let round=1;round<=b.rounds;round++) for(let j=0;j<b.itemIds.length;j++) {
+        const type=j<b.itemIds.length-1?'exercise':round<b.rounds?'round':'block';
+        const seconds=type==='exercise'?b.restBetweenExercisesSeconds:type==='round'?b.restBetweenRoundsSeconds:b.restAfterBlockSeconds;
+        events.push({round,itemId:b.itemIds[j],type,seconds});
+      }
+      assert.equal(events.length,b.rounds*b.itemIds.length,'duplicated execution visits');
+      assert.equal(events.filter(e=>e.type==='round').length,b.rounds-1,'round timer boundaries');
+      assert.equal(events.filter(e=>e.type==='block').length,1,'block timer boundaries');
+    }
+    assert.deepEqual(flattened,plan.items.map(i=>i.id),'every item once in execution order');
+    assert.equal(plan.workoutBlocks.at(-1).restAfterBlockSeconds,0,'last workout block has no further work rest');
+    assert.equal(logical,expected[plan.id][1],'logical set allocation');assert.equal(rows,expected[plan.id][2],'side row allocation');
+    logicalSets+=logical;actualRows+=rows;
+  }
+  assert.equal(blockCount,10,'ten blocks');
+  assert.equal(canonical(p.programs),canonical(baseline.programs),'fixed program unchanged');
+  assert.equal(canonical(p.videos),canonical(baseline.videos),'videos unchanged');
   assert(gs.size===1 && gs.has('return-to-training'),'one stable program');
   for(const g of gs.values()) {
     assert(g.phases.length===1,'no phased progression');const ph=g.phases[0];
@@ -128,12 +164,26 @@ function check(p) {
     }
     if(name==='exercises')for(const [id,e] of old)assert.equal(canonical(current.get(id)),canonical(e),`reused exercise changed ${id}`);
   }
-  return {plans:ps.size,exercises:es.size,videos:vs.size,programs:gs.size,sectionSteps:p.plans.reduce((n,p)=>n+p.warmup.steps.length+p.cooldown.steps.length,0),workItems:p.plans.reduce((n,p)=>n+p.items.length,0)};
+  return {blocks:blockCount,logicalWorkingSets:logicalSets,actualWorkingRows:actualRows,plans:ps.size,exercises:es.size,videos:vs.size,programs:gs.size,sectionSteps:p.plans.reduce((n,p)=>n+p.warmup.steps.length+p.cooldown.steps.length,0),workItems:p.plans.reduce((n,p)=>n+p.items.length,0)};
 }
-structural(baseline,v1schema,v1schema);
+structural(original,v1schema,v1schema);
+structural(baseline,v2schema,v2schema);
 assert.throws(()=>structural(pack,v1schema,v1schema),'v1 must reject new format');
+assert.throws(()=>structural(pack,v2schema,v2schema),'v2 must reject new format');
 const result=check(pack);
 const negativeTests=[
+ ['missing workout blocks',p=>{delete p.plans[0].workoutBlocks;}],
+ ['dangling block member',p=>{p.plans[0].workoutBlocks[0].itemIds[0]='not-a-work-item';}],
+ ['duplicate block member',p=>{p.plans[0].workoutBlocks[1].itemIds[0]=p.plans[0].workoutBlocks[0].itemIds[0];}],
+ ['missing block membership',p=>{p.plans[0].workoutBlocks.pop();}],
+ ['reordered block members',p=>{p.plans[0].workoutBlocks[0].itemIds.reverse();}],
+ ['round count disagrees with sets',p=>{p.plans[0].workoutBlocks[0].rounds=4;}],
+ ['fractional round count',p=>{p.plans[0].workoutBlocks[0].rounds=2.5;}],
+ ['negative rest',p=>{p.plans[0].workoutBlocks[0].restBetweenRoundsSeconds=-5;}],
+ ['duplicate block id',p=>{p.plans[0].workoutBlocks[1].id=p.plans[0].workoutBlocks[0].id;}],
+ ['same-version grouped plan edit',p=>{p.plans[0].version=2;}],
+ ['extra final work rest',p=>{p.plans[0].workoutBlocks.at(-1).restAfterBlockSeconds=120;}],
+
  ['unknown field',p=>{p.plans[0].cooldown.extra='bad';}],
  ['missing cooldown exercise',p=>{p.plans[0].cooldown.steps[0].exerciseId='missing-exercise';}],
  ['wrong exercise version',p=>{p.plans[0].warmup.steps[0].exerciseVersion=999;}],
@@ -146,5 +196,5 @@ const negativeTests=[
  ['private calf video',p=>{const v=p.videos.find(v=>v.id==='v-calf');v.youtubeId='PQ-F5uzxipQ';v.url=`https://www.youtube.com/watch?v=${v.youtubeId}`;}],
  ['reintroduced phase cap',p=>{p.programs[0].phases[0].workingSetCap=1;}],
 ];
-for(const [label,mutate] of negativeTests){const clone=structuredClone(pack);mutate(clone);assert.throws(()=>check(clone),label);}
-console.log(JSON.stringify({status:'PASS',...result,unchangedExistingExercises:baseline.exercises.length,negativeTests:negativeTests.length,v1Compatibility:'PASS',v2RejectedByV1:'PASS',checks:'Supplied schema keyword constraints, reference integrity, fixed program, safe text and immutable version rules'},null,2));
+for(const [label,mutate] of negativeTests){const clone=structuredClone(pack);mutate(clone);assert.throws(()=>check(clone),{name:'AssertionError'},label);}
+console.log(JSON.stringify({status:'PASS',...result,unchangedExistingExercises:baseline.exercises.length,negativeTests:negativeTests.length,v1Compatibility:'PASS',v2Compatibility:'PASS',v3RejectedByOlderSchemas:'PASS',checks:'Supplied schema constraints, block membership, round/side allocation, timer boundaries, reference integrity and immutable versions'},null,2));

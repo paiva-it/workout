@@ -1,0 +1,3626 @@
+{
+  "schemaVersion": 3,
+  "packId": "home-return-foundation",
+  "version": 3,
+  "title": "Training Paiva - Four fixed workouts in rounds",
+  "createdOn": "2026-10-25",
+  "language": "en-US",
+  "units": "kg",
+  "description": "Four fixed home sessions with individual warm-up and cooldown activities. The workout is organized into exercise blocks repeated for a stated number of rounds. Weights remain manually selected; there are no staged progression phases.",
+  "assumptions": [
+    "Dumbbells, a stable flat bench or seat, floor space and a wall or fixed support.",
+    "No adjustable bench, barbell, squat rack, cable machine or step platform is required.",
+    "Use only comfortable controlled movements and loads that can be positioned safely."
+  ],
+  "videos": [
+    {
+      "id": "v-bench",
+      "provider": "youtube",
+      "youtubeId": "622ku8i0M14",
+      "url": "https://www.youtube.com/watch?v=622ku8i0M14",
+      "title": "My Tricks: Dumbbell Bench Press",
+      "channel": "ScottHermanFitness",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-floor",
+      "provider": "youtube",
+      "youtubeId": "T0Y3OBF1bNI",
+      "url": "https://www.youtube.com/watch?v=T0Y3OBF1bNI",
+      "title": "How To Do A Dumbbell Floor Press",
+      "channel": "PureGym",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-incline-pushup",
+      "provider": "youtube",
+      "youtubeId": "0JUrOH--Kdk",
+      "url": "https://www.youtube.com/watch?v=0JUrOH--Kdk",
+      "title": "How to do an Incline Push-Up | Proper Form & Technique | NASM",
+      "channel": "National Academy of Sports Medicine (NASM)",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-row",
+      "provider": "youtube",
+      "youtubeId": "pYcpY20QaE8",
+      "url": "https://www.youtube.com/watch?v=pYcpY20QaE8",
+      "title": "How To: Dumbbell Bent-Over Row (Single-Arm)",
+      "channel": "ScottHermanFitness",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-reverse-fly",
+      "provider": "youtube",
+      "youtubeId": "evXOlgLTPCw",
+      "url": "https://www.youtube.com/watch?v=evXOlgLTPCw",
+      "title": "Bent Over Dumbbell Reverse Fly",
+      "channel": "daniellagimodierept",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-shrug",
+      "provider": "youtube",
+      "youtubeId": "cJRVVxmytaM",
+      "url": "https://www.youtube.com/watch?v=cJRVVxmytaM",
+      "title": "How To: Dumbbell Shrugs",
+      "channel": "ScottHermanFitness",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-squat",
+      "provider": "youtube",
+      "youtubeId": "9KzZD_n2r64",
+      "url": "https://www.youtube.com/watch?v=9KzZD_n2r64",
+      "title": "How to Goblet Squat - The Complete Guide for Beginners",
+      "channel": "Naomi Kong",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-rdl",
+      "provider": "youtube",
+      "youtubeId": "ndfZi5fDaVM",
+      "url": "https://www.youtube.com/watch?v=ndfZi5fDaVM",
+      "title": "Dumbbell RDL | Romanian Deadlift Tutorial",
+      "channel": "Lift With Michelle - Exercise Form Tutorials",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-lunge",
+      "provider": "youtube",
+      "youtubeId": "C_P3Q-PssvY",
+      "url": "https://www.youtube.com/watch?v=C_P3Q-PssvY",
+      "title": "How To Do A Reverse Lunge | The Right Way | Well+Good",
+      "channel": "Well+Good",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Reverse-lunge technique; start with bodyweight and a stable hand support, then add load only when balanced."
+    },
+    {
+      "id": "v-calf",
+      "provider": "youtube",
+      "youtubeId": "mD-HtAMNM7c",
+      "url": "https://www.youtube.com/watch?v=mD-HtAMNM7c",
+      "title": "A1 | Calf Raises (Floor)",
+      "channel": "Physio REHAB",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Floor calf-raise demonstration replacing the previously private link. The plan sets all training targets. Playback and embed availability require a browser check."
+    },
+    {
+      "id": "v-press",
+      "provider": "youtube",
+      "youtubeId": "wO0l5jW2NtQ",
+      "url": "https://www.youtube.com/watch?v=wO0l5jW2NtQ",
+      "title": "How to do a Standing Dumbbell Shoulder Press!",
+      "channel": "Elite Performance",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-lateral",
+      "provider": "youtube",
+      "youtubeId": "PzsMitRdI_8",
+      "url": "https://www.youtube.com/watch?v=PzsMitRdI_8",
+      "title": "How to do the DUMBBELL LATERAL RAISE! | 2 Minute Tutorial",
+      "channel": "Max Euceda",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-curl",
+      "provider": "youtube",
+      "youtubeId": "in7PaeYlhrM",
+      "url": "https://www.youtube.com/watch?v=in7PaeYlhrM",
+      "title": "The ONLY Way You Should Be Doing Dumbbell Bicep Curls!",
+      "channel": "Mind Pump TV",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Technique reference; the title is the creator's wording, not a claim that only one curl technique is valid."
+    },
+    {
+      "id": "v-hammer",
+      "provider": "youtube",
+      "youtubeId": "BRVDS6HVR9Q",
+      "url": "https://www.youtube.com/watch?v=BRVDS6HVR9Q",
+      "title": "How To Perform HAMMER CURLS | Biceps Exercise Tutorial",
+      "channel": "Buff Dudes Workouts",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-triceps",
+      "provider": "youtube",
+      "youtubeId": "m58XEsPojZU",
+      "url": "https://www.youtube.com/watch?v=m58XEsPojZU",
+      "title": "Dumbbell Triceps Extension on Floor",
+      "channel": "Ames Elite Fitness",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-close-floor",
+      "provider": "youtube",
+      "youtubeId": "AOGkkhMhebQ",
+      "url": "https://www.youtube.com/watch?v=AOGkkhMhebQ",
+      "title": "Close-Grip Dumbbell Chest Press (On The Floor) (Tutorial + Tips) | Team Evolve",
+      "channel": "Vivian Ngo",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-deadbug",
+      "provider": "youtube",
+      "youtubeId": "BZYaCzbP09M",
+      "url": "https://www.youtube.com/watch?v=BZYaCzbP09M",
+      "title": "Dead Bug",
+      "channel": "E3 Rehab Exercise Library",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-sideplank",
+      "provider": "youtube",
+      "youtubeId": "ZpBJIRLGEgg",
+      "url": "https://www.youtube.com/watch?v=ZpBJIRLGEgg",
+      "title": "How to do a Side Plank",
+      "channel": "National Academy of Sports Medicine (NASM)",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Side-plank technique. Start with bent knees if the straight-leg version is too difficult."
+    },
+    {
+      "id": "v-bridge",
+      "provider": "youtube",
+      "youtubeId": "SKOMwg1JLrU",
+      "url": "https://www.youtube.com/watch?v=SKOMwg1JLrU",
+      "title": "How to do a Glute bridge",
+      "channel": "National Academy of Sports Medicine (NASM)",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise tutorial; use this pack for sets, reps and effort."
+    },
+    {
+      "id": "v-warmup",
+      "provider": "youtube",
+      "youtubeId": "hcO3QfAQdnk",
+      "url": "https://www.youtube.com/watch?v=hcO3QfAQdnk",
+      "title": "5-minute warm-up for beginners // no jumping, easy on the knees | Beginner workout | Tina Halder",
+      "channel": "Tina Halder",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "General low-impact warm-up reference, not a video of these complete plans. Follow the plan for selected exercises and all targets. Replacement for the previously non-embeddable NHS reference; embedding is not yet verified."
+    },
+    {
+      "id": "v-pushup-floor",
+      "provider": "youtube",
+      "youtubeId": "WDIpL0pjun0",
+      "url": "https://www.youtube.com/watch?v=WDIpL0pjun0",
+      "title": "How to do a Push-Up | Proper Form & Technique | NASM",
+      "channel": "National Academy of Sports Medicine (NASM)",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-seated-press",
+      "provider": "youtube",
+      "youtubeId": "rO_iEImwHyo",
+      "url": "https://www.youtube.com/watch?v=rO_iEImwHyo",
+      "title": "How to do the SEATED DUMBBELL SHOULDER PRESS! | 2 Minute Tutorial",
+      "channel": "Max Euceda",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "General seated-press technique reference; a backrest may be shown. This plan uses a stable flat seat, light controllable loads and no backward lean. The plan sets all training targets."
+    },
+    {
+      "id": "v-seated-rear-fly",
+      "provider": "youtube",
+      "youtubeId": "YMT4Ij5Sn3I",
+      "url": "https://www.youtube.com/watch?v=YMT4Ij5Sn3I",
+      "title": "Seated Dumbbell Rear Delt Fly Technique",
+      "channel": "HurricaneGH",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-french-extension",
+      "provider": "youtube",
+      "youtubeId": "T1EO7u2n7WU",
+      "url": "https://www.youtube.com/watch?v=T1EO7u2n7WU",
+      "title": "Dumbbell Overhead Triceps Extension ( Seated ) | How To | Proper Form & Technique",
+      "channel": "FITTR",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-split-squat",
+      "provider": "youtube",
+      "youtubeId": "Wcmg-3iHwjQ",
+      "url": "https://www.youtube.com/watch?v=Wcmg-3iHwjQ",
+      "title": "Dumbbell Split Squat",
+      "channel": "OPEX Fitness",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Split-squat technique reference. Omit dumbbells for the supported bodyweight alternative. Both feet remain on the floor. The plan sets all training targets."
+    },
+    {
+      "id": "v-db-bridge",
+      "provider": "youtube",
+      "youtubeId": "cruqsnAyU6A",
+      "url": "https://www.youtube.com/watch?v=cruqsnAyU6A",
+      "title": "How To Do A Glute Bridge With A Dumbbell",
+      "channel": "PureGym",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-db-one-leg-calf",
+      "provider": "youtube",
+      "youtubeId": "RodSTSylf94",
+      "url": "https://www.youtube.com/watch?v=RodSTSylf94",
+      "title": "How To: Standing Single Dumbbell Single Leg Calf Raise",
+      "channel": "Live Lean TV Daily Exercises",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Single-leg loaded calf-raise demonstration. Use the flat floor and a fixed hand support in this plan, even if a raised surface is shown. The plan sets all training targets."
+    },
+    {
+      "id": "v-one-leg-calf",
+      "provider": "youtube",
+      "youtubeId": "IphGZ8OlfYg",
+      "url": "https://www.youtube.com/watch?v=IphGZ8OlfYg",
+      "title": "How To Do A Single Leg Calf Raise",
+      "channel": "PureGym",
+      "checkedOn": "2026-10-25",
+      "verification": "search_metadata_matched",
+      "playbackVerified": false,
+      "embeddingVerified": false,
+      "usageNote": "Single-leg calf-raise technique reference. Use the flat floor and a fixed hand support in this plan. The plan sets all training targets."
+    },
+    {
+      "id": "v-crunch",
+      "provider": "youtube",
+      "youtubeId": "AREJ8xla1dA",
+      "url": "https://www.youtube.com/watch?v=AREJ8xla1dA",
+      "title": "How To Do Crunch | Exercise Demo",
+      "channel": "OriGym",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-reverse-crunch",
+      "provider": "youtube",
+      "youtubeId": "XY8KzdDcMFg",
+      "url": "https://www.youtube.com/watch?v=XY8KzdDcMFg",
+      "title": "How To Do A Reverse Crunch",
+      "channel": "PureGym",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-heel-touch",
+      "provider": "youtube",
+      "youtubeId": "J9eSDQh3P1o",
+      "url": "https://www.youtube.com/watch?v=J9eSDQh3P1o",
+      "title": "How to do Alternate Heel Touches | Joanna Soh",
+      "channel": "Joanna Soh",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-shoulder-tap",
+      "provider": "youtube",
+      "youtubeId": "tlCzSdn3Yy8",
+      "url": "https://www.youtube.com/watch?v=tlCzSdn3Yy8",
+      "title": "How To: Plank With Shoulder Taps",
+      "channel": "SATS Nordic",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-march",
+      "provider": "youtube",
+      "youtubeId": "u1gmWFvEluM",
+      "url": "https://www.youtube.com/watch?v=u1gmWFvEluM",
+      "title": "Marching in Place Demonstrated by a Physical Therapist",
+      "channel": "Margaret Martin, Physical Therapist",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-arm-circles",
+      "provider": "youtube",
+      "youtubeId": "mwDgFY86zck",
+      "url": "https://www.youtube.com/watch?v=mwDgFY86zck",
+      "title": "Workout WARM-UP | ARM CIRCLES",
+      "channel": "The Hybrid Athlete",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-trunk-turn",
+      "provider": "youtube",
+      "youtubeId": "haWuH3LRFI4",
+      "url": "https://www.youtube.com/watch?v=haWuH3LRFI4",
+      "title": "Active Dynamic Warm Up Exercise - Standing Trunk Twists",
+      "channel": "BPC Performance Coaching",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-scap-squeeze",
+      "provider": "youtube",
+      "youtubeId": "u_7VgcoVbpQ",
+      "url": "https://www.youtube.com/watch?v=u_7VgcoVbpQ",
+      "title": "Shoulder Blade Squeeze - Your Exercise Solution (YES)",
+      "channel": "Arthritis Foundation",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-hip-hinge",
+      "provider": "youtube",
+      "youtubeId": "vauqqYoLKvw",
+      "url": "https://www.youtube.com/watch?v=vauqqYoLKvw",
+      "title": "Bodyweight Hip Hinge - Master the Foundation of Strength",
+      "channel": "Train With Cuz",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-body-squat",
+      "provider": "youtube",
+      "youtubeId": "P-yaD24bUE8",
+      "url": "https://www.youtube.com/watch?v=P-yaD24bUE8",
+      "title": "Bodyweight Squat Tutorial - Proper Form and Technique",
+      "channel": "Runna",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-lateral-mobility",
+      "provider": "youtube",
+      "youtubeId": "9fJe3EGJcK8",
+      "url": "https://www.youtube.com/watch?v=9fJe3EGJcK8",
+      "title": "Resilient Performance - Lateral Lunge Warm-Up",
+      "channel": "Resilient Performance Physical Therapy",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-dynamic-hamstring",
+      "provider": "youtube",
+      "youtubeId": "4iOM99qao80",
+      "url": "https://www.youtube.com/watch?v=4iOM99qao80",
+      "title": "(Dynamic Stretch) Half kneeling hamstring stretch",
+      "channel": "HMD",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-cat-camel",
+      "provider": "youtube",
+      "youtubeId": "JJkjIKlimW8",
+      "url": "https://www.youtube.com/watch?v=JJkjIKlimW8",
+      "title": "Cat & Camel",
+      "channel": "Royal Free London NHS Foundation Trust",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-cross-shoulder",
+      "provider": "youtube",
+      "youtubeId": "qKVUpzCu7OU",
+      "url": "https://www.youtube.com/watch?v=qKVUpzCu7OU",
+      "title": "Cross-Body Shoulder Stretch - release tight shoulders and improve mobility",
+      "channel": "Keka Rehab Services",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-triceps-stretch",
+      "provider": "youtube",
+      "youtubeId": "cPTrm13hSSo",
+      "url": "https://www.youtube.com/watch?v=cPTrm13hSSo",
+      "title": "How To Do Overhead Tricep Stretch",
+      "channel": "PureGym",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-chest-stretch",
+      "provider": "youtube",
+      "youtubeId": "jftkCSSW7y8",
+      "url": "https://www.youtube.com/watch?v=jftkCSSW7y8",
+      "title": "Doorway Chest Stretch",
+      "channel": "NHS University Hospitals of Northamptonshire",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-quad-stretch",
+      "provider": "youtube",
+      "youtubeId": "Ztwz8rrDShk",
+      "url": "https://www.youtube.com/watch?v=Ztwz8rrDShk",
+      "title": "How to Stretch the Quadriceps - Standing Quad Stretch",
+      "channel": "NAT Global Campus",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-calf-stretch",
+      "provider": "youtube",
+      "youtubeId": "trC42QD0wQI",
+      "url": "https://www.youtube.com/watch?v=trC42QD0wQI",
+      "title": "Calf Stretch",
+      "channel": "Sheffield Teaching Hospitals NHS Foundation Trust",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-hip-flexor-stretch",
+      "provider": "youtube",
+      "youtubeId": "F55tzqJggAY",
+      "url": "https://www.youtube.com/watch?v=F55tzqJggAY",
+      "title": "Half Kneeling Hip Flexor Stretch | B3 Physical Therapy",
+      "channel": "Cara Giusti, PT, DPT",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    },
+    {
+      "id": "v-child-pose",
+      "provider": "youtube",
+      "youtubeId": "kH12QrSGedM",
+      "url": "https://www.youtube.com/watch?v=kH12QrSGedM",
+      "title": "Child Pose",
+      "channel": "Baptist Health",
+      "checkedOn": "2026-10-25",
+      "verification": "playback_checked",
+      "playbackVerified": true,
+      "embeddingVerified": true,
+      "usageNote": "Exact exercise demonstration. The plan sets the sets, repetitions, duration and effort."
+    }
+  ],
+  "exercises": [
+    {
+      "id": "db-bench-press",
+      "version": 1,
+      "name": "Dumbbell bench press",
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "triceps",
+        "anterior_deltoids"
+      ],
+      "movementPattern": "horizontal_push",
+      "equipment": [
+        "dumbbells",
+        "flat_bench"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-bench",
+      "cues": [
+        "Plant both feet and keep the bench stable.",
+        "Keep wrists stacked over forearms; lower under control.",
+        "Keep elbows roughly 30-60 degrees from the torso; use a comfortable depth.",
+        "Use only dumbbells you can position and put down safely."
+      ],
+      "regression": "Use the dumbbell floor press instead; record the changed exercise ID.",
+      "archived": false
+    },
+    {
+      "id": "db-floor-press",
+      "version": 1,
+      "name": "Neutral-grip dumbbell floor press",
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "triceps",
+        "anterior_deltoids"
+      ],
+      "movementPattern": "horizontal_push",
+      "equipment": [
+        "dumbbells",
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-floor",
+      "cues": [
+        "Palms face each other; keep wrists straight.",
+        "Let upper arms touch the floor softly; do not bounce.",
+        "Press smoothly; stop before repetitions become a grind."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "incline-pushup",
+      "version": 1,
+      "name": "Incline push-up",
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "triceps",
+        "anterior_deltoids",
+        "core"
+      ],
+      "movementPattern": "horizontal_push",
+      "equipment": [
+        "stable_support"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-incline-pushup",
+      "cues": [
+        "Use a fixed surface that cannot slide or tip.",
+        "Keep head, trunk and hips in one line.",
+        "Lower the chest toward the support, then push away.",
+        "Record support height or support description every session."
+      ],
+      "regression": "Use a higher fixed surface or a wall. A loose chair is not a safe support.",
+      "archived": false
+    },
+    {
+      "id": "db-supported-row",
+      "version": 1,
+      "name": "Bench-supported single-arm dumbbell row",
+      "primaryMuscles": [
+        "lats",
+        "upper_back"
+      ],
+      "secondaryMuscles": [
+        "biceps",
+        "rear_deltoids"
+      ],
+      "movementPattern": "horizontal_pull",
+      "equipment": [
+        "dumbbell",
+        "flat_bench"
+      ],
+      "metric": "reps",
+      "laterality": "separate_sides",
+      "repsMeaning": "per_side",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 1,
+      "videoId": "v-row",
+      "cues": [
+        "Support yourself on a stable bench; keep the trunk quiet.",
+        "Row the elbow toward the hip without twisting.",
+        "Lower smoothly and use the same range on both sides."
+      ],
+      "regression": "Use a lighter dumbbell; rest between sides if needed.",
+      "archived": false
+    },
+    {
+      "id": "db-reverse-fly",
+      "version": 1,
+      "name": "Bent-over dumbbell reverse fly",
+      "primaryMuscles": [
+        "rear_deltoids",
+        "upper_back"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "horizontal_abduction",
+      "equipment": [
+        "dumbbells"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-reverse-fly",
+      "cues": [
+        "Use very light weights and a stable hip hinge.",
+        "Keep elbows softly bent; open the arms without swinging.",
+        "Stop around torso level; keep the neck relaxed."
+      ],
+      "regression": "Use no added weight. If the bent-over position hurts, omit and add no replacement sets.",
+      "archived": false
+    },
+    {
+      "id": "db-shrug",
+      "version": 1,
+      "name": "Dumbbell shrug",
+      "primaryMuscles": [
+        "upper_trapezius"
+      ],
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "movementPattern": "scapular_elevation",
+      "equipment": [
+        "dumbbells"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-shrug",
+      "cues": [
+        "Stand tall and lift the shoulders straight up.",
+        "Pause briefly, then lower; do not roll the shoulders."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "goblet-squat",
+      "version": 1,
+      "name": "Goblet squat",
+      "primaryMuscles": [
+        "quadriceps",
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "core"
+      ],
+      "movementPattern": "squat",
+      "equipment": [
+        "dumbbell"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "single_dumbbell",
+      "defaultImplementCount": 1,
+      "videoId": "v-squat",
+      "cues": [
+        "Hold one secure dumbbell close to the chest.",
+        "Keep the whole foot planted and let knees track with toes.",
+        "Squat only as low as you can control comfortably."
+      ],
+      "regression": "Unloaded squat to a stable bench or sit-to-stand; record the bodyweight variant.",
+      "archived": false
+    },
+    {
+      "id": "db-rdl",
+      "version": 1,
+      "name": "Dumbbell Romanian deadlift",
+      "primaryMuscles": [
+        "hamstrings",
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "spinal_erectors",
+        "forearms"
+      ],
+      "movementPattern": "hinge",
+      "equipment": [
+        "dumbbells"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-rdl",
+      "cues": [
+        "Keep a soft knee bend and send the hips backward.",
+        "Keep the weights close and the spine comfortable and steady.",
+        "Stop at a hamstring stretch before your lower back rounds; floor contact is unnecessary.",
+        "Stand tall without leaning backward."
+      ],
+      "regression": "Rehearse unloaded hip hinges. If uncomfortable, use a bodyweight glute bridge with its own exercise ID.",
+      "archived": false
+    },
+    {
+      "id": "reverse-lunge",
+      "version": 1,
+      "name": "Reverse lunge",
+      "primaryMuscles": [
+        "quadriceps",
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "core"
+      ],
+      "movementPattern": "single_leg",
+      "equipment": [
+        "floor_space",
+        "stable_support"
+      ],
+      "metric": "reps",
+      "laterality": "separate_sides",
+      "repsMeaning": "per_side",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-lunge",
+      "cues": [
+        "Start unloaded, with light hand support if needed.",
+        "Step back and lower smoothly through a comfortable range.",
+        "Push through the front foot to stand; keep the movement balanced.",
+        "Log left and right separately; the side is the front working leg."
+      ],
+      "regression": "Use a shorter comfortable range with hand support, or substitute the goblet-squat bodyweight variant.",
+      "archived": false
+    },
+    {
+      "id": "calf-raise",
+      "version": 1,
+      "name": "Standing calf raise on floor",
+      "primaryMuscles": [
+        "calves"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "plantar_flexion",
+      "equipment": [
+        "floor_space",
+        "stable_support"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-calf",
+      "cues": [
+        "Use a stable support for balance.",
+        "Rise smoothly, pause, and lower slowly on the flat floor.",
+        "Begin bodyweight; later use one dumbbell and retain the same support."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "db-standing-press",
+      "version": 1,
+      "name": "Standing dumbbell shoulder press",
+      "primaryMuscles": [
+        "deltoids"
+      ],
+      "secondaryMuscles": [
+        "triceps",
+        "core"
+      ],
+      "movementPattern": "vertical_push",
+      "equipment": [
+        "dumbbells"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-press",
+      "cues": [
+        "Keep ribs over hips and knees relaxed.",
+        "Start with elbows slightly in front of the torso.",
+        "Press in a comfortable path without leaning backward."
+      ],
+      "regression": "Use lighter weights. If overhead motion is painful, omit it and seek assessment rather than forcing the movement.",
+      "archived": false
+    },
+    {
+      "id": "db-lateral-raise",
+      "version": 1,
+      "name": "Dumbbell lateral raise",
+      "primaryMuscles": [
+        "lateral_deltoids"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "shoulder_abduction",
+      "equipment": [
+        "dumbbells"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-lateral",
+      "cues": [
+        "Use light weights with a small elbow bend.",
+        "Raise slightly forward of your sides to about shoulder level if comfortable.",
+        "Keep thumbs neutral or slightly upward; avoid swinging."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "db-curl",
+      "version": 1,
+      "name": "Standing dumbbell curl",
+      "primaryMuscles": [
+        "biceps"
+      ],
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "movementPattern": "elbow_flexion",
+      "equipment": [
+        "dumbbells"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-curl",
+      "cues": [
+        "Curl both arms together; count one simultaneous repetition as one rep.",
+        "Keep the upper arms quiet and wrists comfortable.",
+        "Lower under control without leaning or swinging."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "db-hammer-curl",
+      "version": 1,
+      "name": "Dumbbell hammer curl",
+      "primaryMuscles": [
+        "brachialis",
+        "biceps"
+      ],
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "movementPattern": "elbow_flexion",
+      "equipment": [
+        "dumbbells"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-hammer",
+      "cues": [
+        "Keep palms facing each other and curl both arms together.",
+        "Count one simultaneous repetition as one rep.",
+        "Keep elbows close to the torso; do not swing."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "db-floor-triceps-extension",
+      "version": 1,
+      "name": "Dumbbell triceps extension on floor",
+      "primaryMuscles": [
+        "triceps"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "elbow_extension",
+      "equipment": [
+        "dumbbells",
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-triceps",
+      "cues": [
+        "Use light dumbbells and a secure grip.",
+        "Bend at the elbows with the upper arms steady.",
+        "Keep the weights away from your face and move slowly."
+      ],
+      "regression": "If elbows are uncomfortable, omit this exercise; keep only the pain-free close-grip floor press already in the plan.",
+      "archived": false
+    },
+    {
+      "id": "db-close-floor-press",
+      "version": 1,
+      "name": "Close-grip dumbbell floor press",
+      "primaryMuscles": [
+        "triceps",
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "anterior_deltoids"
+      ],
+      "movementPattern": "horizontal_push",
+      "equipment": [
+        "dumbbells",
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-close-floor",
+      "cues": [
+        "Use a neutral grip and keep elbows comfortably close.",
+        "Lower gently until upper arms touch the floor.",
+        "Do not bang the dumbbells together or bounce the elbows."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "dead-bug",
+      "version": 1,
+      "name": "Dead bug",
+      "primaryMuscles": [
+        "core"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "anti_extension",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "separate_sides",
+      "repsMeaning": "per_side",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-deadbug",
+      "cues": [
+        "Lie on your back with hips and knees bent.",
+        "Exhale gently while moving opposite arm and leg.",
+        "Keep the trunk quiet and shorten the reach if your back arches.",
+        "Side means the extending leg."
+      ],
+      "regression": "Move only the legs or tap one heel at a time.",
+      "archived": false
+    },
+    {
+      "id": "side-plank",
+      "version": 1,
+      "name": "Side plank",
+      "primaryMuscles": [
+        "core"
+      ],
+      "secondaryMuscles": [
+        "glute_medius"
+      ],
+      "movementPattern": "anti_lateral_flexion",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "duration",
+      "laterality": "separate_sides",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-sideplank",
+      "cues": [
+        "Put the elbow under the shoulder.",
+        "Keep the trunk aligned and breathe normally.",
+        "Start with bent knees if necessary.",
+        "Side means the side supporting the body on the floor."
+      ],
+      "regression": "Use bent knees and 10-15 second holds.",
+      "archived": false
+    },
+    {
+      "id": "glute-bridge",
+      "version": 1,
+      "name": "Glute bridge",
+      "primaryMuscles": [
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "hamstrings",
+        "core"
+      ],
+      "movementPattern": "hip_extension",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-bridge",
+      "cues": [
+        "Keep feet planted and ribs relaxed.",
+        "Lift the hips by squeezing the glutes; do not arch the back.",
+        "Pause briefly, then lower smoothly."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "easy-walk",
+      "version": 1,
+      "name": "Easy walk",
+      "primaryMuscles": [
+        "general_fitness"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "locomotion",
+      "equipment": [
+        "walking_space"
+      ],
+      "metric": "duration",
+      "laterality": "bilateral",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-warmup",
+      "cues": [
+        "Walk at a pace where you can speak in full sentences.",
+        "Use flat, safe ground; no running is required."
+      ],
+      "regression": "Walk for 5-10 minutes and gradually extend the time.",
+      "archived": false
+    },
+    {
+      "id": "gentle-mobility",
+      "version": 1,
+      "name": "Gentle mobility circuit",
+      "primaryMuscles": [
+        "mobility"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "mobility",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "duration",
+      "laterality": "bilateral",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-warmup",
+      "cues": [
+        "Use easy shoulder circles, ankle circles and comfortable trunk rotations.",
+        "Move slowly and stay in a pain-free range.",
+        "Skip any movement that causes symptoms."
+      ],
+      "regression": "Use less load and a comfortable range of motion.",
+      "archived": false
+    },
+    {
+      "id": "floor-pushup",
+      "version": 1,
+      "name": "Push-up",
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "triceps",
+        "anterior_deltoids",
+        "core"
+      ],
+      "movementPattern": "horizontal_push",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-pushup-floor",
+      "cues": [
+        "Keep head, trunk and hips aligned.",
+        "Lower under control with elbows comfortably angled away from the body.",
+        "Stop while two or three clean repetitions remain."
+      ],
+      "regression": "Select incline-pushup and use a fixed support that cannot slide; keep the new exercise identity and support height.",
+      "archived": false
+    },
+    {
+      "id": "db-seated-press",
+      "version": 1,
+      "name": "Seated dumbbell shoulder press",
+      "primaryMuscles": [
+        "deltoids"
+      ],
+      "secondaryMuscles": [
+        "triceps",
+        "core"
+      ],
+      "movementPattern": "vertical_push",
+      "equipment": [
+        "dumbbells",
+        "stable_flat_seat"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-seated-press",
+      "cues": [
+        "Sit tall on a stable flat seat with feet planted.",
+        "Keep ribs over hips and do not lean backward.",
+        "Keep elbows slightly forward and use a comfortable pressing range."
+      ],
+      "regression": "Use lighter dumbbells, or substitute the existing standing dumbbell press if that position is more comfortable. Omit painful overhead work.",
+      "archived": false
+    },
+    {
+      "id": "db-seated-rear-delt-fly",
+      "version": 1,
+      "name": "Seated dumbbell rear-delt fly",
+      "primaryMuscles": [
+        "rear_deltoids",
+        "upper_back"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "horizontal_abduction",
+      "equipment": [
+        "dumbbells",
+        "stable_flat_seat"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-seated-rear-fly",
+      "cues": [
+        "Sit and hinge forward with a comfortable, steady trunk.",
+        "Use light dumbbells and softly bent elbows.",
+        "Open the arms without throwing the weights or forcing the shoulders."
+      ],
+      "regression": "Use less load or the existing standing reverse fly if its position is more comfortable.",
+      "archived": false
+    },
+    {
+      "id": "db-french-extension",
+      "version": 1,
+      "name": "Seated French triceps extension",
+      "primaryMuscles": [
+        "triceps"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "elbow_extension",
+      "equipment": [
+        "dumbbell",
+        "stable_flat_seat"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "single_dumbbell",
+      "defaultImplementCount": 1,
+      "videoId": "v-french-extension",
+      "cues": [
+        "Hold one secure dumbbell in both hands.",
+        "Keep the torso tall and bend at the elbows without arching the back.",
+        "Move slowly and keep a secure grip; log the one dumbbell weight once."
+      ],
+      "regression": "Use the existing dumbbell triceps extension on the floor if overhead positioning is uncomfortable. Do not force elbow or shoulder pain.",
+      "archived": false
+    },
+    {
+      "id": "db-split-squat",
+      "version": 1,
+      "name": "Dumbbell split squat",
+      "primaryMuscles": [
+        "quadriceps",
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "core"
+      ],
+      "movementPattern": "single_leg",
+      "equipment": [
+        "dumbbells",
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "separate_sides",
+      "repsMeaning": "per_side",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 2,
+      "videoId": "v-split-squat",
+      "cues": [
+        "Keep both feet on the floor in a staggered stance.",
+        "Lower straight down through a comfortable range; the front leg is the logged side.",
+        "Use a stable hand support and the bodyweight variant if balance is difficult."
+      ],
+      "regression": "Select bodyweight-split-squat and use a fixed hand support; no rear-foot elevation is required.",
+      "archived": false
+    },
+    {
+      "id": "bodyweight-split-squat",
+      "version": 1,
+      "name": "Supported bodyweight split squat",
+      "primaryMuscles": [
+        "quadriceps",
+        "glutes"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "single_leg",
+      "equipment": [
+        "floor_space",
+        "stable_support"
+      ],
+      "metric": "reps",
+      "laterality": "separate_sides",
+      "repsMeaning": "per_side",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-split-squat",
+      "cues": [
+        "Use the split-squat movement with no dumbbells and light hand support.",
+        "Keep both feet on the floor and start with a shallow comfortable range."
+      ],
+      "regression": "Use the bodyweight squat or a stable sit-to-stand.",
+      "archived": false
+    },
+    {
+      "id": "db-glute-bridge",
+      "version": 1,
+      "name": "Dumbbell glute bridge",
+      "primaryMuscles": [
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "hamstrings"
+      ],
+      "movementPattern": "hip_extension",
+      "equipment": [
+        "dumbbell",
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "single_dumbbell",
+      "defaultImplementCount": 1,
+      "videoId": "v-db-bridge",
+      "cues": [
+        "Rest one dumbbell securely across the hips with padding if needed and hold it in place.",
+        "Lift by squeezing the glutes, keeping ribs relaxed.",
+        "Do not overarch the lower back or let the dumbbell roll."
+      ],
+      "regression": "Select glute-bridge and perform the same floor movement without added weight.",
+      "archived": false
+    },
+    {
+      "id": "db-single-leg-calf-raise",
+      "version": 1,
+      "name": "Supported single-leg dumbbell calf raise",
+      "primaryMuscles": [
+        "calves"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "plantar_flexion",
+      "equipment": [
+        "dumbbell",
+        "stable_support"
+      ],
+      "metric": "reps",
+      "laterality": "separate_sides",
+      "repsMeaning": "per_side",
+      "defaultLoadBasis": "per_dumbbell",
+      "defaultImplementCount": 1,
+      "videoId": "v-db-one-leg-calf",
+      "cues": [
+        "Use the flat floor and a fixed hand support for balance.",
+        "Hold one dumbbell securely in the free hand; the logged side is the working leg.",
+        "Rise, pause, then lower slowly without bouncing."
+      ],
+      "regression": "Select bodyweight-single-leg-calf-raise; if needed use the existing bilateral calf-raise instead.",
+      "archived": false
+    },
+    {
+      "id": "bodyweight-single-leg-calf-raise",
+      "version": 1,
+      "name": "Supported single-leg calf raise",
+      "primaryMuscles": [
+        "calves"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "plantar_flexion",
+      "equipment": [
+        "stable_support",
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "separate_sides",
+      "repsMeaning": "per_side",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-one-leg-calf",
+      "cues": [
+        "Use a fixed hand support and the flat floor.",
+        "Lift and lower one heel slowly while the other foot is off the ground."
+      ],
+      "regression": "Use the existing bilateral calf-raise with both feet on the floor.",
+      "archived": false
+    },
+    {
+      "id": "floor-crunch",
+      "version": 1,
+      "name": "Crunch",
+      "primaryMuscles": [
+        "core"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "trunk_flexion",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-crunch",
+      "cues": [
+        "Keep feet on the floor and lift the shoulder blades a small controlled distance.",
+        "Exhale as you curl and avoid pulling your neck."
+      ],
+      "regression": "Use a smaller range or substitute dead-bug if comfortable.",
+      "archived": false
+    },
+    {
+      "id": "floor-reverse-crunch",
+      "version": 1,
+      "name": "Reverse crunch",
+      "primaryMuscles": [
+        "core"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "posterior_pelvic_tilt",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-reverse-crunch",
+      "cues": [
+        "Start with bent knees and gently curl the pelvis off the floor.",
+        "Avoid swinging the legs or throwing the hips overhead.",
+        "Lower slowly; a small controlled movement is enough."
+      ],
+      "regression": "Use a smaller pelvic curl or substitute dead-bug.",
+      "archived": false
+    },
+    {
+      "id": "alternating-heel-touches",
+      "version": 1,
+      "name": "Alternating heel touches",
+      "primaryMuscles": [
+        "obliques",
+        "core"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "lateral_flexion",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "alternating_total",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-heel-touch",
+      "cues": [
+        "Keep knees bent and feet planted, reaching gently toward each heel.",
+        "Count every heel touch as one repetition, alternating sides.",
+        "Thirty total touches means fifteen per side; keep the reach controlled."
+      ],
+      "regression": "Keep the head supported between repetitions or use shorter, comfortable reaches.",
+      "archived": false
+    },
+    {
+      "id": "plank-shoulder-taps",
+      "version": 1,
+      "name": "Plank shoulder taps",
+      "primaryMuscles": [
+        "core"
+      ],
+      "secondaryMuscles": [
+        "shoulders"
+      ],
+      "movementPattern": "anti_rotation",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "alternating_total",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-shoulder-tap",
+      "cues": [
+        "Use a wide enough foot position to keep the pelvis steady.",
+        "Tap the opposite shoulder without rocking the trunk.",
+        "Count every tap as one repetition, alternating sides."
+      ],
+      "regression": "Perform from the knees or use a fixed high support. Stop if the wrists or shoulders hurt.",
+      "archived": false
+    },
+    {
+      "id": "march-in-place",
+      "version": 1,
+      "name": "March on the spot",
+      "primaryMuscles": [
+        "general_fitness"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "locomotion",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "duration",
+      "laterality": "bilateral",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-march",
+      "cues": [
+        "March comfortably and gradually increase the pace.",
+        "Keep breathing easy; no high knees or jumping are required."
+      ],
+      "regression": "Use a gentle seated march or a slower pace.",
+      "archived": false
+    },
+    {
+      "id": "arm-circles",
+      "version": 1,
+      "name": "Arm circles",
+      "primaryMuscles": [
+        "shoulder_mobility"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "mobility",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "duration",
+      "laterality": "bilateral",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-arm-circles",
+      "cues": [
+        "Make small comfortable circles and gradually enlarge them.",
+        "Change direction halfway; keep shoulders relaxed."
+      ],
+      "regression": "Use smaller circles or one arm at a time.",
+      "archived": false
+    },
+    {
+      "id": "standing-trunk-turn",
+      "version": 1,
+      "name": "Standing trunk rotations",
+      "primaryMuscles": [
+        "trunk_mobility"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "mobility",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "alternating_total",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-trunk-turn",
+      "cues": [
+        "Turn gently from side to side without forcing end range.",
+        "Count each turn to one side as one repetition.",
+        "Keep knees soft; do not combine a deep toe touch with a fast twist."
+      ],
+      "regression": "Use a smaller range and slower movement.",
+      "archived": false
+    },
+    {
+      "id": "scapular-squeeze",
+      "version": 1,
+      "name": "Shoulder-blade squeeze",
+      "primaryMuscles": [
+        "upper_back"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "mobility",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-scap-squeeze",
+      "cues": [
+        "Draw the shoulder blades gently together.",
+        "Keep the neck relaxed and avoid shrugging."
+      ],
+      "regression": "Use a smaller squeeze without added resistance.",
+      "archived": false
+    },
+    {
+      "id": "unloaded-hip-hinge",
+      "version": 1,
+      "name": "Unloaded hip hinge",
+      "primaryMuscles": [
+        "hip_mobility",
+        "hamstrings"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "hinge",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-hip-hinge",
+      "cues": [
+        "Soften the knees and send the hips back.",
+        "Keep the trunk steady and return to standing without leaning backward."
+      ],
+      "regression": "Use a small range and light support on a stable surface.",
+      "archived": false
+    },
+    {
+      "id": "bodyweight-squat",
+      "version": 1,
+      "name": "Bodyweight squat",
+      "primaryMuscles": [
+        "quadriceps",
+        "glutes"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "squat",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "bodyweight",
+      "defaultImplementCount": 0,
+      "videoId": "v-body-squat",
+      "cues": [
+        "Keep the feet planted and knees tracking with the toes.",
+        "Lower through a comfortable range and stand smoothly."
+      ],
+      "regression": "Sit to a stable bench and stand, using support if needed.",
+      "archived": false
+    },
+    {
+      "id": "lateral-lunge-mobility",
+      "version": 1,
+      "name": "Lateral lunge warm-up",
+      "primaryMuscles": [
+        "hip_mobility",
+        "adductors"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "mobility",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "separate_sides",
+      "repsMeaning": "per_side",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-lateral-mobility",
+      "cues": [
+        "Shift gently onto one leg while keeping the other more extended.",
+        "Use a small range and keep the planted foot steady.",
+        "Perform the target on each side without bouncing."
+      ],
+      "regression": "Use a shallower side-to-side weight shift with hand support.",
+      "archived": false
+    },
+    {
+      "id": "half-kneeling-hamstring-rock",
+      "version": 1,
+      "name": "Half-kneeling hamstring rocks",
+      "primaryMuscles": [
+        "hamstring_mobility"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "mobility",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "separate_sides",
+      "repsMeaning": "per_side",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-dynamic-hamstring",
+      "cues": [
+        "Pad the kneeling knee and extend the front leg comfortably.",
+        "Rock the hips back gently until a mild stretch, then release.",
+        "Do not force a toe touch or lock the knee hard."
+      ],
+      "regression": "Use a standing supported hamstring hinge if kneeling is uncomfortable.",
+      "archived": false
+    },
+    {
+      "id": "cat-camel",
+      "version": 1,
+      "name": "Cat and camel",
+      "primaryMuscles": [
+        "spinal_mobility"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "mobility",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "reps",
+      "laterality": "bilateral",
+      "repsMeaning": "simultaneous_repetitions",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-cat-camel",
+      "cues": [
+        "Move the back gently between a comfortable arch and rounding.",
+        "One full movement through both positions counts as one repetition.",
+        "Use easy motion without forcing either end range."
+      ],
+      "regression": "Use a smaller range or a comfortable standing trunk movement.",
+      "archived": false
+    },
+    {
+      "id": "cross-body-shoulder-stretch",
+      "version": 1,
+      "name": "Cross-body shoulder stretch",
+      "primaryMuscles": [
+        "shoulder_mobility"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "stretch",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "duration",
+      "laterality": "separate_sides",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-cross-shoulder",
+      "cues": [
+        "Bring one arm across the chest with gentle support.",
+        "Keep the shoulder down; stretch mildly without pain."
+      ],
+      "regression": "Reduce the pull or omit if the shoulder is uncomfortable.",
+      "archived": false
+    },
+    {
+      "id": "overhead-triceps-stretch",
+      "version": 1,
+      "name": "Overhead triceps stretch",
+      "primaryMuscles": [
+        "triceps_mobility"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "stretch",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "duration",
+      "laterality": "separate_sides",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-triceps-stretch",
+      "cues": [
+        "Bend one elbow overhead and use only gentle guidance.",
+        "Keep ribs down and breathe normally; do not force the elbow back."
+      ],
+      "regression": "Lower the arm or omit if overhead motion is uncomfortable.",
+      "archived": false
+    },
+    {
+      "id": "doorway-chest-stretch",
+      "version": 1,
+      "name": "Doorway chest stretch",
+      "primaryMuscles": [
+        "chest_mobility"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "stretch",
+      "equipment": [
+        "doorway_or_wall"
+      ],
+      "metric": "duration",
+      "laterality": "separate_sides",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-chest-stretch",
+      "cues": [
+        "Place one forearm on a stable doorway or wall and turn away slightly.",
+        "Use a mild chest stretch without shoulder pain.",
+        "Work one side at a time and avoid forcing the shoulder back."
+      ],
+      "regression": "Use a lower arm position and a smaller turn, or omit.",
+      "archived": false
+    },
+    {
+      "id": "standing-quad-stretch",
+      "version": 1,
+      "name": "Supported quadriceps stretch",
+      "primaryMuscles": [
+        "quadriceps_mobility"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "stretch",
+      "equipment": [
+        "stable_support"
+      ],
+      "metric": "duration",
+      "laterality": "separate_sides",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-quad-stretch",
+      "cues": [
+        "Hold a stable support and bring one heel gently toward the buttock.",
+        "Keep knees comfortable and avoid arching the back."
+      ],
+      "regression": "Use a smaller bend or omit if reaching the foot is difficult or painful.",
+      "archived": false
+    },
+    {
+      "id": "wall-calf-stretch",
+      "version": 1,
+      "name": "Wall calf stretch",
+      "primaryMuscles": [
+        "calf_mobility"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "stretch",
+      "equipment": [
+        "wall"
+      ],
+      "metric": "duration",
+      "laterality": "separate_sides",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-calf-stretch",
+      "cues": [
+        "Step one leg back with its heel down.",
+        "Lean toward the wall until a mild calf stretch; do not bounce."
+      ],
+      "regression": "Use a shorter stance and less lean.",
+      "archived": false
+    },
+    {
+      "id": "half-kneeling-hip-flexor-stretch",
+      "version": 1,
+      "name": "Half-kneeling hip-flexor stretch",
+      "primaryMuscles": [
+        "hip_mobility"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "stretch",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "duration",
+      "laterality": "separate_sides",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-hip-flexor-stretch",
+      "cues": [
+        "Pad the back knee and gently tuck the pelvis.",
+        "Move only a little forward without arching the lower back."
+      ],
+      "regression": "Use a supported standing staggered stance if kneeling is uncomfortable.",
+      "archived": false
+    },
+    {
+      "id": "child-pose",
+      "version": 1,
+      "name": "Child pose stretch",
+      "primaryMuscles": [
+        "back_mobility"
+      ],
+      "secondaryMuscles": [],
+      "movementPattern": "stretch",
+      "equipment": [
+        "floor_space"
+      ],
+      "metric": "duration",
+      "laterality": "bilateral",
+      "repsMeaning": "seconds",
+      "defaultLoadBasis": "none",
+      "defaultImplementCount": 0,
+      "videoId": "v-child-pose",
+      "cues": [
+        "Sit the hips toward the heels only as far as comfortable.",
+        "Reach forward gently and breathe normally without forcing the knees."
+      ],
+      "regression": "Place hands on a stable support and hinge gently from standing, or omit.",
+      "archived": false
+    }
+  ],
+  "plans": [
+    {
+      "id": "arms",
+      "version": 3,
+      "name": "A - Arms, shoulders and back",
+      "kind": "focus",
+      "focus": [
+        "biceps",
+        "triceps",
+        "shoulders",
+        "back"
+      ],
+      "estimatedDurationMinutes": [
+        50,
+        65
+      ],
+      "exampleVideoId": "v-row",
+      "exampleVideoLabel": "Example exercise tutorial, not a video of the complete routine",
+      "warmup": {
+        "durationMinutes": [
+          8,
+          12
+        ],
+        "videoId": "v-march",
+        "steps": [
+          {
+            "id": "arms-v2-warmup-01",
+            "exerciseId": "march-in-place",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 180,
+              "max": 180,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "pulse_raise",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "arms-v2-warmup-02",
+            "exerciseId": "arm-circles",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 40,
+              "max": 40,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "mobility",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "arms-v2-warmup-03",
+            "exerciseId": "standing-trunk-turn",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 10,
+              "max": 10,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "mobility",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "arms-v2-warmup-04",
+            "exerciseId": "scapular-squeeze",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 10,
+              "max": 10,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "mobility",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "arms-v2-warmup-05",
+            "exerciseId": "unloaded-hip-hinge",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 8,
+              "max": 8,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "mobility",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "arms-v2-warmup-06",
+            "exerciseId": "db-supported-row",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 8,
+              "max": 10,
+              "perSide": true
+            },
+            "restSeconds": 30,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "rehearsal",
+            "linkedWorkoutItemId": "arms-v2-work-01",
+            "notes": "Use a very light dumbbell, well below the working load. This is a warm-up, not a working set."
+          },
+          {
+            "id": "arms-v2-warmup-07",
+            "exerciseId": "db-seated-press",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 8,
+              "max": 8,
+              "perSide": false
+            },
+            "restSeconds": 30,
+            "restAfter": "set",
+            "defaultVariant": "flat_seat_no_backrest",
+            "role": "rehearsal",
+            "linkedWorkoutItemId": "arms-v2-work-04",
+            "notes": "Use light controllable dumbbells and keep the torso upright."
+          }
+        ]
+      },
+      "items": [
+        {
+          "id": "arms-v2-work-01",
+          "exerciseId": "db-supported-row",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": true
+          },
+          "restSeconds": 120,
+          "restAfter": "both_sides",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "arms-v2-work-02",
+          "exerciseId": "floor-pushup",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "arms-v2-work-04",
+          "exerciseId": "db-seated-press",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 120,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "flat_seat_no_backrest",
+          "notes": ""
+        },
+        {
+          "id": "arms-v2-work-05",
+          "exerciseId": "db-seated-rear-delt-fly",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "seated_pronated_comfortable",
+          "notes": ""
+        },
+        {
+          "id": "arms-v2-work-03",
+          "exerciseId": "db-lateral-raise",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "arms-v2-work-06",
+          "exerciseId": "db-french-extension",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "arms-v2-work-07",
+          "exerciseId": "db-curl",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        }
+      ],
+      "cooldown": {
+        "durationMinutes": [
+          5,
+          8
+        ],
+        "steps": [
+          {
+            "id": "arms-v2-cooldown-01",
+            "exerciseId": "march-in-place",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 120,
+              "max": 120,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "easy_movement",
+            "linkedWorkoutItemId": null,
+            "notes": "Slow the march gradually; this is not a conditioning interval."
+          },
+          {
+            "id": "arms-v2-cooldown-02",
+            "exerciseId": "cross-body-shoulder-stretch",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 20,
+              "max": 30,
+              "perSide": true
+            },
+            "restSeconds": 0,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "stretch",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "arms-v2-cooldown-03",
+            "exerciseId": "overhead-triceps-stretch",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 20,
+              "max": 30,
+              "perSide": true
+            },
+            "restSeconds": 0,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "stretch",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "arms-v2-cooldown-04",
+            "exerciseId": "doorway-chest-stretch",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 20,
+              "max": 30,
+              "perSide": true
+            },
+            "restSeconds": 0,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "stretch",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          }
+        ],
+        "instructions": [
+          "Walk or march slowly until breathing settles.",
+          "Use only a mild comfortable stretch and keep breathing normally.",
+          "Skip any stretch that produces pain; do not bounce or force the range."
+        ]
+      },
+      "notes": [
+        "Complete the warm-up once. Work through each block for all its rounds before starting the next block. Finish with the cooldown once.",
+        "One round contains one set of every exercise in that block. Do not multiply the round count by workingSets.",
+        "Pause between exercises and rounds as shown. At a block boundary use only the after-block rest, not an additional between-round rest.",
+        "Choose a weight that leaves about two or three more good repetitions possible. Do not rush the transitions or shorten rest to chase the clock.",
+        "Row rounds contain a left and right set; take the main rest after both sides.",
+        "Dumbbell loads are entered per dumbbell, except the French extension which uses one shared dumbbell.",
+        "Use standard lateral raises; no uncertain butterfly technique is assumed."
+      ],
+      "archived": false,
+      "workoutBlocks": [
+        {
+          "id": "arms-v3-block-01",
+          "name": "Block 1 - Row and push-up",
+          "rounds": 3,
+          "itemIds": [
+            "arms-v2-work-01",
+            "arms-v2-work-02"
+          ],
+          "restBetweenExercisesSeconds": 60,
+          "restBetweenRoundsSeconds": 120,
+          "restAfterBlockSeconds": 120,
+          "notes": "Do one set of each listed exercise in order, then repeat the whole block. For a per-side exercise, complete both sides before moving on. Take more rest if needed for controlled technique."
+        },
+        {
+          "id": "arms-v3-block-02",
+          "name": "Block 2 - Shoulder press and rear delts",
+          "rounds": 2,
+          "itemIds": [
+            "arms-v2-work-04",
+            "arms-v2-work-05"
+          ],
+          "restBetweenExercisesSeconds": 60,
+          "restBetweenRoundsSeconds": 120,
+          "restAfterBlockSeconds": 120,
+          "notes": "Do one set of each listed exercise in order, then repeat the whole block. For a per-side exercise, complete both sides before moving on. Take more rest if needed for controlled technique."
+        },
+        {
+          "id": "arms-v3-block-03",
+          "name": "Block 3 - Lateral raise, triceps and curls",
+          "rounds": 2,
+          "itemIds": [
+            "arms-v2-work-03",
+            "arms-v2-work-06",
+            "arms-v2-work-07"
+          ],
+          "restBetweenExercisesSeconds": 60,
+          "restBetweenRoundsSeconds": 120,
+          "restAfterBlockSeconds": 0,
+          "notes": "Do one set of each listed exercise in order, then repeat the whole block. For a per-side exercise, complete both sides before moving on. Take more rest if needed for controlled technique."
+        }
+      ]
+    },
+    {
+      "id": "chest",
+      "version": 3,
+      "name": "B - Chest, shoulders and back",
+      "kind": "focus",
+      "focus": [
+        "chest",
+        "shoulders",
+        "back"
+      ],
+      "estimatedDurationMinutes": [
+        45,
+        60
+      ],
+      "exampleVideoId": "v-floor",
+      "exampleVideoLabel": "Example exercise tutorial, not a video of the complete routine",
+      "warmup": {
+        "durationMinutes": [
+          8,
+          12
+        ],
+        "videoId": "v-march",
+        "steps": [
+          {
+            "id": "chest-v2-warmup-01",
+            "exerciseId": "march-in-place",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 180,
+              "max": 180,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "pulse_raise",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "chest-v2-warmup-02",
+            "exerciseId": "arm-circles",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 40,
+              "max": 40,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "mobility",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "chest-v2-warmup-03",
+            "exerciseId": "standing-trunk-turn",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 10,
+              "max": 10,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "mobility",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "chest-v2-warmup-04",
+            "exerciseId": "scapular-squeeze",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 10,
+              "max": 10,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "mobility",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "chest-v2-warmup-05",
+            "exerciseId": "db-floor-press",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 10,
+              "max": 10,
+              "perSide": false
+            },
+            "restSeconds": 45,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "rehearsal",
+            "linkedWorkoutItemId": "chest-v2-work-01",
+            "notes": "Use a very light load and a controlled soft touch of the upper arms to the floor."
+          },
+          {
+            "id": "chest-v2-warmup-06",
+            "exerciseId": "db-supported-row",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 8,
+              "max": 8,
+              "perSide": true
+            },
+            "restSeconds": 30,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "rehearsal",
+            "linkedWorkoutItemId": "chest-v2-work-02",
+            "notes": "One easy set per side; do not chase fatigue."
+          }
+        ]
+      },
+      "items": [
+        {
+          "id": "chest-v2-work-01",
+          "exerciseId": "db-floor-press",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 120,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "chest-v2-work-02",
+          "exerciseId": "db-supported-row",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": true
+          },
+          "restSeconds": 120,
+          "restAfter": "both_sides",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "chest-v2-work-03",
+          "exerciseId": "floor-pushup",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "chest-v2-work-04",
+          "exerciseId": "db-seated-press",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 120,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "flat_seat_no_backrest",
+          "notes": ""
+        },
+        {
+          "id": "chest-v2-work-05",
+          "exerciseId": "db-lateral-raise",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 12,
+            "max": 18,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        }
+      ],
+      "cooldown": {
+        "durationMinutes": [
+          5,
+          8
+        ],
+        "steps": [
+          {
+            "id": "chest-v2-cooldown-01",
+            "exerciseId": "march-in-place",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 120,
+              "max": 120,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "easy_movement",
+            "linkedWorkoutItemId": null,
+            "notes": "Slow the march gradually; this is not a conditioning interval."
+          },
+          {
+            "id": "chest-v2-cooldown-02",
+            "exerciseId": "cross-body-shoulder-stretch",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 20,
+              "max": 30,
+              "perSide": true
+            },
+            "restSeconds": 0,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "stretch",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "chest-v2-cooldown-03",
+            "exerciseId": "overhead-triceps-stretch",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 20,
+              "max": 30,
+              "perSide": true
+            },
+            "restSeconds": 0,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "stretch",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "chest-v2-cooldown-04",
+            "exerciseId": "doorway-chest-stretch",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 20,
+              "max": 30,
+              "perSide": true
+            },
+            "restSeconds": 0,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "stretch",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          }
+        ],
+        "instructions": [
+          "Walk or march slowly until breathing settles.",
+          "Use only a mild comfortable stretch and keep breathing normally.",
+          "Skip any stretch that produces pain; do not bounce or force the range."
+        ]
+      },
+      "notes": [
+        "Complete the warm-up once. Work through each block for all its rounds before starting the next block. Finish with the cooldown once.",
+        "One round contains one set of every exercise in that block. Do not multiply the round count by workingSets.",
+        "Pause between exercises and rounds as shown. At a block boundary use only the after-block rest, not an additional between-round rest.",
+        "Choose a weight that leaves about two or three more good repetitions possible. Do not rush the transitions or shorten rest to chase the clock.",
+        "Use the floor press now; a suitable chest bench or barbell can be added in a later plan version.",
+        "The row keeps pulling work in the program alongside pressing.",
+        "Switch floor push-ups to incline-pushup when needed and record the fixed support height.",
+        "Keep at least one easier day between this plan and the arms and shoulders plan."
+      ],
+      "archived": false,
+      "workoutBlocks": [
+        {
+          "id": "chest-v3-block-01",
+          "name": "Block 1 - Floor press and row",
+          "rounds": 3,
+          "itemIds": [
+            "chest-v2-work-01",
+            "chest-v2-work-02"
+          ],
+          "restBetweenExercisesSeconds": 60,
+          "restBetweenRoundsSeconds": 120,
+          "restAfterBlockSeconds": 120,
+          "notes": "Do one set of each listed exercise in order, then repeat the whole block. For a per-side exercise, complete both sides before moving on. Take more rest if needed for controlled technique."
+        },
+        {
+          "id": "chest-v3-block-02",
+          "name": "Block 2 - Push-up, shoulder press and lateral raise",
+          "rounds": 2,
+          "itemIds": [
+            "chest-v2-work-03",
+            "chest-v2-work-04",
+            "chest-v2-work-05"
+          ],
+          "restBetweenExercisesSeconds": 75,
+          "restBetweenRoundsSeconds": 120,
+          "restAfterBlockSeconds": 0,
+          "notes": "Do one set of each listed exercise in order, then repeat the whole block. For a per-side exercise, complete both sides before moving on. Take more rest if needed for controlled technique."
+        }
+      ]
+    },
+    {
+      "id": "legs",
+      "version": 3,
+      "name": "C - Legs and glutes",
+      "kind": "focus",
+      "focus": [
+        "quadriceps",
+        "hamstrings",
+        "glutes",
+        "calves"
+      ],
+      "estimatedDurationMinutes": [
+        50,
+        65
+      ],
+      "exampleVideoId": "v-squat",
+      "exampleVideoLabel": "Example exercise tutorial, not a video of the complete routine",
+      "warmup": {
+        "durationMinutes": [
+          8,
+          12
+        ],
+        "videoId": "v-march",
+        "steps": [
+          {
+            "id": "legs-v2-warmup-01",
+            "exerciseId": "march-in-place",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 180,
+              "max": 180,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "pulse_raise",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "legs-v2-warmup-02",
+            "exerciseId": "lateral-lunge-mobility",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 6,
+              "max": 6,
+              "perSide": true
+            },
+            "restSeconds": 0,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "mobility",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "legs-v2-warmup-03",
+            "exerciseId": "half-kneeling-hamstring-rock",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 6,
+              "max": 6,
+              "perSide": true
+            },
+            "restSeconds": 0,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "mobility",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "legs-v2-warmup-04",
+            "exerciseId": "bodyweight-squat",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 8,
+              "max": 8,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "mobility",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "legs-v2-warmup-05",
+            "exerciseId": "unloaded-hip-hinge",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 8,
+              "max": 8,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "mobility",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "legs-v2-warmup-06",
+            "exerciseId": "goblet-squat",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 8,
+              "max": 8,
+              "perSide": false
+            },
+            "restSeconds": 30,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "rehearsal",
+            "linkedWorkoutItemId": "legs-v2-work-01",
+            "notes": "One very light rehearsal set before the work sets."
+          },
+          {
+            "id": "legs-v2-warmup-07",
+            "exerciseId": "db-rdl",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 8,
+              "max": 8,
+              "perSide": false
+            },
+            "restSeconds": 30,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "rehearsal",
+            "linkedWorkoutItemId": "legs-v2-work-02",
+            "notes": "Use light dumbbells and stop the hinge at a comfortable hamstring stretch."
+          }
+        ]
+      },
+      "items": [
+        {
+          "id": "legs-v2-work-01",
+          "exerciseId": "goblet-squat",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 150,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "legs-v2-work-02",
+          "exerciseId": "db-rdl",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 150,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "legs-v2-work-04",
+          "exerciseId": "db-glute-bridge",
+          "exerciseVersion": 1,
+          "workingSets": 3,
+          "target": {
+            "metric": "reps",
+            "min": 12,
+            "max": 20,
+            "perSide": false
+          },
+          "restSeconds": 90,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "legs-v2-work-03",
+          "exerciseId": "db-split-squat",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 12,
+            "perSide": true
+          },
+          "restSeconds": 120,
+          "restAfter": "both_sides",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": "Both feet remain on the floor. Use the bodyweight version if balance or load is limiting."
+        },
+        {
+          "id": "legs-v2-work-05",
+          "exerciseId": "db-single-leg-calf-raise",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 10,
+            "max": 20,
+            "perSide": true
+          },
+          "restSeconds": 75,
+          "restAfter": "both_sides",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "floor_supported",
+          "notes": ""
+        }
+      ],
+      "cooldown": {
+        "durationMinutes": [
+          5,
+          8
+        ],
+        "steps": [
+          {
+            "id": "legs-v2-cooldown-01",
+            "exerciseId": "march-in-place",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 120,
+              "max": 120,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "easy_movement",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "legs-v2-cooldown-02",
+            "exerciseId": "standing-quad-stretch",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 20,
+              "max": 30,
+              "perSide": true
+            },
+            "restSeconds": 0,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "stretch",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "legs-v2-cooldown-03",
+            "exerciseId": "wall-calf-stretch",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 20,
+              "max": 30,
+              "perSide": true
+            },
+            "restSeconds": 0,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "stretch",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "legs-v2-cooldown-04",
+            "exerciseId": "half-kneeling-hip-flexor-stretch",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 20,
+              "max": 30,
+              "perSide": true
+            },
+            "restSeconds": 0,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "stretch",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          }
+        ],
+        "instructions": [
+          "Walk or march slowly until breathing settles.",
+          "Use only a mild comfortable stretch and keep breathing normally.",
+          "Skip any stretch that produces pain; do not bounce or force the range."
+        ]
+      },
+      "notes": [
+        "Complete the warm-up once. Work through each block for all its rounds before starting the next block. Finish with the cooldown once.",
+        "One round contains one set of every exercise in that block. Do not multiply the round count by workingSets.",
+        "Pause between exercises and rounds as shown. At a block boundary use only the after-block rest, not an additional between-round rest.",
+        "Choose a weight that leaves about two or three more good repetitions possible. Do not rush the transitions or shorten rest to chase the clock.",
+        "A fixed step platform, rear-foot elevation and a squat rack are not needed.",
+        "Use a fixed hand support for calf raises; start with the bodyweight alternative if necessary.",
+        "The split squat replaces step-ups and Bulgarian split squats until suitable support equipment is confirmed.",
+        "Take a short extra break between sides if needed, then the listed rest after both sides."
+      ],
+      "archived": false,
+      "workoutBlocks": [
+        {
+          "id": "legs-v3-block-01",
+          "name": "Block 1 - Squat, hinge and glute bridge",
+          "rounds": 3,
+          "itemIds": [
+            "legs-v2-work-01",
+            "legs-v2-work-02",
+            "legs-v2-work-04"
+          ],
+          "restBetweenExercisesSeconds": 90,
+          "restBetweenRoundsSeconds": 150,
+          "restAfterBlockSeconds": 150,
+          "notes": "Do one set of each listed exercise in order, then repeat the whole block. For a per-side exercise, complete both sides before moving on. Take more rest if needed for controlled technique."
+        },
+        {
+          "id": "legs-v3-block-02",
+          "name": "Block 2 - Split squat and calf raise",
+          "rounds": 2,
+          "itemIds": [
+            "legs-v2-work-03",
+            "legs-v2-work-05"
+          ],
+          "restBetweenExercisesSeconds": 90,
+          "restBetweenRoundsSeconds": 120,
+          "restAfterBlockSeconds": 0,
+          "notes": "Do one set of each listed exercise in order, then repeat the whole block. For a per-side exercise, complete both sides before moving on. Take more rest if needed for controlled technique."
+        }
+      ]
+    },
+    {
+      "id": "core",
+      "version": 2,
+      "name": "D - Abs and core",
+      "kind": "focus",
+      "focus": [
+        "core",
+        "obliques"
+      ],
+      "estimatedDurationMinutes": [
+        35,
+        50
+      ],
+      "exampleVideoId": "v-crunch",
+      "exampleVideoLabel": "Example exercise tutorial, not a video of the complete routine",
+      "warmup": {
+        "durationMinutes": [
+          6,
+          9
+        ],
+        "videoId": "v-march",
+        "steps": [
+          {
+            "id": "core-v1-warmup-01",
+            "exerciseId": "march-in-place",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 120,
+              "max": 120,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "pulse_raise",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "core-v1-warmup-02",
+            "exerciseId": "standing-trunk-turn",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 10,
+              "max": 10,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "mobility",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "core-v1-warmup-03",
+            "exerciseId": "cat-camel",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 6,
+              "max": 6,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "mobility",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "core-v1-warmup-04",
+            "exerciseId": "glute-bridge",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 8,
+              "max": 8,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "rehearsal",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "core-v1-warmup-05",
+            "exerciseId": "dead-bug",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "reps",
+              "min": 4,
+              "max": 4,
+              "perSide": true
+            },
+            "restSeconds": 0,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "rehearsal",
+            "linkedWorkoutItemId": "core-v1-work-06",
+            "notes": "Short easy reaches with relaxed breathing; this is preparation, not an extra work round."
+          }
+        ]
+      },
+      "items": [
+        {
+          "id": "core-v1-work-01",
+          "exerciseId": "floor-crunch",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 12,
+            "max": 20,
+            "perSide": false
+          },
+          "restSeconds": 75,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "core-v1-work-02",
+          "exerciseId": "floor-reverse-crunch",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 8,
+            "max": 15,
+            "perSide": false
+          },
+          "restSeconds": 75,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "core-v1-work-03",
+          "exerciseId": "alternating-heel-touches",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 20,
+            "max": 40,
+            "perSide": false
+          },
+          "restSeconds": 60,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": "Total touches across both sides, not repetitions per side."
+        },
+        {
+          "id": "core-v1-work-04",
+          "exerciseId": "side-plank",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "duration",
+            "min": 20,
+            "max": 40,
+            "perSide": true
+          },
+          "restSeconds": 60,
+          "restAfter": "both_sides",
+          "targetRir": null,
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        },
+        {
+          "id": "core-v1-work-05",
+          "exerciseId": "plank-shoulder-taps",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 12,
+            "max": 24,
+            "perSide": false
+          },
+          "restSeconds": 75,
+          "restAfter": "set",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": "Total alternating taps. Each hand touching the opposite shoulder counts once."
+        },
+        {
+          "id": "core-v1-work-06",
+          "exerciseId": "dead-bug",
+          "exerciseVersion": 1,
+          "workingSets": 2,
+          "target": {
+            "metric": "reps",
+            "min": 6,
+            "max": 10,
+            "perSide": true
+          },
+          "restSeconds": 60,
+          "restAfter": "both_sides",
+          "targetRir": [
+            2,
+            3
+          ],
+          "optional": false,
+          "defaultVariant": "standard",
+          "notes": ""
+        }
+      ],
+      "cooldown": {
+        "durationMinutes": [
+          5,
+          8
+        ],
+        "steps": [
+          {
+            "id": "core-v1-cooldown-01",
+            "exerciseId": "march-in-place",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 120,
+              "max": 120,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "easy_movement",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "core-v1-cooldown-02",
+            "exerciseId": "child-pose",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 20,
+              "max": 30,
+              "perSide": false
+            },
+            "restSeconds": 0,
+            "restAfter": "set",
+            "defaultVariant": "standard",
+            "role": "stretch",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "core-v1-cooldown-03",
+            "exerciseId": "half-kneeling-hip-flexor-stretch",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 20,
+              "max": 30,
+              "perSide": true
+            },
+            "restSeconds": 0,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "stretch",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          },
+          {
+            "id": "core-v1-cooldown-04",
+            "exerciseId": "cross-body-shoulder-stretch",
+            "exerciseVersion": 1,
+            "sets": 1,
+            "target": {
+              "metric": "duration",
+              "min": 20,
+              "max": 30,
+              "perSide": true
+            },
+            "restSeconds": 0,
+            "restAfter": "both_sides",
+            "defaultVariant": "standard",
+            "role": "stretch",
+            "linkedWorkoutItemId": null,
+            "notes": "Use a comfortable range and normal breathing."
+          }
+        ],
+        "instructions": [
+          "Walk or march slowly until breathing settles.",
+          "Use only a mild comfortable stretch and keep breathing normally.",
+          "Skip any stretch that produces pain; do not bounce or force the range."
+        ]
+      },
+      "notes": [
+        "Complete the warm-up once. Work through each block for all its rounds before starting the next block. Finish with the cooldown once.",
+        "One round contains one set of every exercise in that block. Do not multiply the round count by workingSets.",
+        "Pause between exercises and rounds as shown. At a block boundary use only the after-block rest, not an additional between-round rest.",
+        "Choose a weight that leaves about two or three more good repetitions possible. Do not rush the transitions or shorten rest to chase the clock.",
+        "This is deliberately shorter than a long upper-body workout; do not add abdominal work only to fill an hour.",
+        "End holds before posture or normal breathing breaks down. Holds use seconds, never repetitions.",
+        "Heel touches and shoulder taps use total alternating repetitions. Dead bugs and side planks keep separate left and right records.",
+        "No high-speed Russian twists or declined bench work are required."
+      ],
+      "archived": false,
+      "workoutBlocks": [
+        {
+          "id": "core-v2-block-01",
+          "name": "Block 1 - Crunch and reverse crunch",
+          "rounds": 2,
+          "itemIds": [
+            "core-v1-work-01",
+            "core-v1-work-02"
+          ],
+          "restBetweenExercisesSeconds": 45,
+          "restBetweenRoundsSeconds": 90,
+          "restAfterBlockSeconds": 90,
+          "notes": "Do one set of each listed exercise in order, then repeat the whole block. For a per-side exercise, complete both sides before moving on. Take more rest if needed for controlled technique."
+        },
+        {
+          "id": "core-v2-block-02",
+          "name": "Block 2 - Heel touches and side plank",
+          "rounds": 2,
+          "itemIds": [
+            "core-v1-work-03",
+            "core-v1-work-04"
+          ],
+          "restBetweenExercisesSeconds": 45,
+          "restBetweenRoundsSeconds": 90,
+          "restAfterBlockSeconds": 90,
+          "notes": "Do one set of each listed exercise in order, then repeat the whole block. For a per-side exercise, complete both sides before moving on. Take more rest if needed for controlled technique."
+        },
+        {
+          "id": "core-v2-block-03",
+          "name": "Block 3 - Shoulder taps and dead bug",
+          "rounds": 2,
+          "itemIds": [
+            "core-v1-work-05",
+            "core-v1-work-06"
+          ],
+          "restBetweenExercisesSeconds": 45,
+          "restBetweenRoundsSeconds": 90,
+          "restAfterBlockSeconds": 0,
+          "notes": "Do one set of each listed exercise in order, then repeat the whole block. For a per-side exercise, complete both sides before moving on. Take more rest if needed for controlled technique."
+        }
+      ]
+    }
+  ],
+  "programs": [
+    {
+      "id": "return-to-training",
+      "version": 2,
+      "name": "Four fixed dumbbell sessions",
+      "recommendedDefault": true,
+      "startDatePolicy": "choose_on_first_use",
+      "weekStart": "monday",
+      "schedule": [
+        {
+          "weekday": "monday",
+          "planId": "arms"
+        },
+        {
+          "weekday": "tuesday",
+          "planId": "legs"
+        },
+        {
+          "weekday": "thursday",
+          "planId": "chest"
+        },
+        {
+          "weekday": "saturday",
+          "planId": "core"
+        }
+      ],
+      "phases": [
+        {
+          "weeks": [
+            1,
+            null
+          ],
+          "name": "Regular training",
+          "workingSetCap": null,
+          "allowOptional": false,
+          "rir": [
+            2,
+            3
+          ],
+          "notes": "Repeat the same sessions. Choose current loads manually. There are no scheduled changes to sets, volume or exercises."
+        }
+      ],
+      "transitionPolicy": "No staged progression or automatic phase transition. The single phase only preserves compatibility with the existing program engine.",
+      "missedDayPolicy": "Resume when recovered and do not combine missed workouts. Keep at least one easier day between the two upper-body sessions."
+    }
+  ]
+}

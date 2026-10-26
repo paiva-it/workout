@@ -5,10 +5,11 @@ Personal training log at **https://workout.paiva.it** — single user, phone-fir
 - `apps/web` — React 19 + TypeScript + Vite SPA (Today, Plans, Workout, History, Weight, Settings).
 - `apps/api` — NestJS 12 + Mongoose 9 on Node 24 LTS. Serves the built SPA and `/api/v1` from one container.
 - `packages/contracts` — shared types and pure logic (phase application, kg→grams, DST-safe local time, volume).
-- `data/training-pack.v2.json` — the active plans (four fixed sessions with structured warm-up/workout/cooldown,
-  schema 2). `data/training-pack.v1.json` is the original restart pack (schema 1), kept for history and tests.
-  Import formats: `contracts/training-pack.schema.json` (1) and `contracts/training-pack.v2.schema.json` (2);
-  `schemaVersion` selects the validator. `docs/revamp-2026-10/` holds the spec of the v2 change.
+- `data/training-pack.v3.json` — the active plans (four fixed sessions, warm-up / workout in blocks repeated for rounds /
+  cooldown, schema 3). `v2` (straight sets) and `v1` (original restart pack) are kept for history and tests.
+  Import formats: `contracts/training-pack.schema.json` (1), `.v2.schema.json` (2) and `.v3.schema.json` (3);
+  `schemaVersion` selects the validator. Specs: `docs/revamp-2026-10/` (v2), `docs/revamp-2026-10-rounds/` (v3; its
+  pack copies the live video verification records, otherwise identical to the supplied package).
 - `docs/` — product, data model, API, security, deployment and acceptance specs this app implements.
 
 ## How it works (short)
@@ -71,15 +72,15 @@ $H "$C exec -T app node dist/cli.js import-pack /dev/stdin" < my-pack.json      
 $H "$C exec -T app node dist/cli.js bootstrap-user" < bootstrap.env                   # no-op if the user exists
 $H "$C exec -T app node dist/cli.js import-profile" < profile.private.json            # idempotent by profileImportKey
 read -rs PW && printf '%s\n' "$PW" | $H "$C exec -T app node dist/cli.js reset-password <username>"; unset PW  # revokes all sessions
-$H "$C exec -T app node dist/cli.js migrate-program-selections /dev/stdin" < docs/revamp-2026-10/catalog-migration.json  # after a catalog swap; idempotent, audited in maintenanceLog
+$H "$C exec -T app node dist/cli.js migrate-program-selections /dev/stdin" < docs/revamp-2026-10-rounds/catalog-migration.json  # after a catalog swap; idempotent, audited in maintenanceLog
 $H "$C exec -T app node dist/cli.js activate-pack home-return-foundation 1"           # roll the active catalog pointer back (imports never downgrade)
 $H /srv/deploy/workout/backup.sh                   # backup now (cron runs it daily 03:17 UTC)
 $H /srv/deploy/workout/src/deploy/restore-test.sh  # restore newest backup into a temp DB, compare, drop
 ```
 
 Rollback: `$H "cd /srv/deploy/workout/src.prev && GIT_SHA=<previous sha> docker compose --env-file ../.env up -d --no-build app"`
-(previous images stay tagged `workout-app:<sha>`; the DB volume is never removed — no `down -v`). Once schema-2
-workouts exist, never roll back below the commit that added schema 2 (it cannot read them); roll the catalog back
+(previous images stay tagged `workout-app:<sha>`; the DB volume is never removed — no `down -v`). Once schema-2/3
+workouts exist, never roll back below the commit that added that schema (it cannot read them); roll the catalog back
 with `activate-pack` instead.
 
 Backups are local to the host (`/srv/backups/workout`, root-only, 14 daily + 8 weekly). There is no off-host copy yet.

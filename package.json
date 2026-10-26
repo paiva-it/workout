@@ -11,7 +11,7 @@
     "typecheck": "pnpm -r run typecheck",
     "lint": "eslint .",
     "test": "pnpm -r --workspace-concurrency=1 run test",
-    "validate:pack": "node scripts/validate-pack.mjs data/training-pack.v1.json && node scripts/validate-revamp.mjs data/training-pack.v2.json",
+    "validate:pack": "node scripts/validate-pack.mjs data/training-pack.v1.json && node scripts/validate-revamp.mjs data/training-pack.v3.json",
     "e2e": "node scripts/e2e.mjs"
   },
   "devDependencies": {

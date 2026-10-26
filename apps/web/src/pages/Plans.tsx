@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { applyPhase, isFixedProgram, isSectionStep, localToInstants, type SectionStep, type Exercise, type Plan, type Program, type Video as VideoT } from '@workout/contracts';
 import { ApiError, useApi } from '../api';
-import { Details, ErrorBox, Field, LOAD_LABEL, Loading, rirText, targetText, Video } from '../ui';
+import { Details, Effort, ErrorBox, Field, LOAD_LABEL, Loading, rirText, targetText, Video } from '../ui';
 import { useAuth } from '../main';
 import { startSession } from './Today';
 import { dosage, StepCard } from '../sections';
@@ -114,13 +114,27 @@ export function PlanDetail() {
       {plan.items.map((item) => {
         const ex = exercises[item.exerciseId];
         const eff = applyPhase(item, phase);
+        const bi = plan.workoutBlocks?.findIndex((b) => b.itemIds.includes(item.id)) ?? -1;
+        const block = plan.workoutBlocks?.[bi];
         return (
-          <section key={item.id} className="card stack">
+          <div key={item.id} className="stack">
+          {block?.itemIds[0] === item.id && (
+            <section className="card inset stack block-head">
+              <h3>{block.name}</h3>
+              <p className="target">Repeat {block.rounds} round{block.rounds > 1 ? 's' : ''}: {block.itemIds.map((i) => exercises[plan.items.find((x) => x.id === i)!.exerciseId].name).join(' → ')}</p>
+              <p className="small">Rest {block.restBetweenExercisesSeconds}s between exercises, {block.restBetweenRoundsSeconds}s between rounds{bi === plan.workoutBlocks!.length - 1 ? '; then cooldown.' : `, ${block.restAfterBlockSeconds}s after the block.`}</p>
+              {block.notes && <p className="muted small">{block.notes}</p>}
+            </section>
+          )}
+          <section className="card stack">
             <h3>{ex.name}{item.optional && <span className="tag">optional</span>}</h3>
-            <p>
+            {block ? <>
+              <p className="target">{ex.repsMeaning === 'alternating_total' ? dosage(item.target, ex.repsMeaning) : targetText(item.target)} each round</p>
+              <p className="small"><Effort rir={eff.rir} metric={item.target.metric} /></p>
+            </> : <p>
               {eff.workingSets !== item.workingSets ? <><s>{item.workingSets}</s> {eff.workingSets}</> : eff.workingSets} × {ex.repsMeaning === 'alternating_total' ? dosage(item.target, ex.repsMeaning) : targetText(item.target)}
               {eff.rir && ` · ${rirText(eff.rir)}`} · rest {item.restSeconds}s
-            </p>
+            </p>}
             <p className="muted small">Load: {LOAD_LABEL[ex.defaultLoadBasis]} · equipment: {ex.equipment.join(', ').replace(/_/g, ' ')} · variant: {item.defaultVariant}</p>
             {item.notes && <p className="small">{item.notes}</p>}
             <Details summary="Cues, regression and video">
@@ -129,6 +143,7 @@ export function PlanDetail() {
               <Video video={videos[ex.videoId]} />
             </Details>
           </section>
+          </div>
         );
       })}
       {structured && (

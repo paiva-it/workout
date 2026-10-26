@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react';
-import type { Video as VideoT } from '@workout/contracts';
+import { effortCue, type Video as VideoT } from '@workout/contracts';
 
 /** Click-to-load, privacy-enhanced, no autoplay; the plain link always stays. */
 export function Video({ video, label }: { video: VideoT | null | undefined; label?: string }) {
@@ -61,6 +61,9 @@ export const loadHint = (basis: string, count: number) =>
       : basis === 'bodyweight' ? 'Bodyweight: no load entry. Body mass is never added as load.'
         : basis === 'none' ? 'Not loaded.' : 'Enter the total load.';
 export const isLoaded = (basis: string) => ['per_dumbbell', 'single_dumbbell', 'barbell_total', 'external_total'].includes(basis);
-export const rirText = (r: [number, number] | null | undefined) => (r ? `RIR ${r[0]}–${r[1]}` : '');
+export const rirText = (r: [number, number] | null | undefined, metric?: 'reps' | 'duration') => effortCue(r, metric);
+/** Effort cue with the RIR shorthand explained on hover/long-press. */
+export const Effort = ({ rir, metric }: { rir: [number, number] | null | undefined; metric?: 'reps' | 'duration' }) =>
+  rir || metric === 'duration' ? <span title={rir ? `Technical shorthand: RIR ${rir[0]}–${rir[1]} (reps in reserve). Nothing to enter.` : undefined}>{effortCue(rir, metric)}</span> : null;
 export const targetText = (t: { metric: string; min: number; max: number; perSide?: boolean }) =>
   `${t.min === t.max ? t.min : `${t.min}–${t.max}`} ${t.metric === 'duration' ? 's' : 'reps'}${t.perSide ? ' per side' : ''}`;

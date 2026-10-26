@@ -24,10 +24,16 @@ export interface SectionStep {
   restSeconds: number; restAfter: 'both_sides' | 'set'; defaultVariant: string; role: SectionRole; linkedWorkoutItemId: string | null; notes: string;
 }
 export const isSectionStep = (s: WarmupStep | SectionStep): s is SectionStep => 'exerciseId' in s;
+/** Schema 3: one set of each member in order, then repeat the whole block `rounds` times. */
+export interface WorkoutBlock {
+  id: string; name: string; rounds: number; itemIds: string[]; notes: string;
+  restBetweenExercisesSeconds: number; restBetweenRoundsSeconds: number; restAfterBlockSeconds: number;
+}
 export interface Plan {
   id: string; version: number; name: string; kind: 'restart' | 'focus' | 'recovery'; focus: string[]; estimatedDurationMinutes: [number, number];
   exampleVideoId: string; exampleVideoLabel: string; warmup: { durationMinutes: [number, number]; videoId: string; steps: WarmupStep[] | SectionStep[] };
   items: PlanItem[]; cooldown: { durationMinutes: [number, number]; instructions: string[]; steps?: SectionStep[] }; notes: string[]; archived: boolean;
+  workoutBlocks?: WorkoutBlock[];
 }
 export interface ScheduleEntry { weekday: Weekday; planId: string; fullRestAllowed?: boolean }
 export interface Phase {
@@ -39,7 +45,7 @@ export interface Program {
   schedule?: ScheduleEntry[]; phases: Phase[]; transitionPolicy?: string; missedDayPolicy?: string;
 }
 export interface TrainingPack {
-  schemaVersion: 1 | 2; packId: string; version: number; title: string; createdOn: string; language: 'en-US'; units: 'kg';
+  schemaVersion: 1 | 2 | 3; packId: string; version: number; title: string; createdOn: string; language: 'en-US'; units: 'kg';
   description: string; assumptions: string[]; videos: Video[]; exercises: Exercise[]; plans: Plan[]; programs: Program[];
 }
 
@@ -132,6 +138,18 @@ export function programPosition(program: Program, sel: ProgramSelection, today: 
 export function nextScheduled(pos: ProgramPosition, doneThisWeek: number): ScheduleEntry | null {
   return pos.schedule[doneThisWeek] ?? null;
 }
+
+/** Rest owed after `memberIndex` of `round` resolves: between exercises, between rounds, after the block, or none (end of workout). One boundary only, never summed. */
+export function blockRest(blocks: Pick<WorkoutBlock, 'rounds' | 'itemIds' | 'restBetweenExercisesSeconds' | 'restBetweenRoundsSeconds' | 'restAfterBlockSeconds'>[], blockIndex: number, round: number, memberIndex: number) {
+  const b = blocks[blockIndex];
+  if (memberIndex < b.itemIds.length - 1) return { kind: 'exercise' as const, seconds: b.restBetweenExercisesSeconds };
+  if (round < b.rounds) return { kind: 'round' as const, seconds: b.restBetweenRoundsSeconds };
+  if (blockIndex < blocks.length - 1) return { kind: 'block' as const, seconds: b.restAfterBlockSeconds };
+  return { kind: 'end' as const, seconds: 0 };
+}
+/** Plain-English effort cue; RIR stays internal metadata. Holds get a form cue instead of spare reps. */
+export const effortCue = (rir: [number, number] | null | undefined, metric: 'reps' | 'duration' = 'reps') =>
+  metric === 'duration' ? 'Stop before your position starts to slip.' : rir ? `Finish while you could still do ${rir[0] === rir[1] ? rir[0] : `${rir[0]}-${rir[1]}`} more good reps.` : '';
 
 // ---- API error shape ----
 export interface ApiError { code: string; message: string; fieldErrors?: Record<string, string>; requestId: string }

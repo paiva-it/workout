@@ -63,6 +63,7 @@ const SetSchema = new Schema(
     target: Mixed, actualReps: { type: Number, default: null }, actualDurationSeconds: { type: Number, default: null },
     actualLoad: { type: LoadSchema, default: null }, actualRir: { type: Number, default: null }, failedAttempt: { type: Boolean, default: false },
     completedAt: { type: Date, default: null }, recordedAt: { type: Date, default: null }, notes: { type: String, default: null }, skipReason: { type: String, default: null },
+    blockSnapshotId: String, // schema-3 sessions only; roundIndex is then the block round
   },
   { ...sub, minimize: false },
 );
@@ -100,7 +101,9 @@ const TrainingSessionSchema = new Schema(
     warmupChecklist: { type: [new Schema({ stepId: String, completed: Boolean, completedAt: { type: Date, default: null } }, sub)], default: [] },
     restTimer: { type: Mixed, default: null },
     exercises: [OccurrenceSchema],
-    sectionActivities: { type: Mixed, default: undefined }, // schema-2 sessions only: { warmup: SectionActivity[], cooldown: SectionActivity[] }
+    sectionActivities: { type: Mixed, default: undefined }, // schema-2+ sessions only: { warmup: SectionActivity[], cooldown: SectionActivity[] }
+    workoutBlocksSnapshot: { type: Mixed, default: undefined }, // schema-3 sessions only: immutable block -> occurrence mapping
+    restBoundariesStarted: { type: Mixed, default: undefined }, // schema-3: rest boundary keys already timed, so replays/edits never restart one
     metadata: { type: Mixed, default: () => ({ energy: null, soreness: null, sleepMinutes: null, sessionRpe: null, notes: null }) },
     appliedOperations: { type: [new Schema({ operationId: String, payloadHash: String, appliedRevision: Number }, sub)], default: [] },
     corrections: { type: [Mixed], default: [] },

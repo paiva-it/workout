@@ -1,0 +1,57 @@
+{
+  "migrationId": "four-fixed-workouts-in-rounds-v1",
+  "preparedOn": "2026-10-25",
+  "knownSources": [
+    {
+      "packId": "home-return-foundation",
+      "version": 1,
+      "schemaVersion": 1,
+      "sha256": "1d89314d375221e15f27373596a33c40d78d8a68a1b5c52152c2e0e24e84ffc3"
+    },
+    {
+      "packId": "home-return-foundation",
+      "version": 2,
+      "schemaVersion": 2,
+      "sha256": "fffb77b1b741fe5c6763b778a930bd22885cb73781e6984893d426a2b7cbffcc"
+    }
+  ],
+  "targetPack": {
+    "packId": "home-return-foundation",
+    "version": 3,
+    "schemaVersion": 3
+  },
+  "activePlanIds": [
+    "arms",
+    "chest",
+    "legs",
+    "core"
+  ],
+  "targetPlanVersions": {
+    "arms": 3,
+    "chest": 3,
+    "legs": 3,
+    "core": 2
+  },
+  "removedFromActiveCatalogPlanIds": [
+    "restart-a",
+    "restart-b",
+    "back",
+    "shoulders-core",
+    "recovery"
+  ],
+  "retainedProgramId": "return-to-training",
+  "retainedProgramVersion": 2,
+  "programSelectionRemap": {
+    "five-focus-days": "return-to-training"
+  },
+  "historyPolicy": "Preserve all completed and in-progress sessions exactly as stored, including old straight-set sessions. Never attach new block assignments to old actuals.",
+  "deploymentOrder": [
+    "Back up the DB and capture active catalog pointers and affected current preferences",
+    "Compare live definitions with both supplied reference packs and reconcile real version conflicts",
+    "Deploy readers/importers for pack and session formats 1, 2 and 3",
+    "Validate and preview only data/training-pack.v3.json",
+    "Activate the immutable pack and perform only the applicable obsolete-program preference remap",
+    "Verify block navigation, per-round actuals, side counts, historical resume and catalog stability"
+  ],
+  "rollbackPolicy": "Restore captured active catalog pointers and affected preferences without deleting new sessions. Keep schema-3 readers deployed once schema-3 sessions exist. Never restore an old dump over newly logged workouts."
+}

@@ -117,3 +117,12 @@ fieldset { border: 1px solid var(--border); border-radius: 8px; }
 .activity.done { border-color: var(--accent); }
 .schedule { list-style: none; padding: 0; display: grid; gap: 4px; }
 .schedule strong { display: inline-block; min-width: 3.2em; }
+.block { gap: 10px; }
+.block-head { border-left: 4px solid var(--accent); }
+.round-nav { display: flex; gap: 6px; }
+.round-nav .btn { flex: 1; min-width: 44px; padding: 8px 4px; }
+.round-btn.active { background: var(--accent-soft); border-color: var(--accent); color: var(--text); font-weight: 700; }
+.round-btn.done { color: var(--accent); }
+.round-btn.partial { color: var(--warn); }
+.round-summary { list-style: none; padding: 0; display: grid; gap: 4px; }
+.rest-time .small { font-weight: 400; }

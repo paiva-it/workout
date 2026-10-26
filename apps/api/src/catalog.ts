@@ -15,6 +15,7 @@ const ajv = new Ajv2020({ allErrors: true, strict: false });
 const SCHEMAS: Record<number, ReturnType<typeof ajv.compile>> = {
   1: ajv.compile(JSON.parse(readFileSync(contractsDir + 'training-pack.schema.json', 'utf8'))),
   2: ajv.compile(JSON.parse(readFileSync(contractsDir + 'training-pack.v2.schema.json', 'utf8'))),
+  3: ajv.compile(JSON.parse(readFileSync(contractsDir + 'training-pack.v3.schema.json', 'utf8'))),
 };
 const WARMUP_ROLES = ['pulse_raise', 'mobility', 'rehearsal'], COOLDOWN_ROLES = ['easy_movement', 'stretch'];
 export const MAX_PACK_BYTES = 2 * 1024 * 1024;
@@ -28,14 +29,14 @@ export function validatePack(raw: unknown): { pack: Pack | null; errors: string[
   if (bytes > MAX_PACK_BYTES) return { pack: null, errors: ['Pack exceeds 2 MiB'] };
   const version = (raw as { schemaVersion?: unknown } | null)?.schemaVersion;
   const validateSchema = typeof version === 'number' ? SCHEMAS[version] : undefined;
-  if (!validateSchema) return { pack: null, errors: [`Unsupported schemaVersion ${JSON.stringify(version)} (supported: 1, 2)`] };
+  if (!validateSchema) return { pack: null, errors: [`Unsupported schemaVersion ${JSON.stringify(version)} (supported: 1, 2, 3)`] };
   if (!validateSchema(raw)) return { pack: null, errors: (validateSchema.errors ?? []).slice(0, 50).map((e) => `${e.instancePath || '/'} ${e.message}`) };
   const p = raw as Pack;
   const check = (ok: unknown, msg: string) => { if (!ok) errors.push(msg); };
   const walk = (v: unknown, path: string): void => {
     if (typeof v === 'string') {
       check(!HTML.test(v), `Markup/script content not allowed at ${path}`);
-      if (p.schemaVersion === 2) check(!v.includes('=') || URL_KEY.test(path), `'=' is only allowed in video URLs (${path})`);
+      if (p.schemaVersion >= 2) check(!v.includes('=') || URL_KEY.test(path), `'=' is only allowed in video URLs (${path})`);
     }
     else if (Array.isArray(v)) v.forEach((x, i) => walk(x, `${path}/${i}`));
     else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) walk(x, `${path}/${k}`);
@@ -57,7 +58,7 @@ export function validatePack(raw: unknown): { pack: Pack | null; errors: string[
     check(e.metric !== 'duration' || e.repsMeaning === 'seconds', `Duration semantics: ${e.id}`);
     check(e.laterality !== 'separate_sides' || e.metric !== 'reps' || e.repsMeaning === 'per_side', `Side semantics: ${e.id}`);
     check(e.repsMeaning !== 'alternating_total' || (e.metric === 'reps' && e.laterality === 'bilateral'), `alternating_total is only for bilateral reps: ${e.id}`);
-    if (p.schemaVersion === 2 && e.metric === 'reps' && e.laterality === 'bilateral') check(['simultaneous_repetitions', 'alternating_total'].includes(e.repsMeaning), `Bilateral reps semantics: ${e.id}`);
+    if (p.schemaVersion >= 2 && e.metric === 'reps' && e.laterality === 'bilateral') check(['simultaneous_repetitions', 'alternating_total'].includes(e.repsMeaning), `Bilateral reps semantics: ${e.id}`);
   }
   for (const plan of plans.values()) {
     check(videos.has(plan.exampleVideoId), `Missing plan video: ${plan.id}`);
@@ -74,7 +75,7 @@ export function validatePack(raw: unknown): { pack: Pack | null; errors: string[
       check(item.target.min <= item.target.max, `Target range: ${item.id}`);
       check(!item.targetRir || item.targetRir[0] <= item.targetRir[1], `RIR: ${item.id}`);
     }
-    if (p.schemaVersion === 2) {
+    if (p.schemaVersion >= 2) {
       const ids = new Set(plan.items.map((i) => i.id));
       const sections = [['warmup', plan.warmup.steps, WARMUP_ROLES], ['cooldown', plan.cooldown.steps ?? [], COOLDOWN_ROLES]] as const;
       for (const [name, steps, roles] of sections) {
@@ -95,6 +96,23 @@ export function validatePack(raw: unknown): { pack: Pack | null; errors: string[
             check(item && item.exerciseId === st.exerciseId && item.exerciseVersion === st.exerciseVersion, `Rehearsal must match its linked item's exercise and version: ${st.id}`);
           }
         }
+      }
+      if (p.schemaVersion === 3) {
+        // Blocks reference item occurrences; flattened members are exactly the item order; one set per member per round.
+        const items = new Map(plan.items.map((i) => [i.id, i]));
+        const flat: string[] = [];
+        for (const b of plan.workoutBlocks ?? []) {
+          check(!ids.has(b.id), `Duplicate block/step/item id in ${plan.id}: ${b.id}`);
+          ids.add(b.id);
+          for (const m of b.itemIds) {
+            const item = items.get(m);
+            check(item, `Block ${b.id} references missing item ${m}`);
+            check(!flat.includes(m), `Item ${m} is in more than one block (${plan.id})`);
+            flat.push(m);
+            if (item) check(item.workingSets === b.rounds, `${m}: workingSets must equal block ${b.id} rounds`);
+          }
+        }
+        check(canonicalJson(flat) === canonicalJson(plan.items.map((i) => i.id)), `Block members must list every work item once, in item order (${plan.id})`);
       }
     }
   }

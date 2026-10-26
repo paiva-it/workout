@@ -2,8 +2,8 @@
 
 Paste everything below the line into ChatGPT (or another assistant). Attach these files from the repo:
 
-1. `contracts/training-pack.v2.schema.json` — the current import format (schema 2, JSON Schema 2020-12).
-2. `data/training-pack.v2.json` — the pack currently live in the app (or the newest pack you imported since).
+1. `contracts/training-pack.v3.schema.json` — the current import format (schema 3, JSON Schema 2020-12).
+2. `data/training-pack.v3.json` — the pack currently live in the app (or the newest pack you imported since).
 3. Optional, private: your export from **Settings → Export** (`workout-export.json`) so the plans can build on real results.
    Never paste it into a public place; it contains your training history and body weight.
 
@@ -152,9 +152,25 @@ video its plans reference (copied byte-for-byte when you reuse an existing `id` 
 - Prefer reusing existing exercise ids when the movement and logging are the same, so history and "last time" stay
   comparable.
 
-## Schema 2 additions (current format)
+## Schema 3 additions (current format)
 
-The live pack is `home-return-foundation` **version 2, `schemaVersion: 2`**. New packs should use schema 2:
+The live pack is `home-return-foundation` **version 3, `schemaVersion: 3`**. New packs should use schema 3: everything in
+schema 2 below, plus `plan.workoutBlocks` (required, 1–20):
+
+- A block is `{ id, name, rounds (1–10), itemIds, restBetweenExercisesSeconds, restBetweenRoundsSeconds,
+  restAfterBlockSeconds, notes }` (rests 0–600 s). One round = one set of each member, in order; the whole block repeats
+  `rounds` times before the next block.
+- Every work item belongs to exactly one block; the members of all blocks, in order, must equal `items` in order.
+- Each member's `workingSets` must equal its block's `rounds` (never rounds × sets).
+- Block ids must not collide with item/step ids. The app times rests from the block fields only; item `restSeconds` is
+  legacy metadata. The last block's `restAfterBlockSeconds` is unused (the workout continues to cooldown).
+- Effort is shown in plain English from `targetRir` ("Finish while you could still do 2-3 more good reps"); holds get a
+  form cue. The user never enters RIR.
+- Any changed plan needs a higher plan `version`, and the pack a higher `version` than the live one.
+
+## Schema 2 additions (still part of schema 3)
+
+Schema 2 added:
 
 - `warmup.steps` and `cooldown.steps` are exercise-linked activities (`sectionStep`): `id`, `exerciseId`,
   `exerciseVersion`, `sets` (1–5), `target`, `restSeconds`, `restAfter`, `defaultVariant`, `role`, `linkedWorkoutItemId`,
@@ -166,7 +182,7 @@ The live pack is `home-return-foundation` **version 2, `schemaVersion: 2`**. New
 - `repsMeaning` may be `alternating_total` for bilateral reps exercises where each alternating side action counts once
   (heel touches, shoulder taps): "20" means 20 in total. Bilateral reps use `simultaneous_repetitions` or
   `alternating_total`; separate-side reps use `per_side`; durations use `seconds`.
-- In schema 2, `=` is allowed only inside video `url` values.
+- In schema 2 and 3, `=` is allowed only inside video `url` values.
 - Every exercise used in a section must be in `exercises` with its own video.
 - The single program `return-to-training` (v2) has one open-ended phase (`weeks: [1, null]`, `workingSetCap: null`):
   the app hides week/phase controls for such programs. Keep that id so the user's selection carries over.
@@ -228,8 +244,8 @@ remembered old personal records as current ability, and do not put any of this d
 
 ## Before you import (for me, not for ChatGPT)
 
-1. Save the JSON as e.g. `training-pack.v2.json`. Quick structural check from the repo root:
-   `node scripts/validate-pack.mjs training-pack.v2.json`
+1. Save the JSON as e.g. `training-pack.v4.json` (`scripts/validate-pack.mjs` only checks schema 1; the app preview is
+   the real check for schema 2/3).
 2. In the app: **Settings → Import plans → Preview**. The preview runs the full schema, reference and versioning checks
    and changes nothing. It must say `new` with `0 conflicting`; read the new/unchanged counts.
 3. **Import and activate**, then open the new plans and click each video once (embeds can be blocked by the uploader;
@@ -242,5 +258,5 @@ Optional video check before importing (prints 200 per embeddable video):
 python3 -c "import json,sys,urllib.request,urllib.parse as u
 for v in json.load(open(sys.argv[1]))['videos']:
   try: print(urllib.request.urlopen('https://www.youtube.com/oembed?url='+u.quote(v['url'])).status, v['id'])
-  except Exception as e: print(getattr(e,'code',e), v['id'], '<- check')" training-pack.v2.json
+  except Exception as e: print(getattr(e,'code',e), v['id'], '<- check')" training-pack.v4.json
 ```

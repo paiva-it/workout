@@ -28,6 +28,7 @@ const browser = await chromium.launch();
 const results = [];
 const step = async (name, fn) => { try { await fn(); results.push(`PASS ${name}`); } catch (e) { results.push(`FAIL ${name}: ${e.message.split('\n')[0]}`); throw e; } };
 const noOverflow = async (page, where) => {
+  if (process.env.E2E_SHOTS) await page.screenshot({ path: `${process.env.E2E_SHOTS}/${where.replace(/\W+/g, '-')}.png`, fullPage: true });
   const [sw, cw] = await page.evaluate(() => [document.documentElement.scrollWidth, document.documentElement.clientWidth]);
   assert.ok(sw <= cw, `horizontal overflow on ${where}: ${sw} > ${cw}`);
 };
@@ -256,6 +257,58 @@ try {
     await page.getByText('Restart A - squat, push and pull').first().click();
     await page.getByText('Not recorded in this workout format.').waitFor();
     await page.getByText(/Warm-up checklist: \d+\/\d+ ticked/).waitFor();
+  });
+
+  await step('v3 import: four plans in blocks and rounds, plain-English effort cue', async () => {
+    await page.getByRole('link', { name: 'Settings' }).click();
+    await page.getByLabel('Or paste JSON').fill(readFileSync(root + 'data/training-pack.v3.json', 'utf8'));
+    await page.getByRole('button', { name: 'Preview' }).click();
+    await page.getByText('plans: 4 new, 0 unchanged, 0 conflicting').waitFor();
+    await page.getByText('exercises: 0 new, 50 unchanged, 0 conflicting').waitFor();
+    await page.getByRole('button', { name: 'Import and activate' }).click();
+    await page.getByText(/v3: imported and activated/).waitFor();
+    await page.getByRole('link', { name: 'Plans' }).click();
+    await page.locator('ul.cards > li h2', { hasText: 'A - Arms, shoulders and back' }).click();
+    await page.getByRole('heading', { name: 'Block 1 - Row and push-up' }).waitFor();
+    await page.getByText(/^Repeat 3 rounds: .*row.* → /i).waitFor();
+    await page.getByText('Finish while you could still do 2-3 more good reps.').first().waitFor();
+    assert.equal(await page.getByText(/RIR \d/).count(), 0, 'raw RIR label shown');
+    await noOverflow(page, 'plan detail v3');
+  });
+
+  await step('grouped workout: rounds, per-side rows, one rest per boundary, revisit, refresh, history', async () => {
+    await page.getByRole('button', { name: 'Start now' }).click();
+    await page.getByRole('button', { name: 'Continue to workout →' }).click();
+    const block = page.locator('section.block').first();
+    await block.getByText('Round 1 of 3').waitFor();
+    const row = block.locator('section.exercise').nth(0);
+    const push = block.locator('section.exercise').nth(1);
+    for (const [side, reps] of [['L', '12'], ['R', '10']]) {
+      await row.getByLabel(`Round 1 ${side} reps`).fill(reps);
+      await row.getByLabel(`Round 1 ${side} kg per dumbbell`).fill('8');
+      await row.locator('.set', { hasText: `Round 1 ${side}` }).getByRole('button', { name: 'Done' }).click();
+      if (side === 'L') { await page.getByRole('status').filter({ hasText: 'Saved' }).waitFor(); assert.equal(await page.locator('.rest').count(), 0, 'rest after one side'); }
+    }
+    await page.locator('.rest', { hasText: 'before the next exercise' }).waitFor();
+    await push.getByLabel('Round 1 reps').fill('10');
+    await push.locator('.set', { hasText: 'Round 1' }).getByRole('button', { name: 'Done' }).click();
+    await page.locator('.rest', { hasText: 'before the next round' }).waitFor();
+    await block.getByText('Round 2 of 3').waitFor();
+    assert.equal(await row.getByLabel('Round 2 L reps').inputValue(), '', 'round 2 prefilled');
+    await block.getByRole('button', { name: 'Round 1, done' }).click();
+    assert.equal(await row.getByLabel('Round 1 L reps').inputValue(), '12');
+    assert.equal(await row.getByLabel('Round 1 R reps').inputValue(), '10');
+    assert.deepEqual(await smallTargets(page), [], 'tap targets under 44px (rounds)');
+    await noOverflow(page, 'workout v3');
+    await page.reload();
+    await page.locator('section.block').first().getByText('Round 2 of 3').waitFor();
+    await page.locator('section.block').first().getByText('Round results').click();
+    await page.getByText(/Round 1 ✓: .*L 12 × 8 kg, R 10 × 8 kg/).waitFor();
+    await page.getByRole('button', { name: 'Finish…' }).click();
+    await page.getByText(/3 of 16 required working sets|3 of 19 required working sets/).waitFor();
+    await page.getByRole('button', { name: 'Finish', exact: true }).click();
+    await page.getByRole('heading', { name: 'Block 1 - Row and push-up · 3 rounds' }).waitFor();
+    await noOverflow(page, 'history v3');
   });
 
   await step('logout clears local state; private API then refuses', async () => {

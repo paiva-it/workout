@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { localToInstants, parseKgToGrams } from '@workout/contracts';
 import { api, ApiError, fmtDuration, fmtTime, kg, outbox, useApi, useOutbox, type OutboxItem } from '../api';
-import { Details, ErrorBox, Field, isLoaded, LOAD_LABEL, loadHint, Loading, rirText, targetText, Video } from '../ui';
+import { Details, Effort, ErrorBox, Field, isLoaded, LOAD_LABEL, loadHint, Loading, rirText, targetText, Video } from '../ui';
 import { useAuth } from '../main';
 import { ActivityCard, dosage, SECTION_LABEL, sectionCounts, sectionSummaryText, type Section } from '../sections';
 
@@ -128,7 +128,9 @@ function ActiveWorkout({ s, pendingCount }: { s: Any; pendingCount: number }) {
         <Video video={s.planSnapshot.videoDefinitions[s.planSnapshot.warmup.videoId]} label="General warm-up reference" />
       </Details>}
 
-      {show('workout') && s.exercises.map((occ: Any) => <ExerciseCard key={occ.id} s={s} occ={occ} enqueue={enqueue} />)}
+      {show('workout') && (s.workoutBlocksSnapshot
+        ? s.workoutBlocksSnapshot.map((b: Any, i: number) => <BlockSection key={b.id} s={s} block={b} index={i} last={i === s.workoutBlocksSnapshot.length - 1} enqueue={enqueue} />)
+        : s.exercises.map((occ: Any) => <ExerciseCard key={occ.id} s={s} occ={occ} enqueue={enqueue} />))}
 
       {show('workout') && optionalItems.length > 0 && (
         <section className="card stack">
@@ -187,14 +189,63 @@ function RestTimer({ s, now, enqueue }: { s: Any; now: number; enqueue: (op: Rec
   if (!t || left < -30) return null;
   return (
     <div className="rest" role="timer" aria-live="off">
-      <span className="rest-time">{left > 0 ? `Rest ${fmtDuration(left)}` : 'Rest over'}</span>
+      <span className="rest-time">{left > 0 ? `Rest ${fmtDuration(left)}` : 'Rest over'}{t.kind && <span className="small"> {REST_LABEL[t.kind]}</span>}</span>
       {left > 0 && <button className="btn" onClick={() => enqueue({ type: 'updateRestTimer', action: 'start', durationSeconds: Math.min(1800, left + 30), exerciseOccurrenceId: t.exerciseOccurrenceId ?? undefined, roundIndex: t.roundIndex ?? undefined })}>+30s</button>}
       <button className="btn" onClick={() => enqueue({ type: 'updateRestTimer', action: 'clear' })}>{left > 0 ? 'Skip rest' : 'Dismiss'}</button>
     </div>
   );
 }
 
-function ExerciseCard({ s, occ, enqueue }: { s: Any; occ: Any; enqueue: (op: Record<string, unknown>) => void }) {
+const REST_LABEL: Record<string, string> = { exercise: 'before the next exercise', round: 'before the next round', block: 'before the next block' };
+/** done = every row performed; partial = all resolved but something skipped; derived from set statuses only. */
+const roundState = (rows: Any[]) => rows.every((x) => x.status === 'done') ? 'done' : rows.every((x) => x.status !== 'pending') ? 'partial' : rows.some((x) => x.status !== 'pending') ? 'started' : 'pending';
+const ROUND_MARK: Record<string, string> = { done: '✓', partial: '◐ partial', started: '…', pending: '' };
+const ROUND_SR: Record<string, string> = { done: ', done', partial: ', partly skipped', started: ', started', pending: '' };
+const rowText = (x: Any) => x.status === 'skipped' ? 'skipped' : x.status !== 'done' ? '–' : `${x.actualReps ?? `${x.actualDurationSeconds}s`}${x.actualLoad?.valueGrams != null ? ` × ${kg(x.actualLoad.valueGrams)} kg` : ''}`;
+
+/** Schema-3 block: one set of each member per round, repeated; actuals stay on the flat occurrences. */
+function BlockSection({ s, block, index, last, enqueue }: { s: Any; block: Any; index: number; last: boolean; enqueue: (op: Record<string, unknown>) => void }) {
+  const p = block.prescriptionSnapshot;
+  const occs = block.members.map((m: Any) => s.exercises.find((o: Any) => o.id === m.exerciseOccurrenceId)).filter(Boolean);
+  const rows = (r: number) => occs.flatMap((o: Any) => o.sets.filter((x: Any) => x.blockSnapshotId === block.id && x.roundIndex === r));
+  const rounds = Array.from({ length: p.rounds }, (_, i) => i + 1);
+  const states = rounds.map((r) => roundState(rows(r)));
+  const firstOpen = rounds.find((r) => rows(r).some((x: Any) => x.status === 'pending'));
+  const [round, setRound] = useState(firstOpen ?? p.rounds);
+  // Move on once the round you are on gets resolved; manual navigation is never overridden.
+  const resolved = states[round - 1] === 'done' || states[round - 1] === 'partial';
+  const was = useRef(resolved);
+  useEffect(() => { if (resolved && !was.current && round < p.rounds) setRound(round + 1); was.current = resolved; }, [resolved]);
+  const name = (o: Any) => o.exerciseSnapshot.name;
+  return (
+    <section className="stack block" aria-labelledby={`blk-${block.id}`}>
+      <div className="card inset stack block-head">
+        <h2 id={`blk-${block.id}`}>{p.name}</h2>
+        <p className="target">Repeat {p.rounds} round{p.rounds > 1 ? 's' : ''} · <span aria-live="polite">Round {round} of {p.rounds}</span></p>
+        <p className="small">One set of each exercise in order, then repeat. Rest {p.restBetweenExercisesSeconds}s between exercises, {p.restBetweenRoundsSeconds}s between rounds{last ? '; after the final round, continue to cooldown.' : `, ${p.restAfterBlockSeconds}s after the block.`}</p>
+        <div className="round-nav" role="group" aria-label={`Block ${index + 1} rounds`}>
+          <button className="btn small-btn" disabled={round === 1} onClick={() => setRound(round - 1)} aria-label="Previous round">‹</button>
+          {rounds.map((r, i) => (
+            <button key={r} className={`btn small-btn round-btn ${states[i]}${r === round ? ' active' : ''}`} aria-current={r === round ? 'step' : undefined} aria-label={`Round ${r}${ROUND_SR[states[i]]}`} onClick={() => setRound(r)}>
+              {r}{ROUND_MARK[states[i]] && <span aria-hidden="true"> {ROUND_MARK[states[i]].split(' ')[0]}</span>}
+            </button>
+          ))}
+          <button className="btn small-btn" disabled={round === p.rounds} onClick={() => setRound(round + 1)} aria-label="Next round">›</button>
+        </div>
+        <Details summary="Round results">
+          <ul className="small round-summary">
+            {rounds.map((r, i) => (
+              <li key={r}><strong>Round {r}</strong> {ROUND_MARK[states[i]]}: {occs.map((o: Any) => `${name(o)} ${o.sets.filter((x: Any) => x.blockSnapshotId === block.id && x.roundIndex === r).map((x: Any) => `${x.side !== 'both' ? `${x.side[0].toUpperCase()} ` : ''}${rowText(x)}`).join(', ')}`).join(' · ')}</li>
+            ))}
+          </ul>
+        </Details>
+      </div>
+      {occs.map((o: Any) => <ExerciseCard key={o.id} s={s} occ={o} enqueue={enqueue} round={round} />)}
+    </section>
+  );
+}
+
+function ExerciseCard({ s, occ, enqueue, round }: { s: Any; occ: Any; enqueue: (op: Record<string, unknown>) => void; round?: number }) {
   const ex = occ.exerciseSnapshot;
   const p = occ.appliedPrescription;
   const loaded = isLoaded(occ.loadBasis);
@@ -211,10 +262,13 @@ function ExerciseCard({ s, occ, enqueue }: { s: Any; occ: Any; enqueue: (op: Rec
     <section className={`card stack exercise${occ.skipped ? ' skipped' : ''}`} aria-labelledby={`ex-${occ.id}`}>
       <h2 id={`ex-${occ.id}`}>{ex.name}{occ.optional && <span className="tag">optional</span>}{occ.skipped && <span className="tag">skipped</span>}</h2>
       {occ.originalExerciseSnapshot && <p className="small">Substituted for {occ.originalExerciseSnapshot.name}</p>}
-      <p className="target">
+      {round ? <>
+        <p className="target">{occ.exerciseSnapshot.repsMeaning === 'alternating_total' ? dosage(p.target, 'alternating_total') : targetText(p.target)} this round</p>
+        <p className="small"><Effort rir={p.rir} metric={p.target.metric} /></p>
+      </> : <p className="target">
         Target {p.workingSets} × {occ.exerciseSnapshot.repsMeaning === 'alternating_total' ? dosage(p.target, 'alternating_total') : targetText(p.target)}{p.rir ? ` · ${rirText(p.rir)}` : ''} · rest {p.restSeconds}s
         {occ.originalPrescription.workingSets !== p.workingSets && <span className="muted small"> (phase cap; plan lists {occ.originalPrescription.workingSets})</span>}
-      </p>
+      </p>}
       {occ.originalPrescription.notes && <p className="small">{occ.originalPrescription.notes}</p>}
       <p className="muted small"><strong>{LOAD_LABEL[occ.loadBasis]}</strong> — {loadHint(occ.loadBasis, occ.implementCount)} Variant: {occ.variantKey}{incline != null ? ` · support ${incline} mm` : ''}</p>
       {prev ? (
@@ -225,12 +279,12 @@ function ExerciseCard({ s, occ, enqueue }: { s: Any; occ: Any; enqueue: (op: Rec
       ) : <p className="muted small">No previous comparable result.</p>}
 
       <div className="sets">
-        {occ.sets.map((set: Any) => <SetRow key={set.id} occ={occ} set={set} enqueue={enqueue} suggest={suggest} />)}
+        {occ.sets.filter((x: Any) => !round || (x.type === 'working' ? x.roundIndex === round : round === 1)).map((set: Any) => <SetRow key={set.id} occ={occ} set={set} enqueue={enqueue} suggest={suggest} />)}
       </div>
       <div className="row wrap">
-        <button className="btn small-btn" onClick={() => enqueue({ type: 'addSet', exerciseOccurrenceId: occ.id, setType: 'working' })}>+ Set</button>
+        {!round && <button className="btn small-btn" onClick={() => enqueue({ type: 'addSet', exerciseOccurrenceId: occ.id, setType: 'working' })}>+ Set</button>}
         <button className="btn small-btn" onClick={() => enqueue({ type: 'addSet', exerciseOccurrenceId: occ.id, setType: 'warmup' })}>+ Warm-up set</button>
-        {lastPending('working') != null && <button className="btn small-btn" onClick={() => enqueue({ type: 'removePendingSet', exerciseOccurrenceId: occ.id, setType: 'working', roundIndex: lastPending('working') })}>− Remove last pending set</button>}
+        {!round && lastPending('working') != null && <button className="btn small-btn" onClick={() => enqueue({ type: 'removePendingSet', exerciseOccurrenceId: occ.id, setType: 'working', roundIndex: lastPending('working') })}>− Remove last pending set</button>}
         <button className="btn small-btn" onClick={() => {
           if (occ.skipped) return enqueue({ type: 'skipExercise', exerciseOccurrenceId: occ.id, skipped: false, reason: null });
           const reason = prompt('Skip this exercise? Optional reason:');
@@ -283,7 +337,7 @@ function SetRow({ occ, set, enqueue, suggest }: { occ: Any; set: Any; enqueue: (
     if (!same) save();
   }, 0);
   const done = set.status === 'done';
-  const label = `${set.type === 'warmup' ? 'W' : 'Set '}${set.roundIndex}${set.side !== 'both' ? ` ${set.side === 'left' ? 'L' : 'R'}` : ''}`;
+  const label = `${set.type === 'warmup' ? 'W' : set.blockSnapshotId ? 'Round ' : 'Set '}${set.roundIndex}${set.side !== 'both' ? ` ${set.side === 'left' ? 'L' : 'R'}` : ''}`;
   const tgt = `${set.target.min === set.target.max ? set.target.min : `${set.target.min}–${set.target.max}`}`;
 
   return (
@@ -302,7 +356,7 @@ function SetRow({ occ, set, enqueue, suggest }: { occ: Any; set: Any; enqueue: (
       <details className="set-more">
         <summary>More</summary>
         <div className="row wrap">
-          <Field label="RIR" hint="How many more good reps you could have done. Blank = not recorded.">
+          <Field label="Reps left (optional)" hint="How many more good reps you could have done (RIR, reps in reserve). Blank = not recorded.">
             <select value={d.rir} onChange={(e) => setD({ ...d, rir: e.target.value })}><option value="">—</option>{Array.from({ length: 11 }, (_, i) => <option key={i} value={i}>{i}</option>)}</select>
           </Field>
           <Field label="Set note"><input value={d.notes} maxLength={1000} onChange={(e) => setD({ ...d, notes: e.target.value })} /></Field>

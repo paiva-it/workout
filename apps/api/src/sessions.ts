@@ -2,21 +2,21 @@ import { randomUUID } from 'node:crypto';
 import { Body, Controller, Get, HttpCode, Param, Post, Patch, Query, Req } from '@nestjs/common';
 import type { Request } from 'express';
 import { z } from 'zod';
-import { applyPhase, isSectionStep, localParts, programPosition, type Exercise, type Plan, type PlanItem, type Program, type SectionStep, type Video } from '@workout/contracts';
+import { applyPhase, blockRest, isSectionStep, localParts, programPosition, type Exercise, type Plan, type PlanItem, type Program, type SectionStep, type Video } from '@workout/contracts';
 import { TrainingSession, User, out } from './db.js';
 import { activeCatalog, loadPack, resolvePlan } from './catalog.js';
 import { fail, hashPayload, parse, zInt, zIso, zNote, zTz, zUuid, type AuthedUser } from './common.js';
 
 type Doc = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any -- lean session documents
 const LOADED = ['per_dumbbell', 'single_dumbbell', 'barbell_total', 'external_total'];
-const MUTABLE = ['status', 'isActive', 'endedAt', 'pauses', 'elapsedSeconds', 'activeSeconds', 'warmupChecklist', 'restTimer', 'exercises', 'sectionActivities', 'metadata', 'corrections', 'correctedAt'] as const;
+const MUTABLE = ['status', 'isActive', 'endedAt', 'pauses', 'elapsedSeconds', 'activeSeconds', 'warmupChecklist', 'restTimer', 'exercises', 'sectionActivities', 'restBoundariesStarted', 'metadata', 'corrections', 'correctedAt'] as const;
 const KEEP_OPERATIONS = 2000;
 
 // ---------- Session construction ----------
-function makeSets(occ: Doc, type: 'working' | 'warmup', round: number, perSide: boolean) {
+function makeSets(occ: Doc, type: 'working' | 'warmup', round: number, perSide: boolean, blockSnapshotId?: string) {
   const p = occ.appliedPrescription;
   const target = type === 'working' ? { metric: p.target.metric, min: p.target.min, max: p.target.max, rir: p.rir } : { metric: p.target.metric, min: Math.min(5, p.target.min), max: Math.max(5, Math.min(10, p.target.max)), rir: null };
-  const blank = { roundIndex: round, type, status: 'pending', target, actualReps: null, actualDurationSeconds: null, actualLoad: null, actualRir: null, failedAttempt: false, completedAt: null, recordedAt: null, notes: null, skipReason: null };
+  const blank = { roundIndex: round, type, status: 'pending', target, actualReps: null, actualDurationSeconds: null, actualLoad: null, actualRir: null, failedAttempt: false, completedAt: null, recordedAt: null, notes: null, skipReason: null, ...(blockSnapshotId && { blockSnapshotId }) };
   return perSide ? [{ id: randomUUID(), side: 'left', ...blank }, { id: randomUUID(), side: 'right', ...blank }] : [{ id: randomUUID(), side: 'both', ...blank }];
 }
 function makeOccurrence(item: PlanItem, ex: Exercise, video: Video | undefined, phase: Doc | null) {
@@ -142,6 +142,7 @@ function applySetActual(d: Doc, op: z.infer<typeof SetActual>, now: Date, user: 
     recordedAt: now,
     completedAt: op.status === 'done' ? (wasDone ? set.completedAt : op.completedAt ? clampTime(d, op.completedAt, now) : now) : null,
   });
+  if (set.blockSnapshotId) return startBlockRest(d, occ, set, user, op.status === 'done' && !wasDone);
   // Rest timer: after the set, or only once both sides of the round are done.
   const rest = occ.appliedPrescription.restSeconds;
   if (user?.restTimerEnabled !== false && op.status === 'done' && !wasDone && rest > 0) {
@@ -151,11 +152,29 @@ function applySetActual(d: Doc, op: z.infer<typeof SetActual>, now: Date, user: 
   }
 }
 
+/** Schema 3: one timer per boundary, only once this member's round rows are all resolved, and never twice for the same boundary. */
+function startBlockRest(d: Doc, occ: Doc, set: Doc, user: AuthedUser | null, justDone: boolean) {
+  if (!justDone || user?.restTimerEnabled === false) return;
+  const blocks = d.workoutBlocksSnapshot as Doc[];
+  const bi = blocks.findIndex((b) => b.id === set.blockSnapshotId);
+  const mi = bi < 0 ? -1 : blocks[bi].members.findIndex((m: Doc) => m.exerciseOccurrenceId === occ.id);
+  const round = occ.sets.filter((s: Doc) => s.blockSnapshotId === set.blockSnapshotId && s.roundIndex === set.roundIndex);
+  if (mi < 0 || round.some((s: Doc) => s.status === 'pending')) return;
+  const rest = blockRest(blocks.map((b) => ({ ...b.prescriptionSnapshot, itemIds: b.members })), bi, set.roundIndex, mi);
+  const key = `${set.blockSnapshotId}:${set.roundIndex}:${mi}`;
+  d.restBoundariesStarted ??= [];
+  if (rest.seconds <= 0 || d.restBoundariesStarted.includes(key)) return;
+  d.restBoundariesStarted.push(key);
+  d.restTimer = { startedAt: set.completedAt, durationSeconds: rest.seconds, endsAt: new Date(new Date(set.completedAt).getTime() + rest.seconds * 1000), exerciseOccurrenceId: occ.id, roundIndex: set.roundIndex, kind: rest.kind, boundaryKey: key };
+}
+const inBlock = (occ: Doc) => occ.sets.some((s: Doc) => s.blockSnapshotId);
+
 async function applyOp(d: Doc, op: OpT, now: Date, user: AuthedUser) {
   switch (op.type) {
     case 'setActual': return applySetActual(d, op, now, user);
     case 'addSet': {
       const occ = findOcc(d, op.exerciseOccurrenceId);
+      if (op.setType === 'working' && inBlock(occ)) throw fail(409, 'BLOCK_ROUNDS', 'Working sets follow the block rounds; log extra work in the set notes');
       const rounds = occ.sets.filter((s: Doc) => s.type === op.setType).map((s: Doc) => s.roundIndex);
       if (occ.sets.filter((s: Doc) => s.type === op.setType).length >= 40) throw fail(422, 'VALIDATION', 'Too many sets');
       const sets = makeSets(occ, op.setType, Math.max(0, ...rounds) + 1, occ.exerciseSnapshot.laterality === 'separate_sides');
@@ -164,6 +183,7 @@ async function applyOp(d: Doc, op: OpT, now: Date, user: AuthedUser) {
     }
     case 'removePendingSet': {
       const occ = findOcc(d, op.exerciseOccurrenceId);
+      if (op.setType === 'working' && inBlock(occ)) throw fail(409, 'BLOCK_ROUNDS', 'Working sets follow the block rounds; skip a set instead');
       const round = occ.sets.filter((s: Doc) => s.type === op.setType && s.roundIndex === op.roundIndex);
       if (!round.length) throw fail(404, 'NOT_FOUND', 'Set not found');
       if (round.some((s: Doc) => s.status !== 'pending')) throw fail(409, 'NOT_PENDING', 'Only pending sets can be removed; mark it skipped instead');
@@ -188,8 +208,9 @@ async function applyOp(d: Doc, op: OpT, now: Date, user: AuthedUser) {
       Object.assign(occ, { exerciseId: ex.id, exerciseVersion: ex.version, exerciseSnapshot: { ...ex, video: c.videos.get(ex.videoId) ?? null }, loadBasis: ex.defaultLoadBasis, implementCount: ex.defaultImplementCount, variantKey: 'standard' });
       occ.appliedPrescription = { ...occ.appliedPrescription, target: { ...occ.appliedPrescription.target, perSide } };
       const workingRounds = new Set(occ.sets.filter((s: Doc) => s.type === 'working').map((s: Doc) => s.roundIndex)).size;
+      const blockSnapshotId = occ.sets.find((s: Doc) => s.blockSnapshotId)?.blockSnapshotId; // the occurrence keeps its block and rounds
       occ.sets = [];
-      for (let r = 1; r <= workingRounds; r++) occ.sets.push(...makeSets(occ, 'working', r, perSide));
+      for (let r = 1; r <= workingRounds; r++) occ.sets.push(...makeSets(occ, 'working', r, perSide, blockSnapshotId));
       return;
     }
     case 'addOptionalExercise': {
@@ -230,7 +251,8 @@ async function applyOp(d: Doc, op: OpT, now: Date, user: AuthedUser) {
     case 'updateRestTimer': {
       if (op.action === 'clear') { d.restTimer = null; return; }
       const secs = op.durationSeconds ?? 90;
-      d.restTimer = { startedAt: now, durationSeconds: secs, endsAt: new Date(now.getTime() + secs * 1000), exerciseOccurrenceId: op.exerciseOccurrenceId ?? null, roundIndex: op.roundIndex ?? null };
+      const keep = d.restTimer?.boundaryKey && d.restTimer.exerciseOccurrenceId === (op.exerciseOccurrenceId ?? null) ? { kind: d.restTimer.kind, boundaryKey: d.restTimer.boundaryKey } : {}; // +30s keeps its boundary label
+      d.restTimer = { startedAt: now, durationSeconds: secs, endsAt: new Date(now.getTime() + secs * 1000), exerciseOccurrenceId: op.exerciseOccurrenceId ?? null, roundIndex: op.roundIndex ?? null, ...keep };
       return;
     }
   }
@@ -320,7 +342,7 @@ export class SessionsController {
     const lp = localParts(startedAt, dto.timezone);
     const programContext = dto.applyProgram ? await programContextFor(user.id, r.plan, lp.localDate) : null;
     const plan: Plan = r.plan;
-    const structured = r.packSchemaVersion === 2;
+    const structured = r.packSchemaVersion >= 2;
     const steps = (list: unknown[] | undefined) => (list ?? []).filter((x) => isSectionStep(x as SectionStep)) as SectionStep[];
     const warmupSteps = structured ? steps(plan.warmup.steps) : [], cooldownSteps = structured ? steps(plan.cooldown.steps) : [];
     const used = new Set([...plan.items, ...warmupSteps, ...cooldownSteps].map((i) => i.exerciseId));
@@ -329,7 +351,7 @@ export class SessionsController {
     const videoDefinitions = Object.fromEntries(Object.entries(r.videos).filter(([id]) => videoIds.has(id)));
     const doc = {
       _id: randomUUID(), ownerId: user.id, clientSessionId: dto.clientSessionId, createPayloadHash, revision: 1,
-      schemaVersion: structured ? 2 : 1,
+      schemaVersion: r.packSchemaVersion,
       planRef: { id: plan.id, version: plan.version, packId: r.packId, packVersion: r.packVersion, packSchemaVersion: r.packSchemaVersion },
       planSnapshot: { ...plan, exerciseDefinitions, videoDefinitions },
       programContext, status: 'in_progress', isActive: true, source: dto.source, startedAt, endedAt: null,
@@ -337,6 +359,15 @@ export class SessionsController {
       warmupChecklist: structured ? [] : plan.warmup.steps.map((s) => ({ stepId: s.id, completed: false, completedAt: null })),
       exercises: plan.items.filter((i) => !i.optional).map((i) => makeOccurrence(i, r.exercises[i.exerciseId], r.videos[r.exercises[i.exerciseId].videoId], programContext)),
     } as Doc;
+    if (plan.workoutBlocks) {
+      // Blocks map to the same flat occurrences; each working set records its block and round. No second copy of sets.
+      const occByItem = new Map<string, Doc>(doc.exercises.map((o: Doc) => [o.planItemId, o]));
+      doc.workoutBlocksSnapshot = plan.workoutBlocks.map((b) => {
+        const snap = { id: randomUUID(), planBlockId: b.id, prescriptionSnapshot: b, members: b.itemIds.filter((i) => occByItem.has(i)).map((i) => ({ planItemId: i, exerciseOccurrenceId: occByItem.get(i)!.id })) };
+        for (const m of snap.members) for (const set of occByItem.get(m.planItemId)!.sets) set.blockSnapshotId = snap.id;
+        return snap;
+      });
+    }
     if (structured) {
       // Rehearsals are linked to the working occurrence but never capped, counted or used as "last time".
       const occByItem = new Map(doc.exercises.map((o: Doc) => [o.planItemId, o.id]));

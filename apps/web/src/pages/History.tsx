@@ -69,13 +69,14 @@ export function HistoryDetail() {
       <p className="small">{sectionSummaryText('Warm-up', s.sectionActivities?.warmup)} · {sectionSummaryText('Cooldown', s.sectionActivities?.cooldown)}</p>
       {s.sectionActivities ? <SectionHistory title="Warm-up" list={s.sectionActivities.warmup} /> : <LegacyWarmup s={s} />}
       <h2>Workout</h2>
-      {s.exercises.map((o: Any) => (
-        <section key={o.id} className="card stack">
+      {s.exercises.map((o: Any) => (<div key={o.id} className="stack">
+        {s.workoutBlocksSnapshot?.filter((b: Any) => b.members[0]?.exerciseOccurrenceId === o.id).map((b: Any) => <h3 key={b.id}>{b.prescriptionSnapshot.name} · {b.prescriptionSnapshot.rounds} round{b.prescriptionSnapshot.rounds > 1 ? 's' : ''}</h3>)}
+        <section className="card stack">
           <h2>{o.exerciseSnapshot.name}{o.skipped && <span className="tag">skipped</span>}</h2>
           {o.originalExerciseSnapshot && <p className="small">Substituted for {o.originalExerciseSnapshot.name}</p>}
           <p className="muted small">{LOAD_LABEL[o.loadBasis]} · variant {o.variantKey}{o.setup?.inclineSupportHeightMm != null ? ` · support ${o.setup.inclineSupportHeightMm} mm` : ''}</p>
           <table className="sets-table">
-            <thead><tr><th>Set</th><th>Status</th><th>Actual</th><th>RIR</th><th></th></tr></thead>
+            <thead><tr><th>{s.workoutBlocksSnapshot ? 'Round' : 'Set'}</th><th>Status</th><th>Actual</th><th>RIR</th><th></th></tr></thead>
             <tbody>
               {o.sets.map((x: Any) => (
                 <tr key={x.id}>
@@ -90,7 +91,7 @@ export function HistoryDetail() {
           </table>
           {o.sets.filter((x: Any) => x.id === editing).map((x: Any) => <Correction key={x.id} s={s} occ={o} set={x} done={() => { setEditing(null); reload(); }} />)}
         </section>
-      ))}
+      </div>))}
       {s.sectionActivities ? <SectionHistory title="Cooldown" list={s.sectionActivities.cooldown} /> : (
         <section className="card stack">
           <h2>Cooldown</h2>

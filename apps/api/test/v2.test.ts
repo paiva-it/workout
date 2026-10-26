@@ -61,7 +61,7 @@ describe('dual-format pack validation', () => {
   it('schema 1 keeps accepting the old pack and rejects the new one; unknown versions are refused', async () => {
     expect((await req('POST', '/plan-imports/preview', { pack: v1 })).body.status).toBe('noop');
     expect((await req('POST', '/plan-imports/preview', { pack: { ...v2, schemaVersion: 1 } })).body.status).toBe('invalid');
-    const bad = await req('POST', '/plan-imports/preview', { pack: { ...v2, schemaVersion: 3 } });
+    const bad = await req('POST', '/plan-imports/preview', { pack: { ...v2, schemaVersion: 4 } });
     expect(bad.body.errors[0]).toMatch(/Unsupported schemaVersion/);
   });
   it('schema 2 rejects unknown step fields, duplicate occurrence ids, wrong rehearsal links and stray equals signs', async () => {

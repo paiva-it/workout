@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { applyPhase, externalVolumeKgReps, localParts, localToInstants, nextScheduled, parseKgToGrams, programPosition, programWeek, type Load, type TrainingPack } from './index.js';
+import { applyPhase, blockRest, effortCue, externalVolumeKgReps, localParts, localToInstants, nextScheduled, parseKgToGrams, programPosition, programWeek, type Load, type TrainingPack } from './index.js';
 
 const root = new URL('../../../', import.meta.url);
 const fixtures = JSON.parse(readFileSync(new URL('fixtures/logging-cases.json', root), 'utf8'));
@@ -105,5 +105,21 @@ describe('v2 fixed program', () => {
   it('an obsolete held phase index cannot restore an old cap', () => {
     const held = programPosition(p, { programId: p.id, startDate: null, heldPhaseIndex: 2 }, '2026-10-27')!;
     expect(held.phase.workingSetCap).toBeNull();
+  });
+});
+
+describe('schema-3 rounds', () => {
+  const b = { rounds: 3, itemIds: ['row', 'push'], restBetweenExercisesSeconds: 60, restBetweenRoundsSeconds: 120, restAfterBlockSeconds: 120 };
+  const last = { ...b, rounds: 2, restAfterBlockSeconds: 0 };
+  it('one boundary per resolved member: exercise, round, block (never summed), end', () => {
+    expect(blockRest([b, last], 0, 1, 0)).toEqual({ kind: 'exercise', seconds: 60 });
+    expect(blockRest([b, last], 0, 2, 1)).toEqual({ kind: 'round', seconds: 120 });
+    expect(blockRest([b, last], 0, 3, 1)).toEqual({ kind: 'block', seconds: 120 });
+    expect(blockRest([b, last], 1, 2, 1)).toEqual({ kind: 'end', seconds: 0 });
+  });
+  it('plain-English effort; holds get a form cue', () => {
+    expect(effortCue([2, 3])).toBe('Finish while you could still do 2-3 more good reps.');
+    expect(effortCue([2, 3], 'duration')).toBe('Stop before your position starts to slip.');
+    expect(effortCue(null)).toBe('');
   });
 });
