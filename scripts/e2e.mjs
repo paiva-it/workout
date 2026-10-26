@@ -279,6 +279,9 @@ try {
   await step('grouped workout: rounds, per-side rows, one rest per boundary, revisit, refresh, history', async () => {
     await page.getByRole('button', { name: 'Start now' }).click();
     await page.getByRole('button', { name: 'Continue to workout →' }).click();
+    // Real-network latency: a Done tap followed straight away by the next input must stay done.
+    const slow = (r) => (r.request().method() === 'PATCH' ? setTimeout(() => r.continue(), 700) : r.continue());
+    await page.route('**/api/v1/sessions/*', slow);
     const block = page.locator('section.block').first();
     await block.getByText('Round 1 of 3').waitFor();
     const row = block.locator('section.exercise').nth(0);
@@ -287,13 +290,15 @@ try {
       await row.getByLabel(`Round 1 ${side} reps`).fill(reps);
       await row.getByLabel(`Round 1 ${side} kg per dumbbell`).fill('8');
       await row.locator('.set', { hasText: `Round 1 ${side}` }).getByRole('button', { name: 'Done' }).click();
-      if (side === 'L') { await page.getByRole('status').filter({ hasText: 'Saved' }).waitFor(); assert.equal(await page.locator('.rest').count(), 0, 'rest after one side'); }
+      if (side === 'L') assert.equal(await page.locator('.rest').count(), 0, 'rest after one side');
     }
     await page.locator('.rest', { hasText: 'before the next exercise' }).waitFor();
     await push.getByLabel('Round 1 reps').fill('10');
     await push.locator('.set', { hasText: 'Round 1' }).getByRole('button', { name: 'Done' }).click();
     await page.locator('.rest', { hasText: 'before the next round' }).waitFor();
     await block.getByText('Round 2 of 3').waitFor();
+    await page.getByRole('status').filter({ hasText: 'Saved' }).waitFor();
+    await page.unroute('**/api/v1/sessions/*', slow);
     assert.equal(await row.getByLabel('Round 2 L reps').inputValue(), '', 'round 2 prefilled');
     await block.getByRole('button', { name: 'Round 1, done' }).click();
     assert.equal(await row.getByLabel('Round 1 L reps').inputValue(), '12');

@@ -330,11 +330,13 @@ function SetRow({ occ, set, enqueue, suggest }: { occ: Any; set: Any; enqueue: (
     setErr('');
     return { type: 'setActual', exerciseOccurrenceId: occ.id, setId: set.id, status, actualReps: metric === 'reps' ? reps : null, actualDurationSeconds: metric === 'duration' ? secs : null, valueGrams: grams, actualRir: d.rir === '' ? null : Number(d.rir), failedAttempt: d.failed, notes: d.notes.trim() || null };
   }
-  const save = (status = set.status) => { const op = build(status); if (op) enqueue(op); };
+  // The blur autosave runs after a tap on Done/Skip; it must reuse that status and never resend the same values.
+  const sent = useRef({ status: set.status as string, d: JSON.stringify(fromSet()) });
+  useEffect(() => { sent.current = { status: set.status, d: JSON.stringify(fromSet()) }; }, [set.status, set.actualReps, set.actualDurationSeconds, set.actualLoad?.valueGrams, set.actualRir, set.notes]);
+  const save = (status = sent.current.status) => { const op = build(status); if (op) { enqueue(op); sent.current = { status, d: JSON.stringify(d) }; } };
   const onBlur = () => setTimeout(() => {
     if (ref.current?.contains(document.activeElement)) return;
-    const same = JSON.stringify(d) === JSON.stringify(fromSet());
-    if (!same) save();
+    if (JSON.stringify(d) !== sent.current.d) save();
   }, 0);
   const done = set.status === 'done';
   const label = `${set.type === 'warmup' ? 'W' : set.blockSnapshotId ? 'Round ' : 'Set '}${set.roundIndex}${set.side !== 'both' ? ` ${set.side === 'left' ? 'L' : 'R'}` : ''}`;
