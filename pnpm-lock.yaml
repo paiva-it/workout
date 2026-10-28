@@ -162,6 +162,14 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  keyv: 5.6.0
+  flat-cache: 6.1.23
+  file-entry-cache: 11.1.5
+  cacheable: 2.5.0
+  '@cacheable/memory': 2.2.0
+  '@cacheable/utils': 2.5.0
+
 importers:
 
   .:
