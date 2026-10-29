@@ -13,3 +13,5 @@ overrides:
   cacheable: 2.5.0
   '@cacheable/memory': 2.2.0
   '@cacheable/utils': 2.5.0
+  # GHSA-q7qp-rjg7-q26m: @nestjs/platform-express 12.2.0 pins multer 2.4.0 exactly
+  multer: 2.5.0
